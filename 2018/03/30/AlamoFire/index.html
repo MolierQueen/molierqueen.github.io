@@ -458,10 +458,10 @@
 <p>有人会说下载同步进行会不会有影响，其实不会的首先我们实现同步的方式是信号量，本质上还是异步的只是我们阻塞的当前的下载线程，这个被阻塞线程一定不是主线程(除非Alamofire的开发者把他回调到主线程下载，这个基本不可能)，而且当我们把这个下载任务加到一个operation中之后，就注定不会在主线程中了，没一个operation都会被系统分配到一个非主线程的地方去做，所以这样不会性能有任何影响。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>因为时间紧迫，暂时做了这么多，也遇到了这些问题，所以写出了总结下，本文还会继续更新，会慢慢的整个网络层分享出来。就是可能更新会慢，毕竟工作量有点饱和。多谢关注</p>
 
-			<div id="aplayer4" class="aplayer" style="margin-bottom: 20px;"></div>
+			<div id="aplayer5" class="aplayer" style="margin-bottom: 20px;"></div>
 			<script>
 				var options = {"narrow":false,"autoplay":true,"showlrc":0,"mutex":true,"music":[{"title":"Thank You Very Much","author":"Margaret","url":"https://molier-1256056152.cos.ap-guangzhou.myqcloud.com/Thankyou.mp3","pic":"https://y.gtimg.cn/music/photo_new/T002R300x300M000000VbGX83hRicw.jpg?max_age=2592000","lrc":"https://demo.meting.api.meto.moe/action/metingapi?server=tencent&type=lrc&id=001Ii3g54dIYpO"}]};
-				options.element = document.getElementById("aplayer4");
+				options.element = document.getElementById("aplayer5");
 				new APlayer(options);
 			</script>
 
