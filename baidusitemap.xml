@@ -48,28 +48,6 @@
 
     
   <url>
-    <loc>https://oliverqueen.cn/2018/08/23/GitFlow/</loc>
-    <lastmod>2020-05-15T08:44:23.871Z</lastmod>
-    <data>
-        <display>
-        <title>GitFlow流程</title>
-        <pubTime>2018-08-23T06:20:39.000Z</pubTime>
-        
-        <tag>git</tag>
-         
-        <tag>效率工作</tag>
-         
-         
-           
-             
-              <breadCrumb title="iOS开发" url="https://oliverqueen.cn/categories/iOS%E5%BC%80%E5%8F%91/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>https://oliverqueen.cn/2018/06/19/MusicAbout/</loc>
     <lastmod>2020-05-15T08:44:23.871Z</lastmod>
     <data>
@@ -84,6 +62,28 @@
         <tag>K歌</tag>
          
         <tag>AVFoundation</tag>
+         
+         
+           
+             
+              <breadCrumb title="iOS开发" url="https://oliverqueen.cn/categories/iOS%E5%BC%80%E5%8F%91/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://oliverqueen.cn/2018/08/23/GitFlow/</loc>
+    <lastmod>2020-05-15T08:44:23.871Z</lastmod>
+    <data>
+        <display>
+        <title>GitFlow流程</title>
+        <pubTime>2018-08-23T06:20:39.000Z</pubTime>
+        
+        <tag>git</tag>
+         
+        <tag>效率工作</tag>
          
          
            
@@ -116,16 +116,16 @@
 
     
   <url>
-    <loc>https://oliverqueen.cn/2018/03/30/AlamoFire/</loc>
+    <loc>https://oliverqueen.cn/2018/03/14/Simple-HotFix-Mtehod/</loc>
     <lastmod>2020-05-15T08:44:23.869Z</lastmod>
     <data>
         <display>
-        <title>AlamoFire的使用(下载队列，断点续传)</title>
-        <pubTime>2018-03-30T09:54:38.000Z</pubTime>
+        <title>简单的iOS线上热修复方案</title>
+        <pubTime>2018-03-14T06:04:46.000Z</pubTime>
         
-        <tag>swift</tag>
+        <tag>热修复</tag>
          
-        <tag>网络请求</tag>
+        <tag>JSPath</tag>
          
          
            
@@ -138,16 +138,16 @@
 
     
   <url>
-    <loc>https://oliverqueen.cn/2018/03/14/Simple-HotFix-Mtehod/</loc>
+    <loc>https://oliverqueen.cn/2018/03/30/AlamoFire/</loc>
     <lastmod>2020-05-15T08:44:23.869Z</lastmod>
     <data>
         <display>
-        <title>简单的iOS线上热修复方案</title>
-        <pubTime>2018-03-14T06:04:46.000Z</pubTime>
+        <title>AlamoFire的使用(下载队列，断点续传)</title>
+        <pubTime>2018-03-30T09:54:38.000Z</pubTime>
         
-        <tag>热修复</tag>
+        <tag>swift</tag>
          
-        <tag>JSPath</tag>
+        <tag>网络请求</tag>
          
          
            
@@ -208,30 +208,6 @@
 
     
   <url>
-    <loc>https://oliverqueen.cn/2018/02/08/%E5%85%B3%E4%BA%8EiPhone-X%E4%B8%8BHome%E9%94%AE%E7%9A%84%E9%9A%90%E8%97%8F%E5%92%8C%E5%BB%B6%E8%BF%9F%E5%93%8D%E5%BA%94/</loc>
-    <lastmod>2020-05-15T08:44:23.867Z</lastmod>
-    <data>
-        <display>
-        <title>关于iPhone X下Home键的隐藏和延迟响应</title>
-        <pubTime>2018-02-08T02:15:57.000Z</pubTime>
-        
-        <tag>UI</tag>
-         
-        <tag>屏幕适配</tag>
-         
-        <tag>iOS 11</tag>
-         
-         
-           
-             
-              <breadCrumb title="iOS开发" url="https://oliverqueen.cn/categories/iOS%E5%BC%80%E5%8F%91/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>https://oliverqueen.cn/2018/01/25/%E5%8F%AF%E8%83%BD%E6%98%AF%E6%9C%80%E5%85%A8%E7%9A%84%E4%BD%BF%E7%94%A8HEXO%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%95%99%E7%A8%8B/</loc>
     <lastmod>2020-05-15T08:44:23.867Z</lastmod>
     <data>
@@ -256,18 +232,18 @@
 
     
   <url>
-    <loc>https://oliverqueen.cn/2018/01/24/%E8%AE%B0%E4%B8%80%E6%AC%A1Runtime-Hook%E7%9A%84%E9%97%AE%E9%A2%98/</loc>
-    <lastmod>2020-05-15T08:44:23.866Z</lastmod>
+    <loc>https://oliverqueen.cn/2018/02/08/%E5%85%B3%E4%BA%8EiPhone-X%E4%B8%8BHome%E9%94%AE%E7%9A%84%E9%9A%90%E8%97%8F%E5%92%8C%E5%BB%B6%E8%BF%9F%E5%93%8D%E5%BA%94/</loc>
+    <lastmod>2020-05-15T08:44:23.867Z</lastmod>
     <data>
         <display>
-        <title>记一次Runtime Hook的问题</title>
-        <pubTime>2018-01-24T03:35:57.000Z</pubTime>
+        <title>关于iPhone X下Home键的隐藏和延迟响应</title>
+        <pubTime>2018-02-08T02:15:57.000Z</pubTime>
         
-        <tag>底层</tag>
+        <tag>UI</tag>
          
-        <tag>runtime</tag>
+        <tag>屏幕适配</tag>
          
-        <tag>Hook</tag>
+        <tag>iOS 11</tag>
          
          
            
@@ -280,16 +256,18 @@
 
     
   <url>
-    <loc>https://oliverqueen.cn/2018/01/24/%E5%9C%A8iOS%E5%B7%A5%E7%A8%8B%E4%B8%ADCocoapods%E7%9A%84%E4%BD%BF%E7%94%A8/</loc>
-    <lastmod>2020-05-15T08:44:23.865Z</lastmod>
+    <loc>https://oliverqueen.cn/2018/01/24/%E8%AE%B0%E4%B8%80%E6%AC%A1Runtime-Hook%E7%9A%84%E9%97%AE%E9%A2%98/</loc>
+    <lastmod>2020-05-15T08:44:23.866Z</lastmod>
     <data>
         <display>
-        <title>在iOS工程中Cocoapods的使用</title>
-        <pubTime>2018-01-24T04:42:28.000Z</pubTime>
+        <title>记一次Runtime Hook的问题</title>
+        <pubTime>2018-01-24T03:35:57.000Z</pubTime>
         
-        <tag>Cocoapods</tag>
+        <tag>底层</tag>
          
-        <tag>架构</tag>
+        <tag>runtime</tag>
+         
+        <tag>Hook</tag>
          
          
            
@@ -324,6 +302,28 @@
 
     
   <url>
+    <loc>https://oliverqueen.cn/2018/01/24/%E5%9C%A8iOS%E5%B7%A5%E7%A8%8B%E4%B8%ADCocoapods%E7%9A%84%E4%BD%BF%E7%94%A8/</loc>
+    <lastmod>2020-05-15T08:44:23.865Z</lastmod>
+    <data>
+        <display>
+        <title>在iOS工程中Cocoapods的使用</title>
+        <pubTime>2018-01-24T04:42:28.000Z</pubTime>
+        
+        <tag>Cocoapods</tag>
+         
+        <tag>架构</tag>
+         
+         
+           
+             
+              <breadCrumb title="iOS开发" url="https://oliverqueen.cn/categories/iOS%E5%BC%80%E5%8F%91/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://oliverqueen.cn/2018/01/24/%E5%8F%AF%E8%83%BD%E6%98%AF%E6%9C%80%E5%85%A8%E7%9A%84iOS%E7%AB%AFHttpDns%E9%9B%86%E6%88%90%E6%96%B9%E6%A1%88/</loc>
     <lastmod>2020-05-15T08:44:23.864Z</lastmod>
     <data>
@@ -331,9 +331,9 @@
         <title>可能是最全的iOS端HttpDns集成方案</title>
         <pubTime>2018-01-24T05:54:36.000Z</pubTime>
         
-        <tag>底层</tag>
-         
         <tag>网络</tag>
+         
+        <tag>底层</tag>
          
         <tag>httpdns</tag>
          
@@ -394,17 +394,13 @@
 
     
   <url>
-    <loc>https://oliverqueen.cn/2018/01/24/NSURLProtocol%E5%AF%B9WKWebView%E7%9A%84%E5%A4%84%E7%90%86/</loc>
+    <loc>https://oliverqueen.cn/2018/01/23/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Http%E8%AF%B7%E6%B1%82%E3%80%81DNS%E5%8A%AB%E6%8C%81%E4%B8%8E%E8%A7%A3%E6%9E%90/</loc>
     <lastmod>2020-05-15T08:44:23.862Z</lastmod>
     <data>
         <display>
-        <title>NSURLProtocol对WKWebView的处理</title>
-        <pubTime>2018-01-24T04:24:06.000Z</pubTime>
+        <title>深入理解Http请求、DNS劫持与解析</title>
+        <pubTime>2018-01-23T10:12:18.000Z</pubTime>
         
-        <tag>webview</tag>
-         
-        <tag>hook</tag>
-         
          
            
              
@@ -416,13 +412,17 @@
 
     
   <url>
-    <loc>https://oliverqueen.cn/2018/01/23/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Http%E8%AF%B7%E6%B1%82%E3%80%81DNS%E5%8A%AB%E6%8C%81%E4%B8%8E%E8%A7%A3%E6%9E%90/</loc>
+    <loc>https://oliverqueen.cn/2018/01/24/NSURLProtocol%E5%AF%B9WKWebView%E7%9A%84%E5%A4%84%E7%90%86/</loc>
     <lastmod>2020-05-15T08:44:23.862Z</lastmod>
     <data>
         <display>
-        <title>深入理解Http请求、DNS劫持与解析</title>
-        <pubTime>2018-01-23T10:12:18.000Z</pubTime>
+        <title>NSURLProtocol对WKWebView的处理</title>
+        <pubTime>2018-01-24T04:24:06.000Z</pubTime>
         
+        <tag>webview</tag>
+         
+        <tag>hook</tag>
+         
          
            
              
@@ -502,6 +502,28 @@
 
     
   <url>
+    <loc>https://oliverqueen.cn/2018/01/23/IOS%E4%B8%8B%E4%B8%89%E7%A7%8DDNS%E8%A7%A3%E6%9E%90%E6%96%B9%E5%BC%8F%E5%88%86%E6%9E%90%EF%BC%88LocalDns%EF%BC%89/</loc>
+    <lastmod>2020-05-15T08:44:23.859Z</lastmod>
+    <data>
+        <display>
+        <title>IOS下三种DNS解析方式分析（LocalDns）</title>
+        <pubTime>2018-01-23T10:02:29.000Z</pubTime>
+        
+        <tag>DNS解析</tag>
+         
+        <tag>LocalDNS</tag>
+         
+         
+           
+             
+              <breadCrumb title="iOS开发" url="https://oliverqueen.cn/categories/iOS%E5%BC%80%E5%8F%91/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://oliverqueen.cn/2018/01/23/iOS%E4%B8%AD%E4%BD%BF%E7%94%A8OpenGL%E5%AE%9E%E7%8E%B0%E5%A2%9E%E9%AB%98%E5%8A%9F%E8%83%BD/</loc>
     <lastmod>2020-05-15T08:44:23.859Z</lastmod>
     <data>
@@ -509,9 +531,9 @@
         <title>iOS中使用OpenGL实现增高功能</title>
         <pubTime>2018-01-23T13:23:49.000Z</pubTime>
         
-        <tag>OpenGL</tag>
-         
         <tag>底层</tag>
+         
+        <tag>OpenGL</tag>
          
         <tag>UI</tag>
          
@@ -526,16 +548,16 @@
 
     
   <url>
-    <loc>https://oliverqueen.cn/2018/01/23/IOS%E4%B8%8B%E4%B8%89%E7%A7%8DDNS%E8%A7%A3%E6%9E%90%E6%96%B9%E5%BC%8F%E5%88%86%E6%9E%90%EF%BC%88LocalDns%EF%BC%89/</loc>
-    <lastmod>2020-05-15T08:44:23.859Z</lastmod>
+    <loc>https://oliverqueen.cn/2018/01/23/CFNetwork%E7%9A%84%E4%BB%8B%E7%BB%8D%E5%92%8C%E4%BD%BF%E7%94%A8/</loc>
+    <lastmod>2020-05-15T08:44:23.858Z</lastmod>
     <data>
         <display>
-        <title>IOS下三种DNS解析方式分析（LocalDns）</title>
-        <pubTime>2018-01-23T10:02:29.000Z</pubTime>
+        <title>CFNetwork的介绍和使用</title>
+        <pubTime>2018-01-23T13:04:15.000Z</pubTime>
         
-        <tag>DNS解析</tag>
+        <tag>网络</tag>
          
-        <tag>LocalDNS</tag>
+        <tag>底层</tag>
          
          
            
@@ -561,28 +583,6 @@
            
              
               <breadCrumb title="其他" url="https://oliverqueen.cn/categories/%E5%85%B6%E4%BB%96/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://oliverqueen.cn/2018/01/23/CFNetwork%E7%9A%84%E4%BB%8B%E7%BB%8D%E5%92%8C%E4%BD%BF%E7%94%A8/</loc>
-    <lastmod>2020-05-15T08:44:23.858Z</lastmod>
-    <data>
-        <display>
-        <title>CFNetwork的介绍和使用</title>
-        <pubTime>2018-01-23T13:04:15.000Z</pubTime>
-        
-        <tag>底层</tag>
-         
-        <tag>网络</tag>
-         
-         
-           
-             
-              <breadCrumb title="iOS开发" url="https://oliverqueen.cn/categories/iOS%E5%BC%80%E5%8F%91/"/>
           
         </display>
     </data>
