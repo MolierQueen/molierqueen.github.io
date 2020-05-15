@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-mac-osx.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="KAj10O4WT-YoszaSxxDUTKP4VzNZxQwduVLhOojJJ7U" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.1" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.1" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.0.1',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+  
+  <meta name="keywords" content="swift,网络请求," />
+
+
+<meta name="description" content="前言最近开始做了一个新项目，几乎没有时间来写自己的博客，大部分都在写feature（BUG），自己研究的东西很少，本来之前说好每个月要写两篇文章也没能坚持下来，最近在项目中遇到了一些问题，就在这里总结下吧。一些小的技巧而已，大神可以忽略了。">
+<meta name="keywords" content="swift,网络请求">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AlamoFire的使用(下载队列，断点续传)">
+<meta property="og:url" content="https://oliverqueen.cn/2018/03/30/AlamoFire/index.html">
+<meta property="og:site_name" content="Molier">
+<meta property="og:description" content="前言最近开始做了一个新项目，几乎没有时间来写自己的博客，大部分都在写feature（BUG），自己研究的东西很少，本来之前说好每个月要写两篇文章也没能坚持下来，最近在项目中遇到了一些问题，就在这里总结下吧。一些小的技巧而已，大神可以忽略了。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://raw.githubusercontent.com/Alamofire/Alamofire/master/alamofire.png">
+<meta property="og:image" content="https://wx1.sinaimg.cn/large/006tNc79gy1fpw0vlzbp6g308h0gnkjm.gif">
+<meta property="og:image" content="https://wx1.sinaimg.cn/large/006tNc79gy1fpw1444jp0j31610qbgrr.jpg">
+<meta property="og:image" content="https://wx1.sinaimg.cn/large/006tNc79gy1fpw15riwhjg308h0gnb2i.gif">
+<meta property="og:updated_time" content="2020-05-15T08:44:23.869Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AlamoFire的使用(下载队列，断点续传)">
+<meta name="twitter:description" content="前言最近开始做了一个新项目，几乎没有时间来写自己的博客，大部分都在写feature（BUG），自己研究的东西很少，本来之前说好每个月要写两篇文章也没能坚持下来，最近在项目中遇到了一些问题，就在这里总结下吧。一些小的技巧而已，大神可以忽略了。">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Alamofire/Alamofire/master/alamofire.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://oliverqueen.cn/2018/03/30/AlamoFire/"/>
+
+
+  <title>AlamoFire的使用(下载队列，断点续传) | Molier</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Molier</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">Tomorrow is another day</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://oliverqueen.cn/2018/03/30/AlamoFire/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Molier">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ws4.sinaimg.cn/large/006tKfTcgy1fnqkpikcyeg30f00f0njv.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Molier">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">AlamoFire的使用(下载队列，断点续传)</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-30T17:54:38+08:00">2018-03-30</time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2020-05-15T16:44:23+08:00">2020-05-15</time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/iOS开发/" itemprop="url" rel="index"><span itemprop="name">iOS开发</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <script src="/assets/js/APlayer.min.js"> </script><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近开始做了一个新项目，几乎没有时间来写自己的博客，大部分都在写feature（BUG），自己研究的东西很少，本来之前说好每个月要写两篇文章也没能坚持下来，最近在项目中遇到了一些问题，就在这里总结下吧。一些小的技巧而已，大神可以忽略了。</p>
+<p><img src="https://raw.githubusercontent.com/Alamofire/Alamofire/master/alamofire.png" alt=""><br><a id="more"></a></p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>新项目包含了上传下载网络请求相关功能，由于是swift编写所以自然而然选择了 <a href="https://github.com/Alamofire/Alamofire" target="_blank" rel="noopener">AlamoFire</a> (好像也没得选)来做底层，正常的网络请求post、get等都是直接傻瓜式调用 AlamoFire 的接口，本文主要将一些细节问题</p>
+<h2 id="设置通用超时时间"><a href="#设置通用超时时间" class="headerlink" title="设置通用超时时间"></a>设置通用超时时间</h2><p>使用Alamofire发起请求时候有这两个接口</p>
+<figure class="highlight dart"><table><tr><td class="code"><pre><span class="line"><span class="comment"><span class="markdown">/// Creates </span>a<span class="markdown"> <span class="code">`DataRequest`</span> using </span>the<span class="markdown"> default <span class="code">`SessionManager`</span> to retrieve </span>the<span class="markdown"> contents of </span>the<span class="markdown"> specified <span class="code">`url`</span>,</span></span></span><br><span class="line"><span class="comment"><span class="markdown">/// <span class="code">`method`</span>, <span class="code">`parameters`</span>, <span class="code">`encoding`</span> and <span class="code">`headers`</span>.</span></span></span><br><span class="line"><span class="comment"><span class="markdown">///</span></span></span><br><span class="line"><span class="comment"><span class="markdown">/// - parameter url:        The URL.</span></span></span><br><span class="line"><span class="comment"><span class="markdown">/// - parameter method:     The HTTP method. <span class="code">`.get`</span> by default.</span></span></span><br><span class="line"><span class="comment"><span class="markdown">/// - parameter parameters: The parameters. <span class="code">`nil`</span> by default.</span></span></span><br><span class="line"><span class="comment"><span class="markdown">/// - parameter encoding:   The parameter encoding. <span class="code">`URLEncoding.default`</span> by default.</span></span></span><br><span class="line"><span class="comment"><span class="markdown">/// - parameter headers:    The HTTP headers. <span class="code">`nil`</span> by default.</span></span></span><br><span class="line"><span class="comment"><span class="markdown">///</span></span></span><br><span class="line"><span class="comment"><span class="markdown">/// - returns: The created <span class="code">`DataRequest`</span>.</span></span></span><br><span class="line">public func request(_ url: URLConvertible, method: Alamofire.HTTPMethod = <span class="keyword">default</span>, parameters: Parameters? = <span class="keyword">default</span>, encoding: ParameterEncoding = <span class="keyword">default</span>, headers: HTTPHeaders? = <span class="keyword">default</span>) -&gt; Alamofire.DataRequest</span><br><span class="line"></span><br><span class="line"><span class="comment"><span class="markdown">/// Creates </span>a<span class="markdown"> <span class="code">`DataRequest`</span> using </span>the<span class="markdown"> default <span class="code">`SessionManager`</span> to retrieve </span>the<span class="markdown"> contents of </span>a<span class="markdown"> URL based on </span>the<span class="markdown"></span></span></span><br><span class="line"><span class="comment"><span class="markdown">/// specified <span class="code">`urlRequest`</span>.</span></span></span><br><span class="line"><span class="comment"><span class="markdown">///</span></span></span><br><span class="line"><span class="comment"><span class="markdown">/// - parameter urlRequest: The URL request</span></span></span><br><span class="line"><span class="comment"><span class="markdown">///</span></span></span><br><span class="line"><span class="comment"><span class="markdown">/// - returns: The created <span class="code">`DataRequest`</span>.</span></span></span><br><span class="line">public func request(_ urlRequest: URLRequestConvertible) -&gt; Alamofire.DataRequest</span><br></pre></td></tr></table></figure>
+<p>而我们在调用的时候通常会直接这么用</p>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">let <span class="string">req :</span> URLRequest = URLRequest(<span class="string">url:</span> URL(<span class="string">fileURLWithPath:</span> <span class="string">"32"</span>), <span class="string">cachePolicy:</span> .useProtocolCachePolicy, <span class="string">timeoutInterval:</span> <span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 第一种方法调用，后面参数直接用default</span></span><br><span class="line">        Alamofire.request(URL(<span class="string">fileURLWithPath:</span> <span class="string">"32"</span>))</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 第二中调用，使传入request</span></span><br><span class="line">        Alamofire.request(req)</span><br><span class="line">        let semaphore = DispatchSemaphore(<span class="string">value:</span> <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<p>其中第一种方法我们不能传入超时时间，第二中方法我们可以通过传入的URLRequest来设置超时时间，但是我们通常一个项目中大部分的请求，可能除了某些特殊的下载请求之外所有的超时时间都是一样的，这样的话我们需要同样的代码写好多遍，这个时候有两个办法</p>
+<ul>
+<li><p>对生成Request的方法做一个封装，通用的参数如超时时间、header、请求方式 写死在方法里面，对于会变动的参数如 URL 和可以通过参数传入.</p>
+</li>
+<li><p>创建 <code>Alamofire.SessionManager</code> 通过sessionManager来设置超时时间等一些通用的东西</p>
+</li>
+</ul>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">let networkManager : SessionManager = &#123;</span><br><span class="line">        let<span class="built_in"> config </span>: URLSessionConfiguration = URLSessionConfiguration.default</span><br><span class="line">        config.timeoutIntervalForRequest = 10</span><br><span class="line">        let manager = Alamofire.SessionManager.init(configuration: config)</span><br><span class="line">        return manager</span><br><span class="line">    &#125;()</span><br></pre></td></tr></table></figure>
+<h2 id="断点续传"><a href="#断点续传" class="headerlink" title="断点续传"></a>断点续传</h2><p>Alamofire支持断点续传下载，原理就是将下载一半的数据保存到本地，然后下次再启动时候通过data的拼接来进行继续下载。用法也很简单，只是调用接口而已，关键是看开发者如何自己去维护这个已下载的数据，比如是存内存还是存硬盘，要存多久，淘汰策略是什么之类的。其实就是两个步骤， 断点和续传</p>
+<h4 id="第一步-断点"><a href="#第一步-断点" class="headerlink" title="第一步 断点"></a>第一步 断点</h4><p>监听下载中断，中断后将已经下载的数据进行保留，我这边用一个属性来存，具体到项目实现大家可以采用自己存储方式，存到硬盘或者数据库之类的</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">Alamofire.download(<span class="string">"http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"</span>, method: <span class="selector-class">.get</span>, parameters: nil, encoding: URLEncoding<span class="selector-class">.default</span>, headers: nil) &#123; (url, response) -&gt; (destinationURL: URL, options: DownloadRequest.DownloadOptions) <span class="keyword">in</span></span><br><span class="line">            return (URL(fileURLWithPath: String(describing : NSSearchPathForDirectoriesInDomains(<span class="selector-class">.documentDirectory</span>, <span class="selector-class">.userDomainMask</span>, false)[<span class="number">0</span>]+<span class="string">"123.mp4"</span>)), [<span class="selector-class">.createIntermediateDirectories</span>, .removePreviousFile])</span><br><span class="line">            &#125;<span class="selector-class">.responseJSON</span> &#123; (response) <span class="keyword">in</span></span><br><span class="line"></span><br><span class="line">                switch response<span class="selector-class">.result</span> &#123;</span><br><span class="line"></span><br><span class="line">                case <span class="selector-class">.success</span>:</span><br><span class="line">                    print(<span class="string">"success"</span>)</span><br><span class="line">                case <span class="selector-class">.failure</span>:</span><br><span class="line">                    <span class="comment">//意外中断后在此处处理下载完成的部分</span></span><br><span class="line">                    self<span class="selector-class">.tmpData</span> = response.resumeData</span><br><span class="line"></span><br><span class="line">                default:</span><br><span class="line">                    print(<span class="string">"failed"</span>)</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<h4 id="第二步-续传"><a href="#第二步-续传" class="headerlink" title="第二步 续传"></a>第二步 续传</h4><p>当下载再次启动时候，需要在上一步数据的基础上继续下载，我们调用Alamofire这个方法<br><figure class="highlight dart"><table><tr><td class="code"><pre><span class="line"><span class="comment"><span class="markdown">/// Creates </span>a<span class="markdown"> <span class="code">`DownloadRequest`</span> using </span>the<span class="markdown"> default <span class="code">`SessionManager`</span> from </span>the<span class="markdown"> <span class="code">`resumeData`</span> produced from </span>a<span class="markdown"></span></span></span><br><span class="line"><span class="comment"><span class="markdown">/// previous request cancellation to retrieve </span>the<span class="markdown"> contents of </span>the<span class="markdown"> original request and save them to </span>the<span class="markdown"> <span class="code">`destination`</span>.</span></span></span><br><span class="line"><span class="comment"><span class="markdown">///</span></span></span><br><span class="line"><span class="comment"><span class="markdown">/// If <span class="code">`destination`</span> is not specified, </span>the<span class="markdown"> contents </span>will<span class="markdown"> remain in </span>the<span class="markdown"> temporary location determined by </span>the<span class="markdown"></span></span></span><br><span class="line"><span class="comment"><span class="markdown">/// underlying URL session.</span></span></span><br><span class="line"><span class="comment"><span class="markdown">///</span></span></span><br><span class="line"><span class="comment"><span class="markdown">/// On </span>the<span class="markdown"> latest release of all </span>the<span class="markdown"> Apple platforms (iOS 10, macOS 10.12, tvOS 10, watchOS 3), <span class="code">`resumeData`</span> is broken</span></span></span><br><span class="line"><span class="comment"><span class="markdown">/// on background URL session configurations. There's </span>an<span class="markdown"> underlying bug in </span>the<span class="markdown"> <span class="code">`resumeData`</span> generation logic where </span>the<span class="markdown"></span></span></span><br><span class="line"><span class="comment"><span class="markdown">/// data is written incorrectly and </span>will<span class="markdown"> always fail to resume </span>the<span class="markdown"> download. For </span>more<span class="markdown"> information about </span>the<span class="markdown"> bug and</span></span></span><br><span class="line"><span class="comment"><span class="markdown">/// possible workarounds, please refer to </span>the<span class="markdown"> following Stack Overflow post:</span></span></span><br><span class="line"><span class="comment"><span class="markdown">///</span></span></span><br><span class="line"><span class="comment"><span class="markdown">///    - http://stackoverflow.com/</span>a<span class="markdown">/39347461/1342462</span></span></span><br><span class="line"><span class="comment"><span class="markdown">///</span></span></span><br><span class="line"><span class="comment"><span class="markdown">/// - parameter resumeData:  The resume data. This is </span>an<span class="markdown"> opaque data blob produced by <span class="code">`URLSessionDownloadTask`</span></span></span></span><br><span class="line"><span class="comment"><span class="markdown">///                          when </span>a<span class="markdown"> task is cancelled. See <span class="code">`URLSession -downloadTask(withResumeData:)`</span> for additional</span></span></span><br><span class="line"><span class="comment"><span class="markdown">///                          information.</span></span></span><br><span class="line"><span class="comment"><span class="markdown">/// - parameter destination: The closure used to determine </span>the<span class="markdown"> destination of </span>the<span class="markdown"> downloaded file. <span class="code">`nil`</span> by default.</span></span></span><br><span class="line"><span class="comment"><span class="markdown">///</span></span></span><br><span class="line"><span class="comment"><span class="markdown">/// - returns: The created <span class="code">`DownloadRequest`</span>.</span></span></span><br><span class="line">public func download(resumingWith resumeData: Data, to destination: Alamofire.DownloadRequest.DownloadFileDestination? = <span class="keyword">default</span>) -&gt; Alamofire.DownloadRequest</span><br></pre></td></tr></table></figure></p>
+<p>这个接口需要我们传入已存在的数据，然后基于我们传入的数据进行下载，它支持从新指定目的地路径，如果你有需要可以重新指定<br><figure class="highlight less"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">Alamofire</span><span class="selector-class">.download</span>(<span class="attribute">resumingWith</span>: tmpData!)</span><br></pre></td></tr></table></figure></p>
+<p>同样他返回一个request的对象，我们可以通过点语法来拿到进度、response等信息</p>
+<h2 id="批量下载"><a href="#批量下载" class="headerlink" title="批量下载"></a>批量下载</h2><p>当我们需要同时下载很多东西的时候，往往需要我们自己维护一个下载队列，比如下一个载素材列表之类的。Alamo给我们提供了下载的接口，但是下载的线程队列需要我们自己去维护，其实就是一个多线程并发队列。</p>
+<h4 id="GCD"><a href="#GCD" class="headerlink" title="GCD"></a>GCD</h4><p>我们很自然而然的想到GCD，但是GCD有一个问题无法控制最大并发数，而且对队列的管理也并不完善，比如我们要下载100个文件，如果同时下载的话开辟100个线程，那肯定是不行的，先不说移动设备是否支持(最多70个左右)，即使支持了那这个开销太大。虽说GCD的话可以使用信号量进行线程控制，但是每个线程的暂停启动之类的又是问题，而且毕竟是曲线救国的方法。</p>
+<h4 id="OperationQueue"><a href="#OperationQueue" class="headerlink" title="OperationQueue"></a>OperationQueue</h4><p>Operation及OperationQueue是基于GCD封装的对象，作为对象可以提供更多操作选择，可以用方法或block实现多线程任务，同时也可以利用继承、类别等进行一些其他操作；但同时实现代码相对复杂一些。但是他毕竟不像GCD那样使用C语言实现，所以效率会相比GCD低一些。但是对线程的控制的灵活性要远高于GCD，对于下载线程来说可以优先选择这个。</p>
+<h4 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h4><p>我们把每一个下载任务封装成一个operation。注意Operation不能直接使用，我们需要使用他的子类，这里我选择使用 <code>BlockOperation</code> 他的闭包则是需要执行的下载任务，然后我们把他添加进queue中便开始执行了任务</p>
+<figure class="highlight roboconf"><table><tr><td class="code"><pre><span class="line">let op : BlockOperation = BlockOperation &#123; [<span class="attribute">weak self] in</span></span><br><span class="line"><span class="attribute">            Alamofire.download("http</span>://clips<span class="variable">.vorwaerts-gmbh</span><span class="variable">.de</span>/big_buck_bunny<span class="variable">.mp</span>4", method: <span class="variable">.get</span>, parameters: nil, encoding: URLEncoding<span class="variable">.default</span>, headers: nil) &#123; (url, response) -&gt; (destinationURL: URL, options: DownloadRequest<span class="variable">.DownloadOptions</span>) in</span><br><span class="line">                return (URL(fileURLWithPath: String(describing : NSSearchPathForDirectoriesInDomains(<span class="variable">.documentDirectory</span>, <span class="variable">.userDomainMask</span>, false)[0]+"123<span class="variable">.mp</span>4")), [<span class="variable">.createIntermediateDirectories</span>, <span class="variable">.removePreviousFile</span>])</span><br><span class="line">                &#125;<span class="variable">.downloadProgress</span> &#123; [weak self] (pro) in</span><br><span class="line">                    let percent = Float(pro<span class="variable">.completedUnitCount</span>) / Float(pro<span class="variable">.totalUnitCount</span>)</span><br><span class="line">                    if count == 0 &#123;</span><br><span class="line"></span><br><span class="line">                        self?<span class="variable">.downLoadLabel</span><span class="variable">.snp</span><span class="variable">.remakeConstraints</span> &#123; (make) in</span><br><span class="line">                            make<span class="variable">.width</span><span class="variable">.equalTo</span>(300 * percent)</span><br><span class="line">                            make<span class="variable">.height</span><span class="variable">.equalTo</span>(30)</span><br><span class="line">                            make<span class="variable">.top</span><span class="variable">.equalTo</span>((self?<span class="variable">.stopButton</span><span class="variable">.snp</span><span class="variable">.bottom</span>)!)<span class="variable">.offset</span>(30)</span><br><span class="line">                            make<span class="variable">.left</span><span class="variable">.equalToSuperview</span>()<span class="variable">.offset</span>(30)</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125; else &#123;</span><br><span class="line">                        self?<span class="variable">.downLoadLabel</span>2<span class="variable">.snp</span><span class="variable">.remakeConstraints</span> &#123; (make) in</span><br><span class="line">                            make<span class="variable">.width</span><span class="variable">.equalTo</span>(300 * percent)</span><br><span class="line">                            make<span class="variable">.height</span><span class="variable">.equalTo</span>(30)</span><br><span class="line">                            make<span class="variable">.top</span><span class="variable">.equalTo</span>((self?<span class="variable">.downLoadLabel</span><span class="variable">.snp</span><span class="variable">.bottom</span>)!)<span class="variable">.offset</span>(30)</span><br><span class="line">                            make<span class="variable">.left</span><span class="variable">.equalToSuperview</span>()<span class="variable">.offset</span>(30)</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;<span class="variable">.responseJSON</span> &#123; (response) in</span><br><span class="line"></span><br><span class="line">                    switch response<span class="variable">.result</span> &#123;</span><br><span class="line"></span><br><span class="line">                    case <span class="variable">.success</span>:</span><br><span class="line">                        print("success")</span><br><span class="line">                    case <span class="variable">.failure</span>:</span><br><span class="line">                        self?<span class="variable">.tmpData</span> = response<span class="variable">.resumeData</span></span><br><span class="line"></span><br><span class="line">                    default:</span><br><span class="line">                        print("failed")</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        queue<span class="variable">.addOperation</span>(op)</span><br></pre></td></tr></table></figure>
+<p>每一个opeeation对象我们都可以设置他的优先级、启动、暂停、等属性，简单的调用接口就可以，在此就不一一作解释了。然后我们需要对我们的queue进行设置，我们设置最大并发数，大家可以根据实际情况来设置，demo中我只有两个下载任务，所以我就设置最大并发数为1 这样就是一个一个下载。<br><figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">let<span class="built_in"> queue </span>: OperationQueue = &#123;</span><br><span class="line">        let que : OperationQueue = OperationQueue()</span><br><span class="line">        que.maxConcurrentOperationCount = 1</span><br><span class="line">        return que</span><br><span class="line">    &#125;()</span><br></pre></td></tr></table></figure></p>
+<p>我们运行然后点击开始下载</p>
+<p><img src="https://wx1.sinaimg.cn/large/006tNc79gy1fpw0vlzbp6g308h0gnkjm.gif" alt=""></p>
+<p>很奇怪我们发现他还是同时下载，我们又试了其他的个数，无论多少都是同时下载，最大线程数量完全不起作用，再反过来看下上面加入queue的任务。正常来说每一个operation都要等上一个operation完成后才会执行，而系统判断完成的标准就是上一个operation的闭包走完，我们闭包中放入的是一个下载任务，而Alamofire的下载都是异步执行，所以导致operation的闭包走完了，但是其实下载是异步在另一个线程执行的，实际上下载没有完成，知道原因我们对症下药，只需要保证operation闭包中的代码是同步执行的就OK了。而Alamofire是基于URLSession来实现的，并没有像connection那样提供同步的方法，所以我们使用信号量卡一下，像这样</p>
+<p><img src="https://wx1.sinaimg.cn/large/006tNc79gy1fpw1444jp0j31610qbgrr.jpg" alt=""></p>
+<p>这样之后就会按照我们设置好的队列进行了</p>
+<p><img src="https://wx1.sinaimg.cn/large/006tNc79gy1fpw15riwhjg308h0gnb2i.gif" alt=""></p>
+<p>有人会说下载同步进行会不会有影响，其实不会的首先我们实现同步的方式是信号量，本质上还是异步的只是我们阻塞的当前的下载线程，这个被阻塞线程一定不是主线程(除非Alamofire的开发者把他回调到主线程下载，这个基本不可能)，而且当我们把这个下载任务加到一个operation中之后，就注定不会在主线程中了，没一个operation都会被系统分配到一个非主线程的地方去做，所以这样不会性能有任何影响。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>因为时间紧迫，暂时做了这么多，也遇到了这些问题，所以写出了总结下，本文还会继续更新，会慢慢的整个网络层分享出来。就是可能更新会慢，毕竟工作量有点饱和。多谢关注</p>
+
+			<div id="aplayer5" class="aplayer" style="margin-bottom: 20px;"></div>
+			<script>
+				var options = {"narrow":false,"autoplay":true,"showlrc":0,"mutex":true,"music":[{"title":"Thank You Very Much","author":"Margaret","url":"https://molier-1256056152.cos.ap-guangzhou.myqcloud.com/Thankyou.mp3","pic":"https://y.gtimg.cn/music/photo_new/T002R300x300M000000VbGX83hRicw.jpg?max_age=2592000","lrc":"https://demo.meting.api.meto.moe/action/metingapi?server=tencent&type=lrc&id=001Ii3g54dIYpO"}]};
+				options.element = document.getElementById("aplayer5");
+				new APlayer(options);
+			</script>
+
+		
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Molier
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://oliverqueen.cn/2018/03/30/AlamoFire/" title="AlamoFire的使用(下载队列，断点续传)">https://oliverqueen.cn/2018/03/30/AlamoFire/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/swift/" rel="tag"># swift</a>
+          
+            <a href="/tags/网络请求/" rel="tag"># 网络请求</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/14/Simple-HotFix-Mtehod/" rel="next" title="简单的iOS线上热修复方案">
+                <i class="fa fa-chevron-left"></i> 简单的iOS线上热修复方案
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/08/RX-Swift-Study-One/" rel="prev" title="关于RxSwift的一点理解">
+                关于RxSwift的一点理解 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://ws4.sinaimg.cn/large/006tKfTcgy1fnqkpikcyeg30f00f0njv.gif"
+                alt="Molier" />
+            
+              <p class="site-author-name" itemprop="name">Molier</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">29</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    <span class="site-state-item-count">48</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:371099694@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/zhangninghao?refer_flag=1005055010_" target="_blank" title="新浪微博">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>新浪微博</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/fd21f41fb522" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-superpowers"></i>简书</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/586c624bac502e12d631545f" target="_blank" title="掘金">
+                      
+                        <i class="fa fa-fw fa-juejin"></i>掘金</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Friends
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://reuixiy.github.io/" rel="external nofollow" title="reuixiy" target="_blank">reuixiy</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://billchan.me/" rel="external nofollow" title="CMB" target="_blank">CMB</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://mashirosorata.vicp.io/" rel="external nofollow" title="Mashiro_Sorata" target="_blank">Mashiro_Sorata</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.saitjr.com/" rel="external nofollow" title="saitjr <br>(iOS大神，持续集成，几乎全栈)" target="_blank">saitjr <br>(iOS大神，持续集成，几乎全栈)</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+         
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置通用超时时间"><span class="nav-text">设置通用超时时间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#断点续传"><span class="nav-text">断点续传</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#第一步-断点"><span class="nav-text">第一步 断点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第二步-续传"><span class="nav-text">第二步 续传</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#批量下载"><span class="nav-text">批量下载</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#GCD"><span class="nav-text">GCD</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#OperationQueue"><span class="nav-text">OperationQueue</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实现"><span class="nav-text">实现</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Molier</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">茉莉儿的小站</div>
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.1"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<script type="text/javascript">
+const gitalk = new Gitalk({
+clientID: '991238e983176ecf9dbd',
+clientSecret: '299ec7e920c736040adf969a0b0a4148ade5953f',
+repo: 'GitMent',
+owner: 'MolierQueen',
+admin: 'MolierQueen'.split(','),
+pagerDirection: 'first',
+id: md5(window.location.pathname),
+distractionFreeMode: false
+})
+gitalk.render('gitalk-container')
+</script>
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,Facebook,Twitter,Linkedin";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+  
+<!-- <script type="text/javascript"
+color="255,255,255" opacity='1' zIndex="-2" count="100" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script> -->
+
+
+</body>
+</html>

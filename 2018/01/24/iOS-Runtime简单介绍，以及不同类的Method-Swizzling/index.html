@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-mac-osx.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="KAj10O4WT-YoszaSxxDUTKP4VzNZxQwduVLhOojJJ7U" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.1" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.1" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.0.1',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+  
+  <meta name="keywords" content="底层,runtime," />
+
+
+<meta name="description" content="Runtime介绍： runtime顾名思义就是运行时，其实我们的App从你按下command+R开始一直到App运行起来经历了大致两个阶段，1：编译时，2：运行时。还记得一道很经典的面试题 这里给大家解释下：首先， * testObject 是告诉编译器，testObject是一个指向某个Objective-C对象的指针。因为不管指向的是什么类型的对象，">
+<meta name="keywords" content="底层,runtime">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS Runtime简单介绍，以及不同类的Method Swizzling">
+<meta property="og:url" content="https://oliverqueen.cn/2018/01/24/iOS-Runtime简单介绍，以及不同类的Method-Swizzling/index.html">
+<meta property="og:site_name" content="Molier">
+<meta property="og:description" content="Runtime介绍： runtime顾名思义就是运行时，其实我们的App从你按下command+R开始一直到App运行起来经历了大致两个阶段，1：编译时，2：运行时。还记得一道很经典的面试题 这里给大家解释下：首先， * testObject 是告诉编译器，testObject是一个指向某个Objective-C对象的指针。因为不管指向的是什么类型的对象，">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://wx3.sinaimg.cn/large/006tNc79gy1fo6kbsn9yxj30kk03et8z.jpg">
+<meta property="og:image" content="https://wx1.sinaimg.cn/large/006tNc79gy1fo6kc7w3zcj30pk0ajdks.jpg">
+<meta property="og:image" content="https://wx1.sinaimg.cn/large/006tNc79gy1fo6kcfrky6j30tr0120sy.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/large/006tNc79gy1fo6kexyuzgj30f801mwel.jpg">
+<meta property="og:image" content="https://wx4.sinaimg.cn/large/006tNc79gy1fo6kg3i5z6j30hv0fj0z9.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/large/006tNc79gy1fo6kgrq52oj30f80betcz.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/large/006tNc79gy1fo6khw8c97j30740ag74v.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/large/006tNc79gy1fo6kir8y63j309a02rglq.jpg">
+<meta property="og:image" content="https://wx1.sinaimg.cn/large/006tNc79gy1fo6kj5dcykj308z02lwep.jpg">
+<meta property="og:image" content="https://wx1.sinaimg.cn/large/006tNc79gy1fo6kjlzvdqj30f90b43zw.jpg">
+<meta property="og:image" content="https://wx1.sinaimg.cn/large/006tNc79gy1fo6kjxsheej30d701h3yl.jpg">
+<meta property="og:image" content="https://wx1.sinaimg.cn/large/006tNc79gy1fo6kka2s8uj30dx0anwfp.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/large/006tNc79gy1fo6kliitupj30yd08w422.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/large/006tNc79gy1fo6km0wogkj30yg0pz43q.jpg">
+<meta property="og:image" content="https://wx4.sinaimg.cn/large/006tNc79gy1fo6kmhkzidj30yg0g378f.jpg">
+<meta property="og:image" content="https://wx1.sinaimg.cn/large/006tNc79gy1fo6kn9m5btj30yg0ifgqa.jpg">
+<meta property="og:updated_time" content="2020-05-15T08:44:23.863Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS Runtime简单介绍，以及不同类的Method Swizzling">
+<meta name="twitter:description" content="Runtime介绍： runtime顾名思义就是运行时，其实我们的App从你按下command+R开始一直到App运行起来经历了大致两个阶段，1：编译时，2：运行时。还记得一道很经典的面试题 这里给大家解释下：首先， * testObject 是告诉编译器，testObject是一个指向某个Objective-C对象的指针。因为不管指向的是什么类型的对象，">
+<meta name="twitter:image" content="https://wx3.sinaimg.cn/large/006tNc79gy1fo6kbsn9yxj30kk03et8z.jpg">
+
+
+
+
+
+
+  <link rel="canonical" href="https://oliverqueen.cn/2018/01/24/iOS-Runtime简单介绍，以及不同类的Method-Swizzling/"/>
+
+
+  <title>iOS Runtime简单介绍，以及不同类的Method Swizzling | Molier</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Molier</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">Tomorrow is another day</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://oliverqueen.cn/2018/01/24/iOS-Runtime简单介绍，以及不同类的Method-Swizzling/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Molier">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ws4.sinaimg.cn/large/006tKfTcgy1fnqkpikcyeg30f00f0njv.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Molier">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">iOS Runtime简单介绍，以及不同类的Method Swizzling</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-24T12:18:50+08:00">2018-01-24</time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2020-05-15T16:44:23+08:00">2020-05-15</time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/iOS开发/" itemprop="url" rel="index"><span itemprop="name">iOS开发</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <script src="/assets/js/APlayer.min.js"> </script><h5 id="Runtime介绍："><a href="#Runtime介绍：" class="headerlink" title="Runtime介绍："></a>Runtime介绍：</h5><p> runtime顾名思义就是运行时，其实我们的App从你按下command+R开始一直到App运行起来经历了大致两个阶段，1：编译时，2：运行时。还记得一道很经典的面试题<br><img src="https://wx3.sinaimg.cn/large/006tNc79gy1fo6kbsn9yxj30kk03et8z.jpg" alt=""></p>
+<p>这里给大家解释下：首先， * testObject 是告诉编译器，testObject是一个指向某个Objective-C对象的指针。因为不管指向的是什么类型的对象，<br><a id="more"></a><br>一个指针所占的内存空间都是固定的，所以这里声明成任何类型的对象，最终生成的可执行代码都是没有区别的。这里限定了NSString只不过是告诉编译器，请把testObject当做一个NSString来检查，如果后面调用了非NSString的方法，会产生警告。接着，你创建了一个NSData对象，然后把这个对象所在的内存地址保存在testObject里。那么运行时(从这段代码执行开始，到程序结束)，testObject指向的内存空间就是一个NSData对象。你可以把testObject当做一个NSData对象来用。 所以编译时是NSString，运行时是NSData。<br>runtime是什么：<br>在runtime中，所有的类在OC中都会被定义成一个结构体，像这样<br>类在runtime中的表示<br>struct objc_class {<br>    Class isa;//指针，顾名思义，表示是一个什么，  //实例的isa指向类对象，类对象的isa指向元类<br><figure class="highlight cs"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">if</span> !__OBJC2__</span></span><br><span class="line">        Class super_class;  <span class="comment">//指向父类</span></span><br><span class="line">        <span class="keyword">const</span> <span class="keyword">char</span> *name;  <span class="comment">//类名</span></span><br><span class="line">        <span class="keyword">long</span> version;     <span class="comment">//类的版本信息，默认初始化为 0。我们可以在运行期对其进行修改（class_setVersion）或获取（class_getVersion）。</span></span><br><span class="line">        <span class="keyword">long</span> info;   <span class="comment">/*供运行期使用的一些位标识。有如下一些位掩码：</span></span><br><span class="line"><span class="comment">                        CLS_CLASS (0x1L) 表示该类为普通 class ，其中包含实例方法和变量；</span></span><br><span class="line"><span class="comment">                      CLS_META (0x2L) 表示该类为 metaclass，其中包含类方法；</span></span><br><span class="line"><span class="comment">                      CLS_INITIALIZED (0x4L) 表示该类已经被运行期初始化了，这个标识位只被 objc_addClass 所设置；</span></span><br><span class="line"><span class="comment">                      CLS_POSING (0x8L) 表示该类被 pose 成其他的类；（poseclass 在ObjC 2.0中被废弃了）；</span></span><br><span class="line"><span class="comment">                      CLS_MAPPED (0x10L) 为ObjC运行期所使用</span></span><br><span class="line"><span class="comment">                      CLS_FLUSH_CACHE (0x20L) 为ObjC运行期所使用</span></span><br><span class="line"><span class="comment">                      CLS_GROW_CACHE (0x40L) 为ObjC运行期所使用</span></span><br><span class="line"><span class="comment">                      CLS_NEED_BIND (0x80L) 为ObjC运行期所使用</span></span><br><span class="line"><span class="comment">                      CLS_METHOD_ARRAY (0x100L) 该标志位指示 methodlists 是指向一个 objc_method_list 还是一个包含 objc_method_list 指针的数组；*/</span></span><br><span class="line">        <span class="keyword">long</span> instance_size  <span class="comment">//该类的实例变量大小（包括从父类继承下来的实例变量）；</span></span><br><span class="line">        <span class="keyword">struct</span> objc_ivar_list *ivars <span class="comment">//成员变量列表</span></span><br><span class="line">        <span class="keyword">struct</span> objc_method_list **methodLists; <span class="comment">//方法列表</span></span><br><span class="line">        <span class="keyword">struct</span> objc_cache *cache;<span class="comment">//缓存   一种优化，调用过的方法存入缓存列表，下次调用先找缓存</span></span><br><span class="line">        <span class="keyword">struct</span> objc_protocol_list *protocols <span class="comment">//协议列表</span></span><br><span class="line">        <span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">&#125; OBJC2_UNAVAILABLE;</span><br></pre></td></tr></table></figure></p>
+<p>相关的定义<br>/// 描述类中的一个方法<br>typedef struct objc_method *Method;</p>
+<p>/// 实例变量<br>typedef struct objc_ivar *Ivar;</p>
+<p>/// 类别Category<br>typedef struct objc_category *Category;</p>
+<p>/// 类中声明的属性<br>typedef struct objc_property *objc_property_t;</p>
+<p>ObjC 为每个类的定义生成两个 objc_class ，一个即普通的 class，另一个即 metaclass。我们可以在运行期创建这两个 objc_class 数据结构，然后使用 objc_addClass 动态地创建新的类定义。</p>
+<h5 id="runtime能干什么："><a href="#runtime能干什么：" class="headerlink" title="runtime能干什么："></a>runtime能干什么：</h5><ul>
+<li>：1：获取一个类中的列表比如方法列表、属性列表、协议列表、成员变量列表像如下这样 其中获取到的属性、方法都是可以获取public和private的。</li>
+</ul>
+<figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line"><span class="keyword">unsigned</span> <span class="keyword">int</span> count;</span><br><span class="line">    Class clas = [<span class="built_in">WKWebViewController</span> <span class="keyword">class</span>]; <span class="comment">//是我自己的类，之所以不用系统的类是因为系统的类方法属性太多了</span></span><br><span class="line"></span><br><span class="line">    objc_property_t * propertyList = class_copyPropertyList(clas, &amp;count);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count; i++) &#123;</span><br><span class="line">        <span class="keyword">const</span> <span class="keyword">char</span> *propertyName = property_getName(propertyList[i]);</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"  %@  属性(包括私有) --------&gt;&gt;&gt;&gt;&gt;    %@"</span>,clas,[<span class="built_in">NSString</span> stringWithUTF8String:propertyName]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"-------------------------------------------------------------------------------------------------------------- "</span>);</span><br><span class="line"></span><br><span class="line">    Method * methodList = class_copyMethodList(clas, &amp;count);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count; i++) &#123;</span><br><span class="line">        Method methodName = methodList[i];</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"  %@ 方法(包括私有)  --------&gt;&gt;&gt;&gt;&gt;    %@"</span>,clas,<span class="built_in">NSStringFromSelector</span>(method_getName(methodName)));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"-------------------------------------------------------------------------------------------------------------- "</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    Ivar *ivarList = class_copyIvarList(clas, &amp;count);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i&lt;count; i++) &#123;</span><br><span class="line">        Ivar myIvar = ivarList[i];</span><br><span class="line">        <span class="keyword">const</span> <span class="keyword">char</span> *ivarName = ivar_getName(myIvar);</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"%@ 成员变量(包括私有) --------&gt;&gt;&gt;&gt;&gt; %@"</span>,clas, [<span class="built_in">NSString</span> stringWithUTF8String:ivarName]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"-------------------------------------------------------------------------------------------------------------- "</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">//获取协议列表</span></span><br><span class="line">    __<span class="keyword">unsafe_unretained</span> Protocol **protocolList = class_copyProtocolList([<span class="keyword">self</span> <span class="keyword">class</span>], &amp;count);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i&lt;count; i++) &#123;</span><br><span class="line">        Protocol *myProtocal = protocolList[i];</span><br><span class="line">        <span class="keyword">const</span> <span class="keyword">char</span> *protocolName = protocol_getName(myProtocal);</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"%@ 协议 --------&gt;&gt;&gt;&gt;&gt; %@"</span>,clas, [<span class="built_in">NSString</span> stringWithUTF8String:protocolName]);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>输出后的结果是<br><img src="https://wx1.sinaimg.cn/large/006tNc79gy1fo6kc7w3zcj30pk0ajdks.jpg" alt="image.png"><br>其中也包括了私有方法。</p>
+<ul>
+<li>2：拦截方法调用<br>有的时候我们用一个类或者一个实例变量去调用一个方法，由于操作失误或者是其他原因，导致这个所被调用的方法并不存在，报出这样的错误，然后闪退！<br><img src="https://wx1.sinaimg.cn/large/006tNc79gy1fo6kcfrky6j30tr0120sy.jpg" alt="image.png"></li>
+</ul>
+<p>这个时候如果我们想避免这些崩溃，我们就需要在运行时对其做一些手脚。iOS中方法调用的流程：其实调用方法就是发送消息，所有调用方法的代码例如   [obj aaa]  在运行时runtime会将这段代码转换为objc_msgSend(obj, [@selector]);（本质就是发送消息）然后obj会通过其中isa指针去该类的缓存中(cache)查找对应函数的Method, 如果没有找到，再去该类的方法列表（methodList）中查找，如果没有找到再去该类的父类找，如果找到了，就先将方法添加到缓存中，以便下次查找，然后通过method中的指针定位到指定方法执行。如果一直没有找到，便会走完如下四个方法之后崩溃。</p>
+<figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    如果调用的是不存在的实例方法则会在奔溃前进入该方法，防止崩溃可以在此处做处理</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">+(<span class="built_in">BOOL</span>)resolveInstanceMethod:(SEL)sel &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">YES</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> 如果调用的是不存在的类方法则会在奔溃前进入该方法，防止崩溃可以在此处做处理</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">+(<span class="built_in">BOOL</span>)resolveClassMethod:(SEL)sel &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">YES</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> 这个方法会把你所调用的不存在的方法重定向到一个声明了该方法的类中，只需要你返回一个有该方法的</span></span><br><span class="line"><span class="comment"> 类就可以，如果你重定向的这个类仍然不具有该方法那么会继续崩溃</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">-(<span class="keyword">id</span>)forwardingTargetForSelector:(SEL)aSelector &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> 将你不存在的方法打包成NSInvocation对象，做完你自己的处理之后</span></span><br><span class="line"><span class="comment"> 调用invokeWithTarget让某个target来处理该方法</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">-(<span class="keyword">void</span>)forwardInvocation:(<span class="built_in">NSInvocation</span> *)anInvocation &#123;</span><br><span class="line">    [anInvocation invokeWithTarget:<span class="keyword">self</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>3：动态添加方法<br>因为我们调用了一个不存在的方法导致崩溃，那么我们在判断出不存在后就动态添加上一个方法吧 这样不就不会蹦了吗？我们先写一个方法用来给我们做出提示</li>
+</ul>
+<figure class="highlight erlang"><table><tr><td class="code"><pre><span class="line">- <span class="params">(void)</span> errorMethod &#123;</span><br><span class="line">    NSLog<span class="params">(@<span class="string">"no method!!!!!!!"</span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果调用了没有的方法，那么就把这个方法添加进去，然后把被调用的方法的指针指向这个error1：，那么一旦调用了没有的方法就会走这个。我们来看代码</p>
+<figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line">+(<span class="built_in">BOOL</span>)resolveInstanceMethod:(SEL)sel &#123;</span><br><span class="line">    Method errorMethod =  class_getInstanceMethod([<span class="keyword">self</span> <span class="keyword">class</span>], <span class="keyword">@selector</span>(errorMethod));</span><br><span class="line">    <span class="keyword">if</span> ([<span class="built_in">NSStringFromSelector</span>(sel) isEqualToString:<span class="string">@"testMethod"</span>]) &#123;</span><br><span class="line">        <span class="built_in">BOOL</span> isAdd =  class_addMethod([<span class="keyword">self</span> <span class="keyword">class</span>], sel, method_getImplementation(errorMethod), method_getTypeEncoding(errorMethod));</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"tinajia  = %d"</span>,isAdd);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//Do something</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">YES</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>主要用到</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    添加方法</span></span><br><span class="line"><span class="comment">     <span class="doctag">@param</span> class] 在哪个类里添加</span></span><br><span class="line"><span class="comment">     <span class="doctag">@param</span> sel 添加的方法的名字</span></span><br><span class="line"><span class="comment">     <span class="doctag">@param</span> errorMethod 添加的方法的实现IMP指</span></span><br><span class="line"><span class="comment">     <span class="doctag">@param</span> types 方法的标示符</span></span><br><span class="line"><span class="comment">     <span class="doctag">@return</span> 是否添加成功</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">BOOL isAdd =  class_addMethod([self <span class="class"><span class="keyword">class</span>], <span class="type">sel</span>, <span class="type">method_getImplementation</span></span>(errorMethod), method_getTypeEncoding(errorMethod));</span><br></pre></td></tr></table></figure>
+<p>然后运行下：</p>
+<figure class="highlight inform7"><table><tr><td class="code"><pre><span class="line">WKWebViewController * vc= <span class="comment">[<span class="comment">[WKWebViewController alloc]</span> init]</span>;</span><br><span class="line"><span class="comment">[vc performSelector:@selector(testMethod)]</span>;</span><br></pre></td></tr></table></figure>
+<p>我调用了并不存在的testMethod方法并没有崩溃并且方法已经成功添加了</p>
+<p><img src="https://wx3.sinaimg.cn/large/006tNc79gy1fo6kexyuzgj30f801mwel.jpg" alt="image.png"></p>
+<ul>
+<li><p>4：动态交换方法（也叫iOS黑魔法，慎用）<br>没什么好例子，用一个网上说的例子(引用别人的东西，懒得复制了，就截了图)</p>
+<p><img src="https://wx4.sinaimg.cn/large/006tNc79gy1fo6kg3i5z6j30hv0fj0z9.jpg" alt=""></p>
+<p>其实本质即使SEL和IMP的交换，原理是这样的：在iOS中每一个类中都有一个叫dispatch table的东西，里面存放在SEL 和他所对应的IMP指针，之前也说过方法调用就是通过sel找IMP指针然后指针定位调用方法。方法交换就是对这个dispatch table进行操作。让A的SEL去对应B的IMP，B的SEL对应A的IMP，如图</p>
+<p><img src="https://wx3.sinaimg.cn/large/006tNc79gy1fo6kgrq52oj30f80betcz.jpg" alt=""></p>
+<p>这样就达到方法交换的目的，下面看代码：</p>
+</li>
+</ul>
+<figure class="highlight monkey"><table><tr><td class="code"><pre><span class="line">+ (void)changeMethod &#123;</span><br><span class="line">    //  如果是类方法 要使用 !</span><br><span class="line">    //  如果是系统的集合类的属性要用元类 比如 __NSSetM = NSMutableSet</span><br><span class="line">    //  <span class="class"><span class="keyword">Class</span>  <span class="title">class</span> = <span class="title">NSClassFromString</span>(@"<span class="title">__NSSetM</span>");</span></span><br><span class="line">    //  <span class="class"><span class="keyword">Class</span> <span class="title">metaClass</span> = <span class="title">objc_getMetaClass</span>([<span class="title">NSStringFromClass</span>(<span class="title">class</span>) <span class="title">UTF8String</span>]);</span></span><br><span class="line">    <span class="class"><span class="keyword">Class</span> <span class="title">systemClass</span> = <span class="title">NSClassFromString</span>(<span class="title">__NSSetM</span>);</span></span><br><span class="line"></span><br><span class="line">    SEL sel_System = NSSelectorFromString(addObject:);</span><br><span class="line">    SEL sel_Custom = @selector(swizzle_addObject:);</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">Method</span> <span class="title">method_System</span> =</span> class_getInstanceMethod(systemClass, sel_System);</span><br><span class="line">    <span class="function"><span class="keyword">Method</span> <span class="title">method_Custom</span> =</span> class_getInstanceMethod([<span class="built_in">self</span> <span class="class"><span class="keyword">class</span>], <span class="title">sel_Custom</span>);</span></span><br><span class="line"></span><br><span class="line">    IMP imp_System = method_getImplementation(method_System);</span><br><span class="line">    IMP imp_Custom = method_getImplementation(method_Custom);</span><br><span class="line"></span><br><span class="line">    method_exchangeImplementations(method_System, method_Custom);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)swizzle_addObject:(id) obj &#123;</span><br><span class="line">    <span class="keyword">if</span> (obj) &#123;</span><br><span class="line">        [<span class="built_in">self</span> swizzle_addObject:obj];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>主要代码  method_exchangeImplementations(method1, method2); 这两个参数很简单，就是两个需要交换的方法。<br>最后我调用了m1但是实际上走了m2。</p>
+<h5 id="动态交换方法的原理以及交换过程中指针的变化"><a href="#动态交换方法的原理以及交换过程中指针的变化" class="headerlink" title="动态交换方法的原理以及交换过程中指针的变化"></a>动态交换方法的原理以及交换过程中指针的变化</h5><p>在通常的方法交换中我们通常有两种情景，一种是我会针对被交换的类建一个category，然后hook的方法会写在category中。另一种是自己创建一个Tool类里面放些常用的工具方法其中包含了方法交换。可能大家普遍选择第一种方法，但是如果你需要hook的类非常多的(我实际项目中就遇到这样的问题)那你就需要针对不同的类创建category，就会导致文件过多，且每一个文件中只有一个hook方法，这样一来左侧一堆文件，所以我用了第二种方法，但是在使用过程中出现一个问题，先看下我的代码结构</p>
+<p><img src="https://wx3.sinaimg.cn/large/006tNc79gy1fo6khw8c97j30740ag74v.jpg" alt="image.png"></p>
+<p>我要hook的是ViewController中的viewDidLoad方法，我建立了两个类一个是ViewController的category，另一个是Tool类，为了一会区别演示不同类hook的不同(两个类中hook的代码完全一样)</p>
+<ul>
+<li>ViewController中将要被替换的系统方法</li>
+</ul>
+<p><img src="https://wx3.sinaimg.cn/large/006tNc79gy1fo6kir8y63j309a02rglq.jpg" alt="被替换的方法(系统方法)"></p>
+<ul>
+<li>Category中将要用来替换的自定义方法</li>
+</ul>
+<p><img src="https://wx1.sinaimg.cn/large/006tNc79gy1fo6kj5dcykj308z02lwep.jpg" alt="用来替换的方法(自定义方法)"></p>
+<ul>
+<li>然后在ViewController中的load中做方法替换</li>
+</ul>
+<p><img src="https://wx1.sinaimg.cn/large/006tNc79gy1fo6kjlzvdqj30f90b43zw.jpg" alt="进行方法替换"></p>
+<p>运行一下的输出结果想必大家已经猜到了先执行custom再执行system，这是通常情况下大家的做法。<br><img src="https://wx1.sinaimg.cn/large/006tNc79gy1fo6kjxsheej30d701h3yl.jpg" alt="结果"></p>
+<p>下面再来看下如果我将替换方法写在不同类中会怎样，调用Tool中的交换方法</p>
+<p><img src="https://wx1.sinaimg.cn/large/006tNc79gy1fo6kka2s8uj30dx0anwfp.jpg" alt="执行Tool中的交换方法"></p>
+<p>然后直接看结果了，因为代码都是一模一样的我直接复制过去的</p>
+<p><img src="https://wx3.sinaimg.cn/large/006tNc79gy1fo6kliitupj30yd08w422.jpg" alt="结果"></p>
+<p>发生了crash，原因是ViewController中没有swizzel_viewDidLoad_custom这个方法，为什么不同类的交换会出现这种问题，我们用个图来说明下</p>
+<p><img src="https://wx3.sinaimg.cn/large/006tNc79gy1fo6km0wogkj30yg0pz43q.jpg" alt="image.png"></p>
+<p>解决的办法是我们在交换方法之前要先像其中添加方法，也就是说把customMethod添加到SystemClass中，但是注意要把customMethod的实现指向syetemMethod的实现。这样一来就可以达到SystemClass调用customMethod却执行systemMethod的代码的效果，实现以上要求我们需要在交换之前执行这个方法。</p>
+<figure class="highlight lisp"><table><tr><td class="code"><pre><span class="line">class_addMethod(<span class="name">systemClass</span>, sel_Custom, imp_System, method_getTypeEncoding(<span class="name">method_System</span>))</span><br></pre></td></tr></table></figure>
+<p>其中第一个参数是需要往哪个类添加；第二个参数是要添加的方法的方法名；第三个参数是所添加的方法的方法实现，第四个是方法的标识符。经过就该之后我们的代码是这样</p>
+<figure class="highlight asciidoc"><table><tr><td class="code"><pre><span class="line">.</span><br><span class="line">.</span><br><span class="line">之前的都一样就省略</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">if (class<span class="emphasis">_addMethod(systemClass, sel_</span>Custom, imp<span class="emphasis">_System, method_</span>getTypeEncoding(method<span class="emphasis">_System))) &#123;</span></span><br><span class="line"><span class="emphasis">        class_</span>replaceMethod(systemClass, sel<span class="emphasis">_System, imp_</span>Custom, method<span class="emphasis">_getTypeEncoding(method_</span>System));</span><br><span class="line"><span class="code">    &#125; else &#123;</span></span><br><span class="line"><span class="code">        method_exchangeImplementations(method_System, method_Custom);</span></span><br><span class="line"><span class="code">    &#125;</span></span><br></pre></td></tr></table></figure>
+<p>我们来看下执行完add操作之后此时的方法和类的对应关系(红色的为add的修改)</p>
+<p><img src="https://wx4.sinaimg.cn/large/006tNc79gy1fo6kmhkzidj30yg0g378f.jpg" alt="关系"></p>
+<p>因为SystemClass中本身不包含customMethod所以add一定是成功的，也就是说会进入判断执行replace方法。</p>
+<figure class="highlight lisp"><table><tr><td class="code"><pre><span class="line">class_replaceMethod(<span class="name">systemClass</span>, sel_System, imp_Custom, method_getTypeEncoding(<span class="name">method_System</span>))<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>第一个参数：需要修改的方法的所在的类；第二个参数：需要替换其实现的方法名；第三个参数：需要把哪个实现替换给他；第四个参数：方法标识符。此时看下我们做完replace之后的类与方法名以及他们实现的关系(红色的为replace的修改)。</p>
+<p><img src="https://wx1.sinaimg.cn/large/006tNc79gy1fo6kn9m5btj30yg0ifgqa.jpg" alt="关系"></p>
+<p>此时大家已经看出来了，虽然没有执行exchange方法，但是我已经达到了方法交换的目的。系统执行systemMethod时候会走customMethod的实现但是因为在customMethod方法中我会递归执行[self customMethod]，所以又会走到systemMethod的实现，因为之前进行了方法添加，所以此时A类中有了customMethod方法，不会再发生之前的crash。达到一个不同类进行Method Swizzling的目的。</p>
+<h5 id="综上来看一个完整严谨的MethodSwizzling应该在交换前先add，并且add方法的参数不能错"><a href="#综上来看一个完整严谨的MethodSwizzling应该在交换前先add，并且add方法的参数不能错" class="headerlink" title="综上来看一个完整严谨的MethodSwizzling应该在交换前先add，并且add方法的参数不能错"></a>综上来看一个完整严谨的MethodSwizzling应该在交换前先add，并且add方法的参数不能错</h5><figure class="highlight armasm"><table><tr><td class="code"><pre><span class="line">+ (void)changeMethod &#123;</span><br><span class="line"></span><br><span class="line">    Class systemClass = NSClassFromString(<span class="comment">@"你的类");</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">SEL </span><span class="keyword">sel_System </span>= <span class="comment">@selector(系统方法);</span></span><br><span class="line">    <span class="keyword">SEL </span><span class="keyword">sel_Custom </span>= <span class="comment">@selector(你自己的方法);</span></span><br><span class="line"></span><br><span class="line">    Method method_System = class_getInstanceMethod(systemClass, <span class="keyword">sel_System);</span></span><br><span class="line"><span class="keyword"> </span>   Method method_Custom = class_getInstanceMethod([<span class="keyword">self </span>class], <span class="keyword">sel_Custom);</span></span><br><span class="line"><span class="keyword"></span></span><br><span class="line"><span class="keyword"> </span>   IMP imp_System = method_getImplementation(method_System)<span class="comment">;</span></span><br><span class="line">    IMP imp_Custom = method_getImplementation(method_Custom)<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">if</span> (class_addMethod(systemClass, <span class="keyword">sel_Custom, </span>imp_System, method_getTypeEncoding(method_System))) &#123;</span><br><span class="line">        class_replaceMethod(systemClass, <span class="keyword">sel_System, </span>imp_Custom, method_getTypeEncoding(method_System))<span class="comment">;</span></span><br><span class="line">    &#125; <span class="meta">else</span> &#123;</span><br><span class="line">        method_exchangeImplementations(method_System, method_Custom)<span class="comment">;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="以上代码无论是写在工具类中还是category中都是没有问题的。"><a href="#以上代码无论是写在工具类中还是category中都是没有问题的。" class="headerlink" title="以上代码无论是写在工具类中还是category中都是没有问题的。"></a>以上代码无论是写在工具类中还是category中都是没有问题的。</h5>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Molier
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://oliverqueen.cn/2018/01/24/iOS-Runtime简单介绍，以及不同类的Method-Swizzling/" title="iOS Runtime简单介绍，以及不同类的Method Swizzling">https://oliverqueen.cn/2018/01/24/iOS-Runtime简单介绍，以及不同类的Method-Swizzling/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/底层/" rel="tag"># 底层</a>
+          
+            <a href="/tags/runtime/" rel="tag"># runtime</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/24/iOS端自动内存泄漏检测工具/" rel="next" title="iOS端自动内存泄漏检测工具">
+                <i class="fa fa-chevron-left"></i> iOS端自动内存泄漏检测工具
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/24/NSURLProtocol对WKWebView的处理/" rel="prev" title="NSURLProtocol对WKWebView的处理">
+                NSURLProtocol对WKWebView的处理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://ws4.sinaimg.cn/large/006tKfTcgy1fnqkpikcyeg30f00f0njv.gif"
+                alt="Molier" />
+            
+              <p class="site-author-name" itemprop="name">Molier</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">29</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    <span class="site-state-item-count">48</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:371099694@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/zhangninghao?refer_flag=1005055010_" target="_blank" title="新浪微博">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>新浪微博</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/fd21f41fb522" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-superpowers"></i>简书</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/586c624bac502e12d631545f" target="_blank" title="掘金">
+                      
+                        <i class="fa fa-fw fa-juejin"></i>掘金</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Friends
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://reuixiy.github.io/" rel="external nofollow" title="reuixiy" target="_blank">reuixiy</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://billchan.me/" rel="external nofollow" title="CMB" target="_blank">CMB</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://mashirosorata.vicp.io/" rel="external nofollow" title="Mashiro_Sorata" target="_blank">Mashiro_Sorata</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.saitjr.com/" rel="external nofollow" title="saitjr <br>(iOS大神，持续集成，几乎全栈)" target="_blank">saitjr <br>(iOS大神，持续集成，几乎全栈)</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+         
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#Runtime介绍："><span class="nav-text">Runtime介绍：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#runtime能干什么："><span class="nav-text">runtime能干什么：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#动态交换方法的原理以及交换过程中指针的变化"><span class="nav-text">动态交换方法的原理以及交换过程中指针的变化</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#综上来看一个完整严谨的MethodSwizzling应该在交换前先add，并且add方法的参数不能错"><span class="nav-text">综上来看一个完整严谨的MethodSwizzling应该在交换前先add，并且add方法的参数不能错</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#以上代码无论是写在工具类中还是category中都是没有问题的。"><span class="nav-text">以上代码无论是写在工具类中还是category中都是没有问题的。</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Molier</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">茉莉儿的小站</div>
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.1"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<script type="text/javascript">
+const gitalk = new Gitalk({
+clientID: '991238e983176ecf9dbd',
+clientSecret: '299ec7e920c736040adf969a0b0a4148ade5953f',
+repo: 'GitMent',
+owner: 'MolierQueen',
+admin: 'MolierQueen'.split(','),
+pagerDirection: 'first',
+id: md5(window.location.pathname),
+distractionFreeMode: false
+})
+gitalk.render('gitalk-container')
+</script>
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,Facebook,Twitter,Linkedin";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+  
+<!-- <script type="text/javascript"
+color="255,255,255" opacity='1' zIndex="-2" count="100" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script> -->
+
+
+</body>
+</html>

@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-mac-osx.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="KAj10O4WT-YoszaSxxDUTKP4VzNZxQwduVLhOojJJ7U" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.1" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.1" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.0.1',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+  
+  <meta name="keywords" content="网络,底层,httpdns," />
+
+
+<meta name="description" content="科普片1、DNS劫持的危害  不知道大家有没有发现这样一个现象，在打开一些网页的时候会弹出一些与所浏览网页不相关的内容比如这样奇(se)怪(qing)的东西  或者这样">
+<meta name="keywords" content="网络,底层,httpdns">
+<meta property="og:type" content="article">
+<meta property="og:title" content="可能是最全的iOS端HttpDns集成方案">
+<meta property="og:url" content="https://oliverqueen.cn/2018/01/24/可能是最全的iOS端HttpDns集成方案/index.html">
+<meta property="og:site_name" content="Molier">
+<meta property="og:description" content="科普片1、DNS劫持的危害  不知道大家有没有发现这样一个现象，在打开一些网页的时候会弹出一些与所浏览网页不相关的内容比如这样奇(se)怪(qing)的东西  或者这样">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://wx2.sinaimg.cn/large/006tNc79gy1fo6jm5b190j30h60ugqkg.jpg">
+<meta property="og:image" content="https://wx4.sinaimg.cn/large/006tNc79gy1fo6jmr1afuj30ww0ue4qp.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/large/006tNc79gy1fo6jnbe2zhj30sa0i8dwv.jpg">
+<meta property="og:image" content="https://wx2.sinaimg.cn/large/006tNc79gy1fo6jnt2uw9j31kw0icava.jpg">
+<meta property="og:image" content="https://wx1.sinaimg.cn/large/006tNc79gy1fo6jtpp3z0j30ze1by122.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/large/006tNc79gy1fo6juzsqdqj31kw0bbn5v.jpg">
+<meta property="og:updated_time" content="2020-05-15T08:44:23.864Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="可能是最全的iOS端HttpDns集成方案">
+<meta name="twitter:description" content="科普片1、DNS劫持的危害  不知道大家有没有发现这样一个现象，在打开一些网页的时候会弹出一些与所浏览网页不相关的内容比如这样奇(se)怪(qing)的东西  或者这样">
+<meta name="twitter:image" content="https://wx2.sinaimg.cn/large/006tNc79gy1fo6jm5b190j30h60ugqkg.jpg">
+
+
+
+
+
+
+  <link rel="canonical" href="https://oliverqueen.cn/2018/01/24/可能是最全的iOS端HttpDns集成方案/"/>
+
+
+  <title>可能是最全的iOS端HttpDns集成方案 | Molier</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Molier</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">Tomorrow is another day</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://oliverqueen.cn/2018/01/24/可能是最全的iOS端HttpDns集成方案/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Molier">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ws4.sinaimg.cn/large/006tKfTcgy1fnqkpikcyeg30f00f0njv.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Molier">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">可能是最全的iOS端HttpDns集成方案</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-24T13:54:36+08:00">2018-01-24</time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2020-05-15T16:44:23+08:00">2020-05-15</time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/iOS开发/" itemprop="url" rel="index"><span itemprop="name">iOS开发</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <script src="/assets/js/APlayer.min.js"> </script><h1 id="科普片"><a href="#科普片" class="headerlink" title="科普片"></a>科普片</h1><h5 id="1、DNS劫持的危害"><a href="#1、DNS劫持的危害" class="headerlink" title="1、DNS劫持的危害"></a>1、DNS劫持的危害</h5><p>  不知道大家有没有发现这样一个现象，在打开一些网页的时候会弹出一些与所浏览网页不相关的内容比如这样奇(se)怪(qing)的东西</p>
+<p><img src="https://wx2.sinaimg.cn/large/006tNc79gy1fo6jm5b190j30h60ugqkg.jpg" alt="图一"></p>
+<p>或者这样<br><a id="more"></a></p>
+<p><img src="https://wx4.sinaimg.cn/large/006tNc79gy1fo6jmr1afuj30ww0ue4qp.jpg" alt="图二">，</p>
+<p>其实造成这样的原因就是DNS劫持，在我们正常浏览的网页链接里面被恶意插入一些奇怪的东西。不止是这些，DNS劫持还会对我们的个人信息安全造成很大的伤害，钓鱼网站之类的，也许我们所访问的网站根本不是我们需要的网站，或者根本打不开网页，有时还会消耗我们过多的流量。</p>
+<h5 id="2、什么是DNS解析"><a href="#2、什么是DNS解析" class="headerlink" title="2、什么是DNS解析"></a>2、什么是DNS解析</h5><p>  现在假如我们访问一个网站www.baidu.com从按下回车到百度页面显示到我们的电脑上会经历如下几个步骤</p>
+<ul>
+<li>1：计算机会向我们的运营商(移动、电信、联通等)发出打开www.baidu.com的请求。</li>
+<li>2：运营商收到请求后会到自己的DNS服务器中找www.baidu.com这个域名所对应的服务器的IP地址(也就是百度的服务器的IP地址)，这里比如是180.149.132.47。</li>
+<li>3：运营商用第二步得到的IP地址去找到百度的服务器请求得到数据后返回给我们。</li>
+</ul>
+<p>其中第二步就是我们所说的DNS解析过程，域名和IP地址的关系其实就是我们的身份证号和姓名的关系，都是来标记一个人或者是一个网站的，只是IP地址\身份证号只是一串没有意义的数字，辨识度低，又不好记，所以就会在IP上加上一个域名以便区分，或是做的更加个性化，但是如果真的要来准确的区分还是要靠身份证号码或者是IP的，所以DNS解析就应运而生了。</p>
+<h5 id="3：什么是DNS劫持"><a href="#3：什么是DNS劫持" class="headerlink" title="3：什么是DNS劫持"></a>3：什么是DNS劫持</h5><p>DNS劫持，是指在DNS解析过程中拦截域名解析的请求，然后做一些自己的处理，比如返回假的IP地址或者什么都不做使请求失去响应，其效果就是对特定的网络不能反应或访问的是假网址。根本原因就是以下两点：</p>
+<ul>
+<li>1：恶意攻击，拦截运营商的解析过程，把自己的非法东西嵌入其中。</li>
+<li>2：运营商为了利益或者一些其他的因素，允许一些第三方在自己的链接里打打广告之类的。</li>
+</ul>
+<h5 id="4：防止DNS劫持"><a href="#4：防止DNS劫持" class="headerlink" title="4：防止DNS劫持"></a>4：防止DNS劫持</h5><p>  了解了DNS劫持的相关资料后我们就知道了，防止NDS劫持就要从第二步入手，因为DNS解析过程是运营商来操作的，我们不能去干涉他们，不然我们也就成了劫持者了，所以我们要做的就是在我们请求之前对我们的请求链接做一些修改，将我们原本的请求链接www.baidu.com 修改为180.149.132.47，然后请求出去，这样的话就运营商在拿到我们的请求后发现我们直接用的就是IP地址就会直接给我们放行，而不会去走他自己DNS解析了，也就是说我们把运营商要做的事情自己先做好了。不走他的DNS解析也就不会存在DNS被劫持的问题，从根本是解决了。</p>
+<h1 id="技术篇"><a href="#技术篇" class="headerlink" title="技术篇"></a>技术篇</h1><h5 id="5：项目中的实际操作"><a href="#5：项目中的实际操作" class="headerlink" title="5：项目中的实际操作"></a>5：项目中的实际操作</h5><h6 id="5-1：DNSPOD相关"><a href="#5-1：DNSPOD相关" class="headerlink" title="5.1：DNSPOD相关"></a>5.1：DNSPOD相关</h6><p>  我们知道要要把项目中请求的接口替换成成IP其实很简单，URL是字符串，域名替换IP，无非就是一个字符串替换而已，的确这块其实没有什么技术含量，而且现在像阿里云(没开源)，七牛云(开源)，等一些比较大的平台在这方面也都有了比较成熟的解决方案，一个SDK，传个普通的URL进去就会返回一个域名被替换成IP的URL出来，也比较好用，这里要说一下IP地址的来源，如何拿到一个域名所对应的IP呢？这里就是需要用到另一个服务——HTTPDNS，国内比较有名的就是DNSPOD，包括阿里，七牛等也是使用他们的DNS服务来解析，就是这个</p>
+<p><img src="https://wx3.sinaimg.cn/large/006tNc79gy1fo6jnbe2zhj30sa0i8dwv.jpg" alt="DNSPOD logo"></p>
+<p><img src="https://wx2.sinaimg.cn/large/006tNc79gy1fo6jnt2uw9j31kw0icava.jpg" alt="简介"></p>
+<p>他会给我们提供一个接口，我们使用HTTP请求的方式去请求这个接口，参数带上我们的域名，他们就会把域名对应的IP列表返回回来。类似这样：<br><figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line"><span class="comment">///这个请求URL的结构是固定的119.29.29.29是DNSPOD固定的服务器地址，ttl参数的意思是返回结果是否带ttl是个BOOL，dn就是我们需要解析的域名，id就是我们在dnspod上注册时候他给我们的一个KEY</span></span><br><span class="line"><span class="built_in">NSString</span> *url = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"http://119.29.29.29/d?ttl=1&amp;dn=www.baidu.com&amp;id=KEY"</span>];</span><br><span class="line"><span class="built_in">NSMutableURLRequest</span> * request = [<span class="built_in">NSMutableURLRequest</span> requestWithURL:[<span class="built_in">NSURL</span> URLWithString:url] cachePolicy:<span class="built_in">NSURLRequestUseProtocolCachePolicy</span> timeoutInterval:<span class="number">10</span>];</span><br><span class="line"><span class="built_in">NSData</span> * data = [<span class="built_in">NSURLConnection</span> sendSynchronousRequest:request returningResponse:<span class="literal">nil</span> error:&amp;networkError];</span><br></pre></td></tr></table></figure></p>
+<p>这里使用同步还是异步都是可以的，具体根据你们业务需求。</p>
+<h6 id="5-2：项目中的使用"><a href="#5-2：项目中的使用" class="headerlink" title="5.2：项目中的使用"></a>5.2：项目中的使用</h6><p> <br>其实dnspod最难的部分是接入的部分，因为不同的APP不同的网络环境会导致各种各样的问题，如果你是一个新的项目那么接入难度会大大降低，因为你完全可以自己封装一套网络请求，把DNS解析相关的逻辑都封装到自己的网络请求中，这样你就可以得到APP所有的网络层的控制权，想干什么就干什么，但是如果是在一个已经比较完善的APP中加入DNS防劫持的话那就是比较困难，因为你不能拿到所有网络请求的控制权这篇文章中我主要使用是NSURLProtocol + Runtime hook方式来处理这些东西的，NSURLProtocol属于iOS黑魔法的一种可以拦截任何从APP的 URL Loading System系统中发出的请求，其中包括如下</p>
+<ul>
+<li>File Transfer Protocol (ftp://)</li>
+<li>Hypertext Transfer Protocol (http://)</li>
+<li>Hypertext Transfer Protocol with encryption (https://)</li>
+<li>Local file URLs (file:///)</li>
+<li>Data URLs (data://)</li>
+</ul>
+<p>如果你的请求不在以上列表中就不能进行拦截了，比如WKWebview，AVPlayer(比较特殊，虽然请求也是http/https但是就是不走这套系统，苹果爸爸就是这样~)等，其实对于正常来说光用已经NSURLProtocol足够了。<br>  NSURLProtocol这个类我们不能直接使用，我们需要自己创建一个他的子类然后在我们的子类中操作他们像这样<br>  <figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line"> <span class="comment">// 注册自定义protocol</span></span><br><span class="line">[<span class="built_in">NSURLProtocol</span> registerClass:[CustomURLProtocol <span class="keyword">class</span>]];</span><br><span class="line"> <span class="built_in">NSURLSessionConfiguration</span> *configuration = [<span class="built_in">NSURLSessionConfiguration</span> defaultSessionConfiguration];</span><br><span class="line">configuration.protocolClasses = @[[CustomURLProtocol <span class="keyword">class</span>]];</span><br></pre></td></tr></table></figure></p>
+<p>在这个类中我们可以拦截到请求，然后进行处理。这个类中有四个非常重要的方法<br><figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line">+ (<span class="built_in">BOOL</span>)canInitWithRequest:(<span class="built_in">NSURLRequest</span> *)request;</span><br><span class="line">+ (<span class="built_in">NSURLRequest</span> *)canonicalRequestForRequest:(<span class="built_in">NSURLRequest</span> *)request;</span><br><span class="line">- (<span class="keyword">void</span>)startLoading;</span><br><span class="line"><span class="comment">//对于拦截的请求，NSURLProtocol对象在停止加载时调用该方法</span></span><br><span class="line">- (<span class="keyword">void</span>)stopLoading;</span><br></pre></td></tr></table></figure></p>
+<h6 id="BOOL-canInitWithRequest-NSURLRequest-request"><a href="#BOOL-canInitWithRequest-NSURLRequest-request" class="headerlink" title="+ (BOOL)canInitWithRequest:(NSURLRequest *)request;"></a>+ (BOOL)canInitWithRequest:(NSURLRequest *)request;</h6><p>通过返回值来告诉NSUrlProtocol对进来的请求是否拦截，比如我只拦截HTTP的，或者是某个域名的请求之类</p>
+<h6 id="NSURLRequest-canonicalRequestForRequest-NSURLRequest-request"><a href="#NSURLRequest-canonicalRequestForRequest-NSURLRequest-request" class="headerlink" title="+ (NSURLRequest )canonicalRequestForRequest:(NSURLRequest )request;"></a>+ (NSURLRequest <em>)canonicalRequestForRequest:(NSURLRequest </em>)request;</h6><p>如果上面的方法返回YES那么request会传到这里，这个地方通常不做处理 直接返回request</p>
+<h6 id="void-startLoading"><a href="#void-startLoading" class="headerlink" title="- (void)startLoading;"></a>- (void)startLoading;</h6><p>这个地方就是对我们拦截的请求做一些处理，我们文中所做的IP对域名的替换就在这里进行，处理完之后将请求转发出去，比如这样<br><figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)startLoading &#123;</span><br><span class="line"><span class="comment">///其中customRequest是处理过的请求(域名替换后的)</span></span><br><span class="line">    <span class="built_in">NSURLSession</span> *session = [<span class="built_in">NSURLSession</span> sessionWithConfiguration:[[<span class="built_in">NSURLSessionConfiguration</span> alloc] init] delegate:<span class="keyword">self</span> delegateQueue:<span class="literal">nil</span>];</span><br><span class="line">    <span class="built_in">NSURLSessionDataTask</span> *task = [session dataTaskWithRequest:customRequest];</span><br><span class="line">    [task resume];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>你可以在 - startLoading 中使用任何方法来对协议对象持有的 request 进行转发，包括 NSURLSession、 NSURLConnection 甚至使用 AFNetworking 等网络库，只要你能在回调方法中把数据传回 client，帮助其正确渲染就可以，比如这样：<br><figure class="highlight less"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">-</span> (void)<span class="selector-tag">URLSession</span><span class="selector-pseudo">:(NSURLSession</span> *)<span class="selector-tag">session</span> <span class="selector-tag">dataTask</span><span class="selector-pseudo">:(NSURLSessionDataTask</span> *)<span class="selector-tag">dataTask</span> <span class="selector-tag">didReceiveResponse</span><span class="selector-pseudo">:(NSURLResponse</span> *)<span class="selector-tag">response</span> <span class="selector-tag">completionHandler</span><span class="selector-pseudo">:(void</span> (^)(NSURLSessionResponseDisposition))<span class="selector-tag">completionHandler</span> &#123;</span><br><span class="line">    <span class="selector-attr">[[self client]</span> <span class="selector-tag">URLProtocol</span><span class="selector-pseudo">:self</span> <span class="selector-tag">didReceiveResponse</span><span class="selector-pseudo">:response</span> <span class="selector-tag">cacheStoragePolicy</span><span class="selector-pseudo">:NSURLCacheStorageAllowed</span>];</span><br><span class="line"></span><br><span class="line">    <span class="selector-tag">completionHandler</span>(NSURLSessionResponseAllow);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">-</span> (void)<span class="selector-tag">URLSession</span><span class="selector-pseudo">:(NSURLSession</span> *)<span class="selector-tag">session</span> <span class="selector-tag">dataTask</span><span class="selector-pseudo">:(NSURLSessionDataTask</span> *)<span class="selector-tag">dataTask</span> <span class="selector-tag">didReceiveData</span><span class="selector-pseudo">:(NSData</span> *)<span class="selector-tag">data</span> &#123;</span><br><span class="line">    <span class="selector-attr">[[self client]</span> <span class="selector-tag">URLProtocol</span><span class="selector-pseudo">:self</span> <span class="selector-tag">didLoadData</span><span class="selector-pseudo">:data</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>client在后面会有讲解。</p>
+<h6 id="void-stopLoading"><a href="#void-stopLoading" class="headerlink" title="- (void)stopLoading;"></a>- (void)stopLoading;</h6><p>请求完毕后调用<br>大概的执行流程是这样</p>
+<p><img src="https://wx1.sinaimg.cn/large/006tNc79gy1fo6jtpp3z0j30ze1by122.jpg" alt="流程"></p>
+<p>在NSURLProtocol中有一个贯穿始终的变量<br><figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*!</span></span><br><span class="line"><span class="comment">    @method client</span></span><br><span class="line"><span class="comment">    @abstract Returns the NSURLProtocolClient of the receiver.</span></span><br><span class="line"><span class="comment">    @result The NSURLProtocolClient of the receiver.  </span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nullable</span>, <span class="keyword">readonly</span>, <span class="keyword">retain</span>) <span class="keyword">id</span> &lt;<span class="built_in">NSURLProtocolClient</span>&gt; client;</span><br></pre></td></tr></table></figure></p>
+<p>你可以认为是这个是请求的发送者，打个比方，A想给B发送一个消息，由于距离遥远于是A去了邮局，A把消息内容告诉了邮局，并且A在邮局登记了自己名字方便B有反馈的时候邮局来通知A查收。这个例子中邮局就是NSURLProtocol，A在邮局登记的名字就是client。所有的 client 都实现了 NSURLProtocolClient 协议，协议的作用就是在 HTTP 请求发出以及接受响应时向其它对象传输数据：<br><figure class="highlight erlang"><table><tr><td class="code"><pre><span class="line">@protocol NSURLProtocolClient &lt;NSObject&gt;</span><br><span class="line">...</span><br><span class="line">- <span class="params">(void)</span>URLProtocol:<span class="params">(NSURLProtocol *)</span>protocol didReceiveResponse:<span class="params">(NSURLResponse *)</span>response cacheStoragePolicy:<span class="params">(NSURLCacheStoragePolicy)</span>policy;</span><br><span class="line"></span><br><span class="line">- <span class="params">(void)</span>URLProtocol:<span class="params">(NSURLProtocol *)</span>protocol didLoadData:<span class="params">(NSData *)</span>data;</span><br><span class="line"></span><br><span class="line">- <span class="params">(void)</span>URLProtocolDidFinishLoading:<span class="params">(NSURLProtocol *)</span>protocol;</span><br><span class="line">...</span><br><span class="line">@<span class="keyword">end</span></span><br></pre></td></tr></table></figure></p>
+<p>当然这个协议中还有很多其他的方法，比如 HTTPS 验证、重定向以及响应缓存相关的方法，你需要在合适的时候调用这些代理方法，对信息进行传递。<br>到此正常情况下的DNS的解析过程已经结束，如果你发现按照如上操作之后并没有达到预期效果那么请往下看，(通常情况下完成以上操作 原有的URL的就会变成<a href="http://123.456.789.123/XXX/XXX/XXX的格式。如果发现请求不成功就往下看吧" target="_blank" rel="noopener">http://123.456.789.123/XXX/XXX/XXX的格式。如果发现请求不成功就往下看吧</a>)</p>
+<h5 id="6：遇到的坑点"><a href="#6：遇到的坑点" class="headerlink" title="6：遇到的坑点"></a>6：遇到的坑点</h5><h6 id="6-1：我们知道运营商本来是根据域名来确定一个URL的，我们将域名改为IP之后虽然不用运营商帮我们解析了，但是运营商在收到一串数字的时候也是懵逼状态，我们还是需要将域名传给他们，但是不能用正常的方式传，我们需要把原来的域名加到http请求的Header中的host字段下，根据Http协议的规定，如果在URL中无法找到域名的话就会去Header中找，这样一来我们既把域名告诉了运营商同时也直接制定了IP地址，这个是必须配置的，不然的话是请求不成功的。"><a href="#6-1：我们知道运营商本来是根据域名来确定一个URL的，我们将域名改为IP之后虽然不用运营商帮我们解析了，但是运营商在收到一串数字的时候也是懵逼状态，我们还是需要将域名传给他们，但是不能用正常的方式传，我们需要把原来的域名加到http请求的Header中的host字段下，根据Http协议的规定，如果在URL中无法找到域名的话就会去Header中找，这样一来我们既把域名告诉了运营商同时也直接制定了IP地址，这个是必须配置的，不然的话是请求不成功的。" class="headerlink" title="6.1：我们知道运营商本来是根据域名来确定一个URL的，我们将域名改为IP之后虽然不用运营商帮我们解析了，但是运营商在收到一串数字的时候也是懵逼状态，我们还是需要将域名传给他们，但是不能用正常的方式传，我们需要把原来的域名加到http请求的Header中的host字段下，根据Http协议的规定，如果在URL中无法找到域名的话就会去Header中找，这样一来我们既把域名告诉了运营商同时也直接制定了IP地址，这个是必须配置的，不然的话是请求不成功的。"></a>6.1：我们知道运营商本来是根据域名来确定一个URL的，我们将域名改为IP之后虽然不用运营商帮我们解析了，但是运营商在收到一串数字的时候也是懵逼状态，我们还是需要将域名传给他们，但是不能用正常的方式传，我们需要把原来的域名加到http请求的Header中的host字段下，根据Http协议的规定，如果在URL中无法找到域名的话就会去Header中找，这样一来我们既把域名告诉了运营商同时也直接制定了IP地址，这个是必须配置的，不然的话是请求不成功的。</h6><figure class="highlight pf"><table><tr><td class="code"><pre><span class="line">[mutableRequest <span class="built_in">set</span>Value:<span class="literal">self</span>.request.URL.host <span class="keyword">for</span>HTTPHeaderField:@<span class="string">"HOST"</span>];</span><br></pre></td></tr></table></figure>
+<h6 id="加上Header再去请求就没问题了，不过有些特殊的情况下会需要带上cookie，同样也是加到Header中"><a href="#加上Header再去请求就没问题了，不过有些特殊的情况下会需要带上cookie，同样也是加到Header中" class="headerlink" title="加上Header再去请求就没问题了，不过有些特殊的情况下会需要带上cookie，同样也是加到Header中"></a>加上Header再去请求就没问题了，不过有些特殊的情况下会需要带上cookie，同样也是加到Header中</h6><figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">[mutableRequest <span class="string">setValue:</span>YOUR Cookie <span class="string">forHTTPHeaderField:</span>@<span class="string">"Cookie"</span>];</span><br></pre></td></tr></table></figure>
+<h6 id="6-2：关于AfNetworking的问题，现在大部分网络请求是基于Afnetworking的，这里有一个坑，我们知道我们注册CustomProtocol的时候是这样"><a href="#6-2：关于AfNetworking的问题，现在大部分网络请求是基于Afnetworking的，这里有一个坑，我们知道我们注册CustomProtocol的时候是这样" class="headerlink" title="6.2：关于AfNetworking的问题，现在大部分网络请求是基于Afnetworking的，这里有一个坑，我们知道我们注册CustomProtocol的时候是这样"></a>6.2：关于AfNetworking的问题，现在大部分网络请求是基于Afnetworking的，这里有一个坑，我们知道我们注册CustomProtocol的时候是这样</h6><figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line"> <span class="comment">// 注册自定义protocol</span></span><br><span class="line">[<span class="built_in">NSURLProtocol</span> registerClass:[CustomURLProtocol <span class="keyword">class</span>]];</span><br><span class="line"> <span class="built_in">NSURLSessionConfiguration</span> *configuration = [<span class="built_in">NSURLSessionConfiguration</span> defaultSessionConfiguration];</span><br><span class="line">configuration.protocolClasses = @[[CustomURLProtocol <span class="keyword">class</span>]];</span><br></pre></td></tr></table></figure>
+<h6 id="在系统的configuration加入我们的CustomProtocol，protocolClasses是一个数组里面可以放很多各种不同的CustomProtocol，我们看一下afnetworking的初始化方法。"><a href="#在系统的configuration加入我们的CustomProtocol，protocolClasses是一个数组里面可以放很多各种不同的CustomProtocol，我们看一下afnetworking的初始化方法。" class="headerlink" title="在系统的configuration加入我们的CustomProtocol，protocolClasses是一个数组里面可以放很多各种不同的CustomProtocol，我们看一下afnetworking的初始化方法。"></a>在系统的configuration加入我们的CustomProtocol，protocolClasses是一个数组里面可以放很多各种不同的CustomProtocol，我们看一下afnetworking的初始化方法。</h6><figure class="highlight abnf"><table><tr><td class="code"><pre><span class="line">AFHTTPSessionManager * sessionManager = [AFHTTPSessionManager manager]<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<h6 id="我相信大家通常都会这么来创建，但是这里我要说下manager并不是一个单利，最后都会调到一个方法"><a href="#我相信大家通常都会这么来创建，但是这里我要说下manager并不是一个单利，最后都会调到一个方法" class="headerlink" title="我相信大家通常都会这么来创建，但是这里我要说下manager并不是一个单利，最后都会调到一个方法"></a>我相信大家通常都会这么来创建，但是这里我要说下manager并不是一个单利，最后都会调到一个方法</h6><figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line">- (<span class="keyword">instancetype</span>)initWithSessionConfiguration:(<span class="built_in">NSURLSessionConfiguration</span> *)configuration &#123;</span><br><span class="line">    <span class="keyword">self</span> = [<span class="keyword">super</span> init];</span><br><span class="line">    <span class="keyword">if</span> (!<span class="keyword">self</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!configuration) &#123;</span><br><span class="line">        configuration = [<span class="built_in">NSURLSessionConfiguration</span> defaultSessionConfiguration];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">self</span>.sessionConfiguration = configuration;</span><br><span class="line">    <span class="keyword">self</span>.operationQueue = [[<span class="built_in">NSOperationQueue</span> alloc] init];</span><br><span class="line">    <span class="keyword">self</span>.operationQueue.maxConcurrentOperationCount = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">self</span>.session = [<span class="built_in">NSURLSession</span> sessionWithConfiguration:<span class="keyword">self</span>.sessionConfiguration delegate:<span class="keyword">self</span> delegateQueue:<span class="keyword">self</span>.operationQueue];</span><br><span class="line">    .</span><br><span class="line">    .</span><br><span class="line">    .</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="大家注意第二个判断，如果没有传入configuration的话他会创建一个默认的，这样以至于我们之前在configuration的protocolClasses中注册类全部被这个新的configuration替换掉了，所以无法解析。这里我采取的办法就是runtime-hook，因为hook第三方的代码并不是一个很好的办法，所以我直接hook-NSURLSession的sessionWithConfiguration方法，因为通过观察Afnetworking的源码最终都是走到这里的。Hook之后把自己的configuration换进去，像这样"><a href="#大家注意第二个判断，如果没有传入configuration的话他会创建一个默认的，这样以至于我们之前在configuration的protocolClasses中注册类全部被这个新的configuration替换掉了，所以无法解析。这里我采取的办法就是runtime-hook，因为hook第三方的代码并不是一个很好的办法，所以我直接hook-NSURLSession的sessionWithConfiguration方法，因为通过观察Afnetworking的源码最终都是走到这里的。Hook之后把自己的configuration换进去，像这样" class="headerlink" title="大家注意第二个判断，如果没有传入configuration的话他会创建一个默认的，这样以至于我们之前在configuration的protocolClasses中注册类全部被这个新的configuration替换掉了，所以无法解析。这里我采取的办法就是runtime hook，因为hook第三方的代码并不是一个很好的办法，所以我直接hook NSURLSession的sessionWithConfiguration方法，因为通过观察Afnetworking的源码最终都是走到这里的。Hook之后把自己的configuration换进去，像这样"></a>大家注意第二个判断，如果没有传入configuration的话他会创建一个默认的，这样以至于我们之前在configuration的protocolClasses中注册类全部被这个新的configuration替换掉了，所以无法解析。这里我采取的办法就是runtime hook，因为hook第三方的代码并不是一个很好的办法，所以我直接hook NSURLSession的sessionWithConfiguration方法，因为通过观察Afnetworking的源码最终都是走到这里的。Hook之后把自己的configuration换进去，像这样</h6><figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line">+ (<span class="built_in">NSURLSession</span> *)swizzle_sessionWithConfiguration:(<span class="built_in">NSURLSessionConfiguration</span> *)configuration &#123;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">NSURLSessionConfiguration</span> *newConfiguration = configuration;</span><br><span class="line">    <span class="comment">// 在现有的Configuration中插入我们自定义的protocol</span></span><br><span class="line">    <span class="keyword">if</span> (configuration) &#123;</span><br><span class="line">        <span class="built_in">NSMutableArray</span> *protocolArray = [<span class="built_in">NSMutableArray</span> arrayWithArray:configuration.protocolClasses];</span><br><span class="line">        [protocolArray insertObject:[CustomProtocol <span class="keyword">class</span>] atIndex:<span class="number">0</span>];</span><br><span class="line">        newConfiguration.protocolClasses = protocolArray;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        newConfiguration = [<span class="built_in">NSURLSessionConfiguration</span> defaultSessionConfiguration];</span><br><span class="line">        <span class="built_in">NSMutableArray</span> *protocolArray = [<span class="built_in">NSMutableArray</span> arrayWithArray:configuration.protocolClasses];</span><br><span class="line">        [protocolArray insertObject:[CustomProtocol <span class="keyword">class</span>] atIndex:<span class="number">0</span>];</span><br><span class="line">        newConfiguration.protocolClasses = protocolArray;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> [<span class="keyword">self</span> swizzle_sessionWithConfiguration:newConfiguration];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="然后就完美解决了。不过要注意下系统的是有两个方法的"><a href="#然后就完美解决了。不过要注意下系统的是有两个方法的" class="headerlink" title="然后就完美解决了。不过要注意下系统的是有两个方法的"></a>然后就完美解决了。不过要注意下系统的是有两个方法的</h6><figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * Customization of NSURLSession occurs during creation of a new session.</span></span><br><span class="line"><span class="comment"> * If you only need to use the convenience routines with custom</span></span><br><span class="line"><span class="comment"> * configuration options it is not necessary to specify a delegate.</span></span><br><span class="line"><span class="comment"> * If you do specify a delegate, the delegate will be retained until after</span></span><br><span class="line"><span class="comment"> * the delegate has been sent the URLSession:didBecomeInvalidWithError: message.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">+ (<span class="built_in">NSURLSession</span> *)sessionWithConfiguration:(<span class="built_in">NSURLSessionConfiguration</span> *)configuration;</span><br><span class="line">+ (<span class="built_in">NSURLSession</span> *)sessionWithConfiguration:(<span class="built_in">NSURLSessionConfiguration</span> *)configuration delegate:(<span class="keyword">nullable</span> <span class="keyword">id</span> &lt;<span class="built_in">NSURLSessionDelegate</span>&gt;)delegate delegateQueue:(<span class="keyword">nullable</span> <span class="built_in">NSOperationQueue</span> *)queue;</span><br></pre></td></tr></table></figure>
+<h6 id="这两个方法不能确定最终会走那个，所以为了保险起见都hook下，hook的方式是一样的"><a href="#这两个方法不能确定最终会走那个，所以为了保险起见都hook下，hook的方式是一样的" class="headerlink" title="这两个方法不能确定最终会走那个，所以为了保险起见都hook下，hook的方式是一样的"></a>这两个方法不能确定最终会走那个，所以为了保险起见都hook下，hook的方式是一样的</h6><h6 id="6-3：AVPlayer请求，AVPlayer是我们iOS系统中系统自带的播放视频的框架，用到地方也很多，但是这个是比较坑的，因为AVPlayer虽然也有http-https-file……请求这个概念，但是AVPlayer所有的请求都不会走URL-Loading-System，也就是说所有由AVPlayer发出的请求都不能被我们的CustomProtocol拦截，这时候大家也许会问，不对呀，我们正常调试的时候可以被拦截到的啊。其实苹果官方上是说AVPlayer在真机调试和模拟器调试时候走的完全不是一套策略，也就是说在模拟器运行时候是完全正常的，可以被拦截到也可以被解析，但是在真机上面就恰恰相反了，因为我们最后还是以真机为准，所以我们采取的办法还是hook，因为我们需要在媒体URL传给AVPlayer前就要将相关东西配置好，域名替换啊，加host啊之类的，所以我们要找AVPlayer的入口，先看初始化方法，我发现项目中使用一个AVURLAsset来初始化AVPlayer，那么AVURLAsset又是什么呢？继续查到AVURLAsset的初始化方法，可以发现这个方法："><a href="#6-3：AVPlayer请求，AVPlayer是我们iOS系统中系统自带的播放视频的框架，用到地方也很多，但是这个是比较坑的，因为AVPlayer虽然也有http-https-file……请求这个概念，但是AVPlayer所有的请求都不会走URL-Loading-System，也就是说所有由AVPlayer发出的请求都不能被我们的CustomProtocol拦截，这时候大家也许会问，不对呀，我们正常调试的时候可以被拦截到的啊。其实苹果官方上是说AVPlayer在真机调试和模拟器调试时候走的完全不是一套策略，也就是说在模拟器运行时候是完全正常的，可以被拦截到也可以被解析，但是在真机上面就恰恰相反了，因为我们最后还是以真机为准，所以我们采取的办法还是hook，因为我们需要在媒体URL传给AVPlayer前就要将相关东西配置好，域名替换啊，加host啊之类的，所以我们要找AVPlayer的入口，先看初始化方法，我发现项目中使用一个AVURLAsset来初始化AVPlayer，那么AVURLAsset又是什么呢？继续查到AVURLAsset的初始化方法，可以发现这个方法：" class="headerlink" title="6.3：AVPlayer请求，AVPlayer是我们iOS系统中系统自带的播放视频的框架，用到地方也很多，但是这个是比较坑的，因为AVPlayer虽然也有http/https/file……请求这个概念，但是AVPlayer所有的请求都不会走URL Loading System，也就是说所有由AVPlayer发出的请求都不能被我们的CustomProtocol拦截，这时候大家也许会问，不对呀，我们正常调试的时候可以被拦截到的啊。其实苹果官方上是说AVPlayer在真机调试和模拟器调试时候走的完全不是一套策略，也就是说在模拟器运行时候是完全正常的，可以被拦截到也可以被解析，但是在真机上面就恰恰相反了，因为我们最后还是以真机为准，所以我们采取的办法还是hook，因为我们需要在媒体URL传给AVPlayer前就要将相关东西配置好，域名替换啊，加host啊之类的，所以我们要找AVPlayer的入口，先看初始化方法，我发现项目中使用一个AVURLAsset来初始化AVPlayer，那么AVURLAsset又是什么呢？继续查到AVURLAsset的初始化方法，可以发现这个方法："></a>6.3：AVPlayer请求，AVPlayer是我们iOS系统中系统自带的播放视频的框架，用到地方也很多，但是这个是比较坑的，因为AVPlayer虽然也有http/https/file……请求这个概念，但是AVPlayer所有的请求都不会走URL Loading System，也就是说所有由AVPlayer发出的请求都不能被我们的CustomProtocol拦截，这时候大家也许会问，不对呀，我们正常调试的时候可以被拦截到的啊。其实苹果官方上是说AVPlayer在真机调试和模拟器调试时候走的完全不是一套策略，也就是说在模拟器运行时候是完全正常的，可以被拦截到也可以被解析，但是在真机上面就恰恰相反了，因为我们最后还是以真机为准，所以我们采取的办法还是hook，因为我们需要在媒体URL传给AVPlayer前就要将相关东西配置好，域名替换啊，加host啊之类的，所以我们要找AVPlayer的入口，先看初始化方法，我发现项目中使用一个AVURLAsset来初始化AVPlayer，那么AVURLAsset又是什么呢？继续查到AVURLAsset的初始化方法，可以发现这个方法：</h6><figure class="highlight smali"><table><tr><td class="code"><pre><span class="line">/*!</span><br><span class="line">  @method		initWithURL:options:</span><br><span class="line">  @abstract		Initializes an<span class="built_in"> instance </span>of AVURLAsset for inspection of a media resource.</span><br><span class="line">  @param		URL</span><br><span class="line">				An<span class="built_in"> instance </span>of NSURL that references a media resource.</span><br><span class="line">  @param		options</span><br><span class="line">				An<span class="built_in"> instance </span>of NSDictionary that contains keys for specifying options for the initialization of the AVURLAsset. See AVURLAssetPreferPreciseDurationAndTimingKey<span class="built_in"> and </span>AVURLAssetReferenceRestrictionsKey above.</span><br><span class="line">  @result		An<span class="built_in"> instance </span>of AVURLAsset.</span><br><span class="line">*/</span><br><span class="line">- (instancetype)initWithURL:(NSURL *)URL options:(nullable NSDictionary&lt;NSString *, id&gt; *)options NS_DESIGNATED_INITIA<span class="class">LIZER;</span></span><br></pre></td></tr></table></figure>
+<h6 id="其中URL就是我们传给AVPlayer播放的URL，找到目标就Hook下就可以了，具体过程就不多说了还是字符串替换，但是有一点需要注意的是，我之前上文说过做完IP对域名的替换之后还需要设置下request的Host，但是这个地方只有一个URL并没有Request该如何处理呢？其实这个方法里面的opinion参数就是处理这个的，可以添加cookie之类的类似与httpheader的东西，可以添加这几个Key"><a href="#其中URL就是我们传给AVPlayer播放的URL，找到目标就Hook下就可以了，具体过程就不多说了还是字符串替换，但是有一点需要注意的是，我之前上文说过做完IP对域名的替换之后还需要设置下request的Host，但是这个地方只有一个URL并没有Request该如何处理呢？其实这个方法里面的opinion参数就是处理这个的，可以添加cookie之类的类似与httpheader的东西，可以添加这几个Key" class="headerlink" title="其中URL就是我们传给AVPlayer播放的URL，找到目标就Hook下就可以了，具体过程就不多说了还是字符串替换，但是有一点需要注意的是，我之前上文说过做完IP对域名的替换之后还需要设置下request的Host，但是这个地方只有一个URL并没有Request该如何处理呢？其实这个方法里面的opinion参数就是处理这个的，可以添加cookie之类的类似与httpheader的东西，可以添加这几个Key"></a>其中URL就是我们传给AVPlayer播放的URL，找到目标就Hook下就可以了，具体过程就不多说了还是字符串替换，但是有一点需要注意的是，我之前上文说过做完IP对域名的替换之后还需要设置下request的Host，但是这个地方只有一个URL并没有Request该如何处理呢？其实这个方法里面的opinion参数就是处理这个的，可以添加cookie之类的类似与httpheader的东西，可以添加这几个Key</h6><figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line"><span class="built_in">AVF_EXPORT</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> <span class="built_in">AVURLAssetPreferPreciseDurationAndTimingKey</span> <span class="built_in">NS_AVAILABLE</span>(<span class="number">10</span>_7, <span class="number">4</span>_0);</span><br><span class="line"><span class="built_in">AVF_EXPORT</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> <span class="built_in">AVURLAssetReferenceRestrictionsKey</span> <span class="built_in">NS_AVAILABLE</span>(<span class="number">10</span>_7, <span class="number">5</span>_0);</span><br><span class="line"><span class="built_in">AVF_EXPORT</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> <span class="built_in">AVURLAssetHTTPCookiesKey</span> <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">8</span>_0);</span><br><span class="line"><span class="built_in">AVF_EXPORT</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> <span class="built_in">AVURLAssetAllowsCellularAccessKey</span> <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">10</span>_0);</span><br></pre></td></tr></table></figure>
+<h6 id="但是并没有发现和Host相关的Key，其实这个key是有的就是AVURLAssetHTTPHeaderFieldsKey只是因为这个Key没暴露出来。这个地方不太确定是不是苹果的私有API，网上查了大量的资料也没有个说法，甚至我亲自去苹果开发者去问，苹果也没有给任何答复，各种说法都有，具体使用的话就是"><a href="#但是并没有发现和Host相关的Key，其实这个key是有的就是AVURLAssetHTTPHeaderFieldsKey只是因为这个Key没暴露出来。这个地方不太确定是不是苹果的私有API，网上查了大量的资料也没有个说法，甚至我亲自去苹果开发者去问，苹果也没有给任何答复，各种说法都有，具体使用的话就是" class="headerlink" title="但是并没有发现和Host相关的Key，其实这个key是有的就是AVURLAssetHTTPHeaderFieldsKey只是因为这个Key没暴露出来。这个地方不太确定是不是苹果的私有API，网上查了大量的资料也没有个说法，甚至我亲自去苹果开发者去问，苹果也没有给任何答复，各种说法都有，具体使用的话就是"></a>但是并没有发现和Host相关的Key，其实这个key是有的就是AVURLAssetHTTPHeaderFieldsKey只是因为这个Key没暴露出来。这个地方不太确定是不是苹果的私有API，网上查了大量的资料也没有个说法，甚至我亲自去苹果开发者去问，苹果也没有给任何答复，各种说法都有，具体使用的话就是</h6><figure class="highlight clojure"><table><tr><td class="code"><pre><span class="line">[self swizzle_initWithURL:videoURL options:@&#123;AVURLAssetHTTPHeaderFieldsKey : @&#123;@<span class="string">"Host"</span><span class="symbol">:host</span>&#125;&#125;]</span><br></pre></td></tr></table></figure>
+<h6 id="这样使用是没有任何问题的，但是毕竟是没有暴露出来的方法，我们不能这样明目张胆的使用，其实对于字符串来说还是比较好规避的，只要不要明文出现这个KEY就可以，我在这里使用了一个加密，吧key变成密文然后这个地方通过解密获取，就像这样："><a href="#这样使用是没有任何问题的，但是毕竟是没有暴露出来的方法，我们不能这样明目张胆的使用，其实对于字符串来说还是比较好规避的，只要不要明文出现这个KEY就可以，我在这里使用了一个加密，吧key变成密文然后这个地方通过解密获取，就像这样：" class="headerlink" title="这样使用是没有任何问题的，但是毕竟是没有暴露出来的方法，我们不能这样明目张胆的使用，其实对于字符串来说还是比较好规避的，只要不要明文出现这个KEY就可以，我在这里使用了一个加密，吧key变成密文然后这个地方通过解密获取，就像这样："></a>这样使用是没有任何问题的，但是毕竟是没有暴露出来的方法，我们不能这样明目张胆的使用，其实对于字符串来说还是比较好规避的，只要不要明文出现这个KEY就可以，我在这里使用了一个加密，吧key变成密文然后这个地方通过解密获取，就像这样：</h6><figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line"><span class="comment">//加密后的KEY</span></span><br><span class="line"><span class="keyword">const</span> <span class="built_in">NSString</span> * headerKey = <span class="string">@"35905FF45AFA4C579B7DE2403C7CA0CCB59AA83D660E60C9D444AFE13323618F"</span>;</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line"><span class="comment">//getRequestHeaderKey方法为解密方法</span></span><br><span class="line"><span class="keyword">return</span> [<span class="keyword">self</span> swizzle_initWithURL:videoURL options:@&#123;[<span class="keyword">self</span> getRequestHeaderKey] : @&#123;<span class="string">@"Host"</span>:host&#125;&#125;];</span><br></pre></td></tr></table></figure>
+<h6 id="这样之后就大功告成了，AVPlayer可以在DNS被劫持的情况下播放了，"><a href="#这样之后就大功告成了，AVPlayer可以在DNS被劫持的情况下播放了，" class="headerlink" title="这样之后就大功告成了，AVPlayer可以在DNS被劫持的情况下播放了，"></a>这样之后就大功告成了，AVPlayer可以在DNS被劫持的情况下播放了，</h6><h6 id="6-4：POST请求这块也算是一个大坑，我们知道http的post请求会包含一个body体，里面包含我们需要上传的参数等一些资料，对于POST请求我们的NSURLProtocol是可以正常拦截的，但是我们拦截之后发现无论怎么样我们获得的body体都为nil！后来查了一些资料发下又是苹果爸爸在做手脚。NSURLProtocol在拦截NSURLSession的POST请求时不能获取到Request中的HTTPBody，这个貌似早就国外的论坛上传开了，但国内好像还鲜有人知，据苹果官方的解释是Body是NSData类型，即可能为二进制内容，而且还没有大小限制，所以可能会很大，为了性能考虑，索性就拦截时就不拷贝了（内流满面脸）。为了解决这个问题，我们可以通过把Body数据放到Header中，不过Header的大小好像是有限制的，我试过2M是没有问题，不过超过10M就直接Request-timeout了。。。而且当Body数据为二进制数据时这招也没辙了，因为Header里都是文本数据，另一种方案就是用一个NSDictionary或NSCache保存没有请求的Body数据，用URL为key，最后方法就是别用NSURLSession，老老实实用古老的NSURLConnection算了。。。你以为这么就结束了吗？并没有，后来查了大量的资料发现，既然post请求的httpbody没有苹果复制下来，那我们就不用httpbody，我们再往底层去看就会发现HTTPBodyStream这个东西我们可以通过他来获取请求的body体具体代吗如下"><a href="#6-4：POST请求这块也算是一个大坑，我们知道http的post请求会包含一个body体，里面包含我们需要上传的参数等一些资料，对于POST请求我们的NSURLProtocol是可以正常拦截的，但是我们拦截之后发现无论怎么样我们获得的body体都为nil！后来查了一些资料发下又是苹果爸爸在做手脚。NSURLProtocol在拦截NSURLSession的POST请求时不能获取到Request中的HTTPBody，这个貌似早就国外的论坛上传开了，但国内好像还鲜有人知，据苹果官方的解释是Body是NSData类型，即可能为二进制内容，而且还没有大小限制，所以可能会很大，为了性能考虑，索性就拦截时就不拷贝了（内流满面脸）。为了解决这个问题，我们可以通过把Body数据放到Header中，不过Header的大小好像是有限制的，我试过2M是没有问题，不过超过10M就直接Request-timeout了。。。而且当Body数据为二进制数据时这招也没辙了，因为Header里都是文本数据，另一种方案就是用一个NSDictionary或NSCache保存没有请求的Body数据，用URL为key，最后方法就是别用NSURLSession，老老实实用古老的NSURLConnection算了。。。你以为这么就结束了吗？并没有，后来查了大量的资料发现，既然post请求的httpbody没有苹果复制下来，那我们就不用httpbody，我们再往底层去看就会发现HTTPBodyStream这个东西我们可以通过他来获取请求的body体具体代吗如下" class="headerlink" title="6.4：POST请求这块也算是一个大坑，我们知道http的post请求会包含一个body体，里面包含我们需要上传的参数等一些资料，对于POST请求我们的NSURLProtocol是可以正常拦截的，但是我们拦截之后发现无论怎么样我们获得的body体都为nil！后来查了一些资料发下又是苹果爸爸在做手脚。NSURLProtocol在拦截NSURLSession的POST请求时不能获取到Request中的HTTPBody，这个貌似早就国外的论坛上传开了，但国内好像还鲜有人知，据苹果官方的解释是Body是NSData类型，即可能为二进制内容，而且还没有大小限制，所以可能会很大，为了性能考虑，索性就拦截时就不拷贝了（内流满面脸）。为了解决这个问题，我们可以通过把Body数据放到Header中，不过Header的大小好像是有限制的，我试过2M是没有问题，不过超过10M就直接Request timeout了。。。而且当Body数据为二进制数据时这招也没辙了，因为Header里都是文本数据，另一种方案就是用一个NSDictionary或NSCache保存没有请求的Body数据，用URL为key，最后方法就是别用NSURLSession，老老实实用古老的NSURLConnection算了。。。你以为这么就结束了吗？并没有，后来查了大量的资料发现，既然post请求的httpbody没有苹果复制下来，那我们就不用httpbody，我们再往底层去看就会发现HTTPBodyStream这个东西我们可以通过他来获取请求的body体具体代吗如下"></a>6.4：POST请求这块也算是一个大坑，我们知道http的post请求会包含一个body体，里面包含我们需要上传的参数等一些资料，对于POST请求我们的NSURLProtocol是可以正常拦截的，但是我们拦截之后发现无论怎么样我们获得的body体都为nil！后来查了一些资料发下又是苹果爸爸在做手脚。NSURLProtocol在拦截NSURLSession的POST请求时不能获取到Request中的HTTPBody，这个貌似早就国外的论坛上传开了，但国内好像还鲜有人知，据苹果官方的解释是Body是NSData类型，即可能为二进制内容，而且还没有大小限制，所以可能会很大，为了性能考虑，索性就拦截时就不拷贝了（内流满面脸）。为了解决这个问题，我们可以通过把Body数据放到Header中，不过Header的大小好像是有限制的，我试过2M是没有问题，不过超过10M就直接Request timeout了。。。而且当Body数据为二进制数据时这招也没辙了，因为Header里都是文本数据，另一种方案就是用一个NSDictionary或NSCache保存没有请求的Body数据，用URL为key，最后方法就是别用NSURLSession，老老实实用古老的NSURLConnection算了。。。你以为这么就结束了吗？并没有，后来查了大量的资料发现，既然post请求的httpbody没有苹果复制下来，那我们就不用httpbody，我们再往底层去看就会发现HTTPBodyStream这个东西我们可以通过他来获取请求的body体具体代吗如下</h6><figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line"><span class="meta">#pragma mark -</span></span><br><span class="line"><span class="meta">#pragma mark 处理POST请求相关POST  用HTTPBodyStream来处理BODY体</span></span><br><span class="line">- (<span class="built_in">NSMutableURLRequest</span> *)handlePostRequestBodyWithRequest:(<span class="built_in">NSMutableURLRequest</span> *)request &#123;</span><br><span class="line">    <span class="built_in">NSMutableURLRequest</span> * req = [request mutableCopy];</span><br><span class="line">    <span class="keyword">if</span> ([request.HTTPMethod isEqualToString:<span class="string">@"POST"</span>]) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!request.HTTPBody) &#123;</span><br><span class="line">            uint8_t d[<span class="number">1024</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">            <span class="built_in">NSInputStream</span> *stream = request.HTTPBodyStream;</span><br><span class="line">            <span class="built_in">NSMutableData</span> *data = [[<span class="built_in">NSMutableData</span> alloc] init];</span><br><span class="line">            [stream open];</span><br><span class="line">            <span class="keyword">while</span> ([stream hasBytesAvailable]) &#123;</span><br><span class="line">                <span class="built_in">NSInteger</span> len = [stream read:d maxLength:<span class="number">1024</span>];</span><br><span class="line">                <span class="keyword">if</span> (len &gt; <span class="number">0</span> &amp;&amp; stream.streamError == <span class="literal">nil</span>) &#123;</span><br><span class="line">                    [data appendBytes:(<span class="keyword">void</span> *)d length:len];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            req.HTTPBody = [data <span class="keyword">copy</span>];</span><br><span class="line">            [stream close];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> req;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="这样之后的req就是携带了body体的request啦，可以愉快地做post请求啦。"><a href="#这样之后的req就是携带了body体的request啦，可以愉快地做post请求啦。" class="headerlink" title="这样之后的req就是携带了body体的request啦，可以愉快地做post请求啦。"></a>这样之后的req就是携带了body体的request啦，可以愉快地做post请求啦。</h6><h6 id="6-5：WKWebview是新出的浏览器控件，这里就不多说了，WKWebview不走URL-Loading-System，所以也不会被拦截，不过也是有办法的，但是因为这次项目中没有用到，所以没有过多的去研究，后续我会写一篇关于这个博客，不是很难，依旧是runtime大法。"><a href="#6-5：WKWebview是新出的浏览器控件，这里就不多说了，WKWebview不走URL-Loading-System，所以也不会被拦截，不过也是有办法的，但是因为这次项目中没有用到，所以没有过多的去研究，后续我会写一篇关于这个博客，不是很难，依旧是runtime大法。" class="headerlink" title="6.5：WKWebview是新出的浏览器控件，这里就不多说了，WKWebview不走URL Loading System，所以也不会被拦截，不过也是有办法的，但是因为这次项目中没有用到，所以没有过多的去研究，后续我会写一篇关于这个博客，不是很难，依旧是runtime大法。"></a>6.5：WKWebview是新出的浏览器控件，这里就不多说了，WKWebview不走URL Loading System，所以也不会被拦截，不过也是有办法的，但是因为这次项目中没有用到，所以没有过多的去研究，后续我会写一篇关于这个博客，不是很难，依旧是runtime大法。</h6><h6 id="6-6：SNI环境，这个可是坑了我好久好久的东西，所以我会放在最后去说，SNI环境因为涉及到证书验证所以是在https的基础上来说的，SNI（Server-Name-Indication）是为了解决一个服务器使用多个域名和证书的扩展。一句话简述它的工作原理就是，在连接到服务器建立SSL链接之前先发送要访问站点的域名（Hostname），这样服务器根据这个域名返回一个合适的证书。其实关于SNI环境在这里就不过多解释，阿里云文档有很明白的解释，同时他也有安卓和iOS在SNI环境下的处理文档，我们发现安卓部分写的很详细，可是已到了iOS这边就这样了："><a href="#6-6：SNI环境，这个可是坑了我好久好久的东西，所以我会放在最后去说，SNI环境因为涉及到证书验证所以是在https的基础上来说的，SNI（Server-Name-Indication）是为了解决一个服务器使用多个域名和证书的扩展。一句话简述它的工作原理就是，在连接到服务器建立SSL链接之前先发送要访问站点的域名（Hostname），这样服务器根据这个域名返回一个合适的证书。其实关于SNI环境在这里就不过多解释，阿里云文档有很明白的解释，同时他也有安卓和iOS在SNI环境下的处理文档，我们发现安卓部分写的很详细，可是已到了iOS这边就这样了：" class="headerlink" title="6.6：SNI环境，这个可是坑了我好久好久的东西，所以我会放在最后去说，SNI环境因为涉及到证书验证所以是在https的基础上来说的，SNI（Server Name Indication）是为了解决一个服务器使用多个域名和证书的扩展。一句话简述它的工作原理就是，在连接到服务器建立SSL链接之前先发送要访问站点的域名（Hostname），这样服务器根据这个域名返回一个合适的证书。其实关于SNI环境在这里就不过多解释，阿里云文档有很明白的解释，同时他也有安卓和iOS在SNI环境下的处理文档，我们发现安卓部分写的很详细，可是已到了iOS这边就这样了："></a>6.6：SNI环境，这个可是坑了我好久好久的东西，所以我会放在最后去说，SNI环境因为涉及到证书验证所以是在https的基础上来说的，SNI（Server Name Indication）是为了解决一个服务器使用多个域名和证书的扩展。一句话简述它的工作原理就是，在连接到服务器建立SSL链接之前先发送要访问站点的域名（Hostname），这样服务器根据这个域名返回一个合适的证书。其实关于SNI环境在这里就不过多解释，<strong><a href="https://help.aliyun.com/document_detail/30143.html" target="_blank" rel="noopener">阿里云文档</a></strong>有很明白的解释，同时他也有安卓和iOS在SNI环境下的处理文档，我们发现安卓部分写的很详细，可是已到了iOS这边就这样了：</h6><p><img src="https://wx3.sinaimg.cn/large/006tNc79gy1fo6juzsqdqj31kw0bbn5v.jpg" alt="阿里云文档截图"></p>
+<h6 id="三行文字加三个链接就完事了。其实在遇到这个坑的时候我也查过很多相关资料，无非就是这三行话加这三个链接复制来复制去，没有实质性的进展，大部分公司或者是项目没有这么重的Httpdns需求，所以也就不会有这个环境，即使遇到了也就直接关闭httpdns了，后来只能自己去用CFNetwork一点点实现。具体代码就不跟大家粘贴了因为涉及到一些公司内部的代码，不过我会把我主要的参考资料发给大家。这里有个小技巧，因为都在说CFNetwork是比较底层的网络实现，好多东西需要开发者自行处理比如一些变量的释放之类的，所以我们能少用尽量少用，因为Cfnetwork是为SNI-https-环境服务-所以我们在拦截判断的时候可以区分是用上层的网络请求转发还是用底层的cfnetwork来转发，"><a href="#三行文字加三个链接就完事了。其实在遇到这个坑的时候我也查过很多相关资料，无非就是这三行话加这三个链接复制来复制去，没有实质性的进展，大部分公司或者是项目没有这么重的Httpdns需求，所以也就不会有这个环境，即使遇到了也就直接关闭httpdns了，后来只能自己去用CFNetwork一点点实现。具体代码就不跟大家粘贴了因为涉及到一些公司内部的代码，不过我会把我主要的参考资料发给大家。这里有个小技巧，因为都在说CFNetwork是比较底层的网络实现，好多东西需要开发者自行处理比如一些变量的释放之类的，所以我们能少用尽量少用，因为Cfnetwork是为SNI-https-环境服务-所以我们在拦截判断的时候可以区分是用上层的网络请求转发还是用底层的cfnetwork来转发，" class="headerlink" title="三行文字加三个链接就完事了。其实在遇到这个坑的时候我也查过很多相关资料，无非就是这三行话加这三个链接复制来复制去，没有实质性的进展，大部分公司或者是项目没有这么重的Httpdns需求，所以也就不会有这个环境，即使遇到了也就直接关闭httpdns了，后来只能自己去用CFNetwork一点点实现。具体代码就不跟大家粘贴了因为涉及到一些公司内部的代码，不过我会把我主要的参考资料发给大家。这里有个小技巧，因为都在说CFNetwork是比较底层的网络实现，好多东西需要开发者自行处理比如一些变量的释放之类的，所以我们能少用尽量少用，因为Cfnetwork是为SNI(https)环境服务,所以我们在拦截判断的时候可以区分是用上层的网络请求转发还是用底层的cfnetwork来转发，"></a>三行文字加三个链接就完事了。其实在遇到这个坑的时候我也查过很多相关资料，无非就是这三行话加这三个链接复制来复制去，没有实质性的进展，大部分公司或者是项目没有这么重的Httpdns需求，所以也就不会有这个环境，即使遇到了也就直接关闭httpdns了，后来只能自己去用CFNetwork一点点实现。具体代码就不跟大家粘贴了因为涉及到一些公司内部的代码，不过我会把我<strong><a href="https://github.com/Dave1991/alicloud-ios-demo/blob/master/httpdns_ios_demo/httpdns_ios_demo/CFHttpMessageURLProtocol.m" target="_blank" rel="noopener">主要的参考资料</a></strong>发给大家。这里有个小技巧，因为都在说CFNetwork是比较底层的网络实现，好多东西需要开发者自行处理比如一些变量的释放之类的，所以我们能少用尽量少用，因为Cfnetwork是为SNI(https)环境服务,所以我们在拦截判断的时候可以区分是用上层的网络请求转发还是用底层的cfnetwork来转发，</h6><figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line"> <span class="keyword">if</span> ([<span class="keyword">self</span>.request.URL.scheme isEqualToString:<span class="string">@"https"</span>] ) &#123;</span><br><span class="line"><span class="comment">//使用CFnetwork</span></span><br><span class="line">        curRequest = req;</span><br><span class="line">        <span class="keyword">self</span>.task = [[CustomCFNetworkRequestTask alloc] initWithURLRequest:originalRequest swizzleRequest:curRequest delegate:<span class="keyword">self</span>];</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">self</span>.task) &#123;</span><br><span class="line">            [<span class="keyword">self</span>.task startLoading];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line"><span class="comment">//使用普通网络请求</span></span><br><span class="line">        <span class="built_in">NSURLSessionConfiguration</span> *configuration = [<span class="built_in">NSURLSessionConfiguration</span> defaultSessionConfiguration];</span><br><span class="line">        <span class="keyword">self</span>.session = [<span class="built_in">NSURLSession</span> sessionWithConfiguration:configuration delegate:<span class="keyword">self</span> delegateQueue:[<span class="built_in">NSOperationQueue</span> mainQueue]];</span><br><span class="line">        <span class="built_in">NSURLSessionTask</span> *task = [<span class="keyword">self</span>.session dataTaskWithRequest:req];</span><br><span class="line">        [task resume];</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h6 id="我是这么做的。"><a href="#我是这么做的。" class="headerlink" title="我是这么做的。"></a>我是这么做的。</h6><h6 id="6-7：在NSURLProtocol中的那几个类方法中是可以发送同步请求的，但是在实例方法发送同步请求就会卡死，所以实例方法中不能有任何的阻塞，进行同步操作。不然就卡死。"><a href="#6-7：在NSURLProtocol中的那几个类方法中是可以发送同步请求的，但是在实例方法发送同步请求就会卡死，所以实例方法中不能有任何的阻塞，进行同步操作。不然就卡死。" class="headerlink" title="6.7：在NSURLProtocol中的那几个类方法中是可以发送同步请求的，但是在实例方法发送同步请求就会卡死，所以实例方法中不能有任何的阻塞，进行同步操作。不然就卡死。"></a>6.7：在NSURLProtocol中的那几个类方法中是可以发送同步请求的，但是在实例方法发送同步请求就会卡死，所以实例方法中不能有任何的阻塞，进行同步操作。不然就卡死。</h6><h5 id="7：总结"><a href="#7：总结" class="headerlink" title="7：总结"></a>7：总结</h5><p>  完成了以上的步骤之后你回发现在DNS坏掉的情况下手机里面除了微信QQ(他们也做了DNS解析)之外其他应用都不能上网了但是你的App依然可以正常浏览网络数据。这就是我最近在做的时候遇到的一些问题，有什么问题及时与我交流吧</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Molier
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://oliverqueen.cn/2018/01/24/可能是最全的iOS端HttpDns集成方案/" title="可能是最全的iOS端HttpDns集成方案">https://oliverqueen.cn/2018/01/24/可能是最全的iOS端HttpDns集成方案/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/网络/" rel="tag"># 网络</a>
+          
+            <a href="/tags/底层/" rel="tag"># 底层</a>
+          
+            <a href="/tags/httpdns/" rel="tag"># httpdns</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/24/在iOS工程中Cocoapods的使用/" rel="next" title="在iOS工程中Cocoapods的使用">
+                <i class="fa fa-chevron-left"></i> 在iOS工程中Cocoapods的使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/25/可能是最全的使用HEXO搭建个人博客教程/" rel="prev" title="可能是最全的使用HEXO搭建个人博客教程">
+                可能是最全的使用HEXO搭建个人博客教程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://ws4.sinaimg.cn/large/006tKfTcgy1fnqkpikcyeg30f00f0njv.gif"
+                alt="Molier" />
+            
+              <p class="site-author-name" itemprop="name">Molier</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">29</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    <span class="site-state-item-count">48</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:371099694@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/zhangninghao?refer_flag=1005055010_" target="_blank" title="新浪微博">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>新浪微博</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/fd21f41fb522" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-superpowers"></i>简书</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/586c624bac502e12d631545f" target="_blank" title="掘金">
+                      
+                        <i class="fa fa-fw fa-juejin"></i>掘金</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Friends
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://reuixiy.github.io/" rel="external nofollow" title="reuixiy" target="_blank">reuixiy</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://billchan.me/" rel="external nofollow" title="CMB" target="_blank">CMB</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://mashirosorata.vicp.io/" rel="external nofollow" title="Mashiro_Sorata" target="_blank">Mashiro_Sorata</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.saitjr.com/" rel="external nofollow" title="saitjr <br>(iOS大神，持续集成，几乎全栈)" target="_blank">saitjr <br>(iOS大神，持续集成，几乎全栈)</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+         
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#科普片"><span class="nav-text">科普片</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1、DNS劫持的危害"><span class="nav-text">1、DNS劫持的危害</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2、什么是DNS解析"><span class="nav-text">2、什么是DNS解析</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3：什么是DNS劫持"><span class="nav-text">3：什么是DNS劫持</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4：防止DNS劫持"><span class="nav-text">4：防止DNS劫持</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#技术篇"><span class="nav-text">技术篇</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#5：项目中的实际操作"><span class="nav-text">5：项目中的实际操作</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#5-1：DNSPOD相关"><span class="nav-text">5.1：DNSPOD相关</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#5-2：项目中的使用"><span class="nav-text">5.2：项目中的使用</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#BOOL-canInitWithRequest-NSURLRequest-request"><span class="nav-text">+ (BOOL)canInitWithRequest:(NSURLRequest *)request;</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#NSURLRequest-canonicalRequestForRequest-NSURLRequest-request"><span class="nav-text">+ (NSURLRequest )canonicalRequestForRequest:(NSURLRequest )request;</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#void-startLoading"><span class="nav-text">- (void)startLoading;</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#void-stopLoading"><span class="nav-text">- (void)stopLoading;</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6：遇到的坑点"><span class="nav-text">6：遇到的坑点</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#6-1：我们知道运营商本来是根据域名来确定一个URL的，我们将域名改为IP之后虽然不用运营商帮我们解析了，但是运营商在收到一串数字的时候也是懵逼状态，我们还是需要将域名传给他们，但是不能用正常的方式传，我们需要把原来的域名加到http请求的Header中的host字段下，根据Http协议的规定，如果在URL中无法找到域名的话就会去Header中找，这样一来我们既把域名告诉了运营商同时也直接制定了IP地址，这个是必须配置的，不然的话是请求不成功的。"><span class="nav-text">6.1：我们知道运营商本来是根据域名来确定一个URL的，我们将域名改为IP之后虽然不用运营商帮我们解析了，但是运营商在收到一串数字的时候也是懵逼状态，我们还是需要将域名传给他们，但是不能用正常的方式传，我们需要把原来的域名加到http请求的Header中的host字段下，根据Http协议的规定，如果在URL中无法找到域名的话就会去Header中找，这样一来我们既把域名告诉了运营商同时也直接制定了IP地址，这个是必须配置的，不然的话是请求不成功的。</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#加上Header再去请求就没问题了，不过有些特殊的情况下会需要带上cookie，同样也是加到Header中"><span class="nav-text">加上Header再去请求就没问题了，不过有些特殊的情况下会需要带上cookie，同样也是加到Header中</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#6-2：关于AfNetworking的问题，现在大部分网络请求是基于Afnetworking的，这里有一个坑，我们知道我们注册CustomProtocol的时候是这样"><span class="nav-text">6.2：关于AfNetworking的问题，现在大部分网络请求是基于Afnetworking的，这里有一个坑，我们知道我们注册CustomProtocol的时候是这样</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#在系统的configuration加入我们的CustomProtocol，protocolClasses是一个数组里面可以放很多各种不同的CustomProtocol，我们看一下afnetworking的初始化方法。"><span class="nav-text">在系统的configuration加入我们的CustomProtocol，protocolClasses是一个数组里面可以放很多各种不同的CustomProtocol，我们看一下afnetworking的初始化方法。</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#我相信大家通常都会这么来创建，但是这里我要说下manager并不是一个单利，最后都会调到一个方法"><span class="nav-text">我相信大家通常都会这么来创建，但是这里我要说下manager并不是一个单利，最后都会调到一个方法</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#大家注意第二个判断，如果没有传入configuration的话他会创建一个默认的，这样以至于我们之前在configuration的protocolClasses中注册类全部被这个新的configuration替换掉了，所以无法解析。这里我采取的办法就是runtime-hook，因为hook第三方的代码并不是一个很好的办法，所以我直接hook-NSURLSession的sessionWithConfiguration方法，因为通过观察Afnetworking的源码最终都是走到这里的。Hook之后把自己的configuration换进去，像这样"><span class="nav-text">大家注意第二个判断，如果没有传入configuration的话他会创建一个默认的，这样以至于我们之前在configuration的protocolClasses中注册类全部被这个新的configuration替换掉了，所以无法解析。这里我采取的办法就是runtime hook，因为hook第三方的代码并不是一个很好的办法，所以我直接hook NSURLSession的sessionWithConfiguration方法，因为通过观察Afnetworking的源码最终都是走到这里的。Hook之后把自己的configuration换进去，像这样</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#然后就完美解决了。不过要注意下系统的是有两个方法的"><span class="nav-text">然后就完美解决了。不过要注意下系统的是有两个方法的</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#这两个方法不能确定最终会走那个，所以为了保险起见都hook下，hook的方式是一样的"><span class="nav-text">这两个方法不能确定最终会走那个，所以为了保险起见都hook下，hook的方式是一样的</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#6-3：AVPlayer请求，AVPlayer是我们iOS系统中系统自带的播放视频的框架，用到地方也很多，但是这个是比较坑的，因为AVPlayer虽然也有http-https-file……请求这个概念，但是AVPlayer所有的请求都不会走URL-Loading-System，也就是说所有由AVPlayer发出的请求都不能被我们的CustomProtocol拦截，这时候大家也许会问，不对呀，我们正常调试的时候可以被拦截到的啊。其实苹果官方上是说AVPlayer在真机调试和模拟器调试时候走的完全不是一套策略，也就是说在模拟器运行时候是完全正常的，可以被拦截到也可以被解析，但是在真机上面就恰恰相反了，因为我们最后还是以真机为准，所以我们采取的办法还是hook，因为我们需要在媒体URL传给AVPlayer前就要将相关东西配置好，域名替换啊，加host啊之类的，所以我们要找AVPlayer的入口，先看初始化方法，我发现项目中使用一个AVURLAsset来初始化AVPlayer，那么AVURLAsset又是什么呢？继续查到AVURLAsset的初始化方法，可以发现这个方法："><span class="nav-text">6.3：AVPlayer请求，AVPlayer是我们iOS系统中系统自带的播放视频的框架，用到地方也很多，但是这个是比较坑的，因为AVPlayer虽然也有http/https/file……请求这个概念，但是AVPlayer所有的请求都不会走URL Loading System，也就是说所有由AVPlayer发出的请求都不能被我们的CustomProtocol拦截，这时候大家也许会问，不对呀，我们正常调试的时候可以被拦截到的啊。其实苹果官方上是说AVPlayer在真机调试和模拟器调试时候走的完全不是一套策略，也就是说在模拟器运行时候是完全正常的，可以被拦截到也可以被解析，但是在真机上面就恰恰相反了，因为我们最后还是以真机为准，所以我们采取的办法还是hook，因为我们需要在媒体URL传给AVPlayer前就要将相关东西配置好，域名替换啊，加host啊之类的，所以我们要找AVPlayer的入口，先看初始化方法，我发现项目中使用一个AVURLAsset来初始化AVPlayer，那么AVURLAsset又是什么呢？继续查到AVURLAsset的初始化方法，可以发现这个方法：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#其中URL就是我们传给AVPlayer播放的URL，找到目标就Hook下就可以了，具体过程就不多说了还是字符串替换，但是有一点需要注意的是，我之前上文说过做完IP对域名的替换之后还需要设置下request的Host，但是这个地方只有一个URL并没有Request该如何处理呢？其实这个方法里面的opinion参数就是处理这个的，可以添加cookie之类的类似与httpheader的东西，可以添加这几个Key"><span class="nav-text">其中URL就是我们传给AVPlayer播放的URL，找到目标就Hook下就可以了，具体过程就不多说了还是字符串替换，但是有一点需要注意的是，我之前上文说过做完IP对域名的替换之后还需要设置下request的Host，但是这个地方只有一个URL并没有Request该如何处理呢？其实这个方法里面的opinion参数就是处理这个的，可以添加cookie之类的类似与httpheader的东西，可以添加这几个Key</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#但是并没有发现和Host相关的Key，其实这个key是有的就是AVURLAssetHTTPHeaderFieldsKey只是因为这个Key没暴露出来。这个地方不太确定是不是苹果的私有API，网上查了大量的资料也没有个说法，甚至我亲自去苹果开发者去问，苹果也没有给任何答复，各种说法都有，具体使用的话就是"><span class="nav-text">但是并没有发现和Host相关的Key，其实这个key是有的就是AVURLAssetHTTPHeaderFieldsKey只是因为这个Key没暴露出来。这个地方不太确定是不是苹果的私有API，网上查了大量的资料也没有个说法，甚至我亲自去苹果开发者去问，苹果也没有给任何答复，各种说法都有，具体使用的话就是</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#这样使用是没有任何问题的，但是毕竟是没有暴露出来的方法，我们不能这样明目张胆的使用，其实对于字符串来说还是比较好规避的，只要不要明文出现这个KEY就可以，我在这里使用了一个加密，吧key变成密文然后这个地方通过解密获取，就像这样："><span class="nav-text">这样使用是没有任何问题的，但是毕竟是没有暴露出来的方法，我们不能这样明目张胆的使用，其实对于字符串来说还是比较好规避的，只要不要明文出现这个KEY就可以，我在这里使用了一个加密，吧key变成密文然后这个地方通过解密获取，就像这样：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#这样之后就大功告成了，AVPlayer可以在DNS被劫持的情况下播放了，"><span class="nav-text">这样之后就大功告成了，AVPlayer可以在DNS被劫持的情况下播放了，</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#6-4：POST请求这块也算是一个大坑，我们知道http的post请求会包含一个body体，里面包含我们需要上传的参数等一些资料，对于POST请求我们的NSURLProtocol是可以正常拦截的，但是我们拦截之后发现无论怎么样我们获得的body体都为nil！后来查了一些资料发下又是苹果爸爸在做手脚。NSURLProtocol在拦截NSURLSession的POST请求时不能获取到Request中的HTTPBody，这个貌似早就国外的论坛上传开了，但国内好像还鲜有人知，据苹果官方的解释是Body是NSData类型，即可能为二进制内容，而且还没有大小限制，所以可能会很大，为了性能考虑，索性就拦截时就不拷贝了（内流满面脸）。为了解决这个问题，我们可以通过把Body数据放到Header中，不过Header的大小好像是有限制的，我试过2M是没有问题，不过超过10M就直接Request-timeout了。。。而且当Body数据为二进制数据时这招也没辙了，因为Header里都是文本数据，另一种方案就是用一个NSDictionary或NSCache保存没有请求的Body数据，用URL为key，最后方法就是别用NSURLSession，老老实实用古老的NSURLConnection算了。。。你以为这么就结束了吗？并没有，后来查了大量的资料发现，既然post请求的httpbody没有苹果复制下来，那我们就不用httpbody，我们再往底层去看就会发现HTTPBodyStream这个东西我们可以通过他来获取请求的body体具体代吗如下"><span class="nav-text">6.4：POST请求这块也算是一个大坑，我们知道http的post请求会包含一个body体，里面包含我们需要上传的参数等一些资料，对于POST请求我们的NSURLProtocol是可以正常拦截的，但是我们拦截之后发现无论怎么样我们获得的body体都为nil！后来查了一些资料发下又是苹果爸爸在做手脚。NSURLProtocol在拦截NSURLSession的POST请求时不能获取到Request中的HTTPBody，这个貌似早就国外的论坛上传开了，但国内好像还鲜有人知，据苹果官方的解释是Body是NSData类型，即可能为二进制内容，而且还没有大小限制，所以可能会很大，为了性能考虑，索性就拦截时就不拷贝了（内流满面脸）。为了解决这个问题，我们可以通过把Body数据放到Header中，不过Header的大小好像是有限制的，我试过2M是没有问题，不过超过10M就直接Request timeout了。。。而且当Body数据为二进制数据时这招也没辙了，因为Header里都是文本数据，另一种方案就是用一个NSDictionary或NSCache保存没有请求的Body数据，用URL为key，最后方法就是别用NSURLSession，老老实实用古老的NSURLConnection算了。。。你以为这么就结束了吗？并没有，后来查了大量的资料发现，既然post请求的httpbody没有苹果复制下来，那我们就不用httpbody，我们再往底层去看就会发现HTTPBodyStream这个东西我们可以通过他来获取请求的body体具体代吗如下</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#这样之后的req就是携带了body体的request啦，可以愉快地做post请求啦。"><span class="nav-text">这样之后的req就是携带了body体的request啦，可以愉快地做post请求啦。</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#6-5：WKWebview是新出的浏览器控件，这里就不多说了，WKWebview不走URL-Loading-System，所以也不会被拦截，不过也是有办法的，但是因为这次项目中没有用到，所以没有过多的去研究，后续我会写一篇关于这个博客，不是很难，依旧是runtime大法。"><span class="nav-text">6.5：WKWebview是新出的浏览器控件，这里就不多说了，WKWebview不走URL Loading System，所以也不会被拦截，不过也是有办法的，但是因为这次项目中没有用到，所以没有过多的去研究，后续我会写一篇关于这个博客，不是很难，依旧是runtime大法。</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#6-6：SNI环境，这个可是坑了我好久好久的东西，所以我会放在最后去说，SNI环境因为涉及到证书验证所以是在https的基础上来说的，SNI（Server-Name-Indication）是为了解决一个服务器使用多个域名和证书的扩展。一句话简述它的工作原理就是，在连接到服务器建立SSL链接之前先发送要访问站点的域名（Hostname），这样服务器根据这个域名返回一个合适的证书。其实关于SNI环境在这里就不过多解释，阿里云文档有很明白的解释，同时他也有安卓和iOS在SNI环境下的处理文档，我们发现安卓部分写的很详细，可是已到了iOS这边就这样了："><span class="nav-text">6.6：SNI环境，这个可是坑了我好久好久的东西，所以我会放在最后去说，SNI环境因为涉及到证书验证所以是在https的基础上来说的，SNI（Server Name Indication）是为了解决一个服务器使用多个域名和证书的扩展。一句话简述它的工作原理就是，在连接到服务器建立SSL链接之前先发送要访问站点的域名（Hostname），这样服务器根据这个域名返回一个合适的证书。其实关于SNI环境在这里就不过多解释，阿里云文档有很明白的解释，同时他也有安卓和iOS在SNI环境下的处理文档，我们发现安卓部分写的很详细，可是已到了iOS这边就这样了：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#三行文字加三个链接就完事了。其实在遇到这个坑的时候我也查过很多相关资料，无非就是这三行话加这三个链接复制来复制去，没有实质性的进展，大部分公司或者是项目没有这么重的Httpdns需求，所以也就不会有这个环境，即使遇到了也就直接关闭httpdns了，后来只能自己去用CFNetwork一点点实现。具体代码就不跟大家粘贴了因为涉及到一些公司内部的代码，不过我会把我主要的参考资料发给大家。这里有个小技巧，因为都在说CFNetwork是比较底层的网络实现，好多东西需要开发者自行处理比如一些变量的释放之类的，所以我们能少用尽量少用，因为Cfnetwork是为SNI-https-环境服务-所以我们在拦截判断的时候可以区分是用上层的网络请求转发还是用底层的cfnetwork来转发，"><span class="nav-text">三行文字加三个链接就完事了。其实在遇到这个坑的时候我也查过很多相关资料，无非就是这三行话加这三个链接复制来复制去，没有实质性的进展，大部分公司或者是项目没有这么重的Httpdns需求，所以也就不会有这个环境，即使遇到了也就直接关闭httpdns了，后来只能自己去用CFNetwork一点点实现。具体代码就不跟大家粘贴了因为涉及到一些公司内部的代码，不过我会把我主要的参考资料发给大家。这里有个小技巧，因为都在说CFNetwork是比较底层的网络实现，好多东西需要开发者自行处理比如一些变量的释放之类的，所以我们能少用尽量少用，因为Cfnetwork是为SNI(https)环境服务,所以我们在拦截判断的时候可以区分是用上层的网络请求转发还是用底层的cfnetwork来转发，</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#我是这么做的。"><span class="nav-text">我是这么做的。</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#6-7：在NSURLProtocol中的那几个类方法中是可以发送同步请求的，但是在实例方法发送同步请求就会卡死，所以实例方法中不能有任何的阻塞，进行同步操作。不然就卡死。"><span class="nav-text">6.7：在NSURLProtocol中的那几个类方法中是可以发送同步请求的，但是在实例方法发送同步请求就会卡死，所以实例方法中不能有任何的阻塞，进行同步操作。不然就卡死。</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#7：总结"><span class="nav-text">7：总结</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Molier</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">茉莉儿的小站</div>
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.1"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<script type="text/javascript">
+const gitalk = new Gitalk({
+clientID: '991238e983176ecf9dbd',
+clientSecret: '299ec7e920c736040adf969a0b0a4148ade5953f',
+repo: 'GitMent',
+owner: 'MolierQueen',
+admin: 'MolierQueen'.split(','),
+pagerDirection: 'first',
+id: md5(window.location.pathname),
+distractionFreeMode: false
+})
+gitalk.render('gitalk-container')
+</script>
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,Facebook,Twitter,Linkedin";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+  
+<!-- <script type="text/javascript"
+color="255,255,255" opacity='1' zIndex="-2" count="100" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script> -->
+
+
+</body>
+</html>

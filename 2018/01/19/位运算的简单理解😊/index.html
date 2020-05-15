@@ -1,0 +1,1405 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-mac-osx.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="KAj10O4WT-YoszaSxxDUTKP4VzNZxQwduVLhOojJJ7U" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.1" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.1" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.0.1',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+  
+  <meta name="keywords" content="算法,C语言,排序," />
+
+
+<meta name="description" content="1：背景从现代计算机中所有的数据二进制的形式存储在设备中。即0、1两种状态，计算机对二进制数据进行的运算(+、-、*、/)都是叫位运算，即将符号位共同参与运算的运算。 我们每一种语言最终都会通过编译器转换成机器语言来执行，所以直接使用底层的语言就不需要便编译器的转换工作从而得到更高的执行效率，当然可读性可能会降低，这也是为什么汇编在大部分情况下有更快的速度。项目中合理的运用位运算能提高我们代码的执">
+<meta name="keywords" content="算法,C语言,排序">
+<meta property="og:type" content="article">
+<meta property="og:title" content="位运算的简单理解😊">
+<meta property="og:url" content="https://oliverqueen.cn/2018/01/19/位运算的简单理解😊/index.html">
+<meta property="og:site_name" content="Molier">
+<meta property="og:description" content="1：背景从现代计算机中所有的数据二进制的形式存储在设备中。即0、1两种状态，计算机对二进制数据进行的运算(+、-、*、/)都是叫位运算，即将符号位共同参与运算的运算。 我们每一种语言最终都会通过编译器转换成机器语言来执行，所以直接使用底层的语言就不需要便编译器的转换工作从而得到更高的执行效率，当然可读性可能会降低，这也是为什么汇编在大部分情况下有更快的速度。项目中合理的运用位运算能提高我们代码的执">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-05-14T09:51:04.108Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="位运算的简单理解😊">
+<meta name="twitter:description" content="1：背景从现代计算机中所有的数据二进制的形式存储在设备中。即0、1两种状态，计算机对二进制数据进行的运算(+、-、*、/)都是叫位运算，即将符号位共同参与运算的运算。 我们每一种语言最终都会通过编译器转换成机器语言来执行，所以直接使用底层的语言就不需要便编译器的转换工作从而得到更高的执行效率，当然可读性可能会降低，这也是为什么汇编在大部分情况下有更快的速度。项目中合理的运用位运算能提高我们代码的执">
+
+
+
+
+
+
+  <link rel="canonical" href="https://oliverqueen.cn/2018/01/19/位运算的简单理解😊/"/>
+
+
+  <title>位运算的简单理解😊 | Molier</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Molier</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">Tomorrow is another day</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://oliverqueen.cn/2018/01/19/位运算的简单理解😊/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Molier">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ws4.sinaimg.cn/large/006tKfTcgy1fnqkpikcyeg30f00f0njv.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Molier">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">位运算的简单理解😊</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-19T14:20:39+08:00">2018-01-19</time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2020-05-14T17:51:04+08:00">2020-05-14</time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/iOS开发/" itemprop="url" rel="index"><span itemprop="name">iOS开发</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <script src="/assets/js/APlayer.min.js"> </script><h2 id="1：背景"><a href="#1：背景" class="headerlink" title="1：背景"></a>1：背景</h2><p>从现代计算机中所有的数据二进制的形式存储在设备中。即0、1两种状态，计算机对二进制数据进行的运算(+、-、*、/)都是叫位运算，即将符号位共同参与运算的运算。</p>
+<p>我们每一种语言最终都会通过编译器转换成机器语言来执行，所以直接使用底层的语言就不需要便编译器的转换工作从而得到更高的执行效率，当然可读性可能会降低，这也是为什么汇编在大部分情况下有更快的速度。项目中合理的运用位运算能提高我们代码的执行效率。</p>
+<p>在iOS系统中位运算多见于枚举中，其他地方很少见，因为位运算是底层的计算机语言，而在iOS开发中不管是Objective—C还是Swift都属于高级的编程语言，大量的位运算都被苹果封装了起来，我们只关心调用的接口不用关心内部的实现。</p>
+<figure class="highlight elm"><table><tr><td class="code"><pre><span class="line">typedef <span class="type">NS_OPTIONS</span>(<span class="type">NSUInteger</span>, <span class="type">NSLayoutFormatOptions</span>) &#123;</span><br><span class="line">    <span class="type">NSLayoutFormatAlignAllLeft</span> = (1 &lt;&lt; <span class="type">NSLayoutAttributeLeft</span>),</span><br><span class="line">    <span class="type">NSLayoutFormatAlignAllRight</span> = (1 &lt;&lt; <span class="type">NSLayoutAttributeRight</span>),</span><br><span class="line">    <span class="type">NSLayoutFormatAlignAllTop</span> = (1 &lt;&lt; <span class="type">NSLayoutAttributeTop</span>),</span><br><span class="line">    <span class="type">NSLayoutFormatAlignAllBottom</span> = (1 &lt;&lt; <span class="type">NSLayoutAttributeBottom</span>),</span><br><span class="line">    <span class="type">NSLayoutFormatAlignAllLeading</span> = (1 &lt;&lt; <span class="type">NSLayoutAttributeLeading</span>),</span><br><span class="line">    <span class="type">NSLayoutFormatAlignAllTrailing</span> = (1 &lt;&lt; <span class="type">NSLayoutAttributeTrailing</span>),</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="10：计算机计算原理"><a href="#10：计算机计算原理" class="headerlink" title="10：计算机计算原理"></a>10：计算机计算原理</h2><h4 id="加法和乘法"><a href="#加法和乘法" class="headerlink" title="加法和乘法"></a>加法和乘法</h4><p>举一个简单的例子来看下CPU是如何进行计算的，比如这行代码</p>
+<figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">int a</span> = 35;</span><br><span class="line"><span class="attribute">int b</span> = 47;</span><br><span class="line"><span class="attribute">int c</span> = a + b;</span><br></pre></td></tr></table></figure>
+<p>计算两个数的和，因为在计算机中都是以二进制来进行运算，所以上面我们所给的int变量会在机器内部先转换为二进制在进行相加</p>
+<figure class="highlight tap"><table><tr><td class="code"><pre><span class="line">35: <span class="number"> 0 </span>0<span class="number"> 1 </span>0<span class="number"> 0 </span>0<span class="number"> 1 </span>1</span><br><span class="line">47: <span class="number"> 0 </span>0<span class="number"> 1 </span>0<span class="number"> 1 </span>1<span class="number"> 1 </span>1</span><br><span class="line">————————————————————</span><br><span class="line">82: <span class="number"> 0 </span>1<span class="number"> 0 </span>1<span class="number"> 0 </span>0<span class="number"> 1 </span>0</span><br></pre></td></tr></table></figure>
+<p>再来看下乘法，执行如下的代码</p>
+<figure class="highlight tap"><table><tr><td class="code"><pre><span class="line">int a = 3;</span><br><span class="line">int b = 2;</span><br><span class="line">int c = a * b;</span><br><span class="line"></span><br><span class="line">3: <span class="number"> 0 </span>0<span class="number"> 0 </span>0<span class="number"> 0 </span>0<span class="number"> 1 </span>1  *  2</span><br><span class="line">————————————————————</span><br><span class="line">6: <span class="number"> 0 </span>0<span class="number"> 0 </span>0<span class="number"> 0 </span>1<span class="number"> 1 </span>0</span><br><span class="line"></span><br><span class="line">*********************************************</span><br><span class="line"></span><br><span class="line">int a = 3;</span><br><span class="line">int b = 4;</span><br><span class="line">int c = a * b;</span><br><span class="line"></span><br><span class="line">3: <span class="number"> 0 </span>0<span class="number"> 0 </span>0<span class="number"> 0 </span>0<span class="number"> 1 </span>1  *  4</span><br><span class="line">————————————————————</span><br><span class="line">12: <span class="number"> 0 </span>0<span class="number"> 0 </span>0<span class="number"> 1 </span>1<span class="number"> 0 </span>0</span><br><span class="line"></span><br><span class="line">*********************************************</span><br><span class="line"></span><br><span class="line">int a = 3;</span><br><span class="line">int b = 8;</span><br><span class="line">int c = a * b;</span><br><span class="line"></span><br><span class="line">3: <span class="number"> 0 </span>0<span class="number"> 0 </span>0<span class="number"> 0 </span>0<span class="number"> 1 </span>1  *  8</span><br><span class="line">————————————————————</span><br><span class="line">24: <span class="number"> 0 </span>0<span class="number"> 0 </span>1<span class="number"> 1 </span>0<span class="number"> 0 </span>0</span><br></pre></td></tr></table></figure>
+<p>通过以上运算可以看出当用a乘b，且如果b满足2^N的时候 就相当于把a的二进制数据向左移动N位，放到代码中 我们可以这样来写 <strong>a &lt;&lt; N</strong>,所以上面<strong>3 <em> 2、3 </em> 4、3 * 8</strong>其实是可以写成<strong>3&lt;&lt;1、3&lt;&lt;2、3&lt;&lt;3</strong>，运算结果都是一样的。</p>
+<p>那假如相乘的两个数都不满足2^N怎么办呢？其实这个时候编译器会将其中一个数拆分成多个满足2^N的数相加的情况，打个比方</p>
+<figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">int a</span> = 15;				<span class="attribute">i</span><span class="attribute">n</span><span class="attribute">t</span> <span class="attribute">a</span> = 15</span><br><span class="line">int b = 13;      =&gt;    	int b = (4 + 8 + 1)</span><br><span class="line">int c = a * b;			<span class="attribute">i</span><span class="attribute">n</span><span class="attribute">t</span> <span class="attribute">c</span> = a * b</span><br></pre></td></tr></table></figure>
+<p>最后其实执行相乘运算就会变成这样 <strong>15 <em> 4 + 15 </em> 8 + 15 * 1</strong>，按照上文说的移位来转换为位运算就会变成<strong>15 &lt;&lt; 2 + 15 &lt;&lt; 3 + 15 &lt;&lt; 0</strong></p>
+<h4 id="减法和除法"><a href="#减法和除法" class="headerlink" title="减法和除法"></a>减法和除法</h4><p>减法也是与加法同理只不过计算机内减法操作就是加上一个数的负数形式，且在操作系统中都是以补码的形式进行操作(因为正数的源码补码反码都与本身相同)。首先, 因为人脑可以知道第一位是符号位, 在计算的时候我们会根据符号位, 选择对真值区域的加减. 但是对于计算机, 加减乘数已经是最基础的运算, 要设计的尽量简单. 计算机辨别”符号位”显然会让计算机的基础电路设计变得十分复杂! 于是人们想出了将符号位也参与运算的方法. 我们知道, 根据运算法则减去一个正数等于加上一个负数, 即: 1-1 = 1 + (-1) = 0 , 所以机器可以只有加法而没有减法, 这样计算机运算的设计就更简单了.</p>
+<p>除法的话其实和乘法原理相同，不过乘法是左移而除法是右移，但是除法的计算量要比乘法大得多，其大部分的消耗都在拆分数值，和处理小数的步骤上，所以如果我们在进行生成变量的时候如果遇到多位的小数我们尽量把他换成string的形式，这也是为什么浮点运算会消耗大量的时钟周期(操作系统中每进行一个移位或者加法运算的过程所消耗的时间就是一个时钟周期，3.0GHz频率的CPU可以在一秒执行运算3.0<em>1024</em>1024*1024个时钟周期)</p>
+<h2 id="11：位运算符"><a href="#11：位运算符" class="headerlink" title="11：位运算符"></a>11：位运算符</h2><p>使用的运算符包括下面：</p>
+<table>
+<thead>
+<tr>
+<th>含义</th>
+<th>运算符</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> 左移</td>
+<td>&lt;&lt;</td>
+<td>0011  =&gt;  0110</td>
+</tr>
+<tr>
+<td> 右移</td>
+<td>&gt;&gt;</td>
+<td>0110  =&gt;  0011</td>
+</tr>
+<tr>
+<td> 按位或</td>
+<td>︳</td>
+<td>0011 <br> ——-  =&gt; 1011<br>1011</td>
+</tr>
+<tr>
+<td> 按位与</td>
+<td>&amp;</td>
+<td>0011 <br> ——-  =&gt; 1011<br>1011</td>
+</tr>
+<tr>
+<td> 按位取反</td>
+<td>~</td>
+<td>0011  =&gt; 1100</td>
+</tr>
+<tr>
+<td> 按位异或 (相同为零不同为一)</td>
+<td>^</td>
+<td>0011 <br> ——-  =&gt; 1000<br>1011</td>
+</tr>
+</tbody>
+</table>
+<h2 id="100：颜色转换"><a href="#100：颜色转换" class="headerlink" title="100：颜色转换"></a>100：颜色转换</h2><h4 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h4><p>上面说了iOS中经常见到的位运算的地方是在枚举中，那么颜色转换应该是除了枚举之外第二比较常用位运算的场景。打个比方设计师再给我们出设计稿的时候通常会在设计稿上按照16进制的样子给我们标色值。但是iOS中的UIColor并不支持使用十六进制的数据来初始化。所以我们需要将十六进制的色值转换为UIColor。</p>
+<h4 id="原理分析"><a href="#原理分析" class="headerlink" title="原理分析"></a>原理分析</h4><p>UIColor中通常是用传入RGB的数值来初始化，而且每个颜色的取值范围是十进制下的0~255，而设计同学又给的是十六进制数据，所以在操作系统中需要把这两种进制的数据统一成二进制来进行计算，这就用到了位运算。这里用一个十六进制的色值来举例子比如<strong>0xffa131</strong>我们要转换就要先理解其组成</p>
+<ul>
+<li><p>0x或者0X：十六进制的标识符，表示这个后面是个十六进制的数值，对数值本身没有任何意义</p>
+</li>
+<li><p>ff 颜色中的R值,转换为二进制为 1111 1111</p>
+</li>
+<li><p>a1 颜色中的G值,转换为二进制为 1010 0001</p>
+</li>
+<li><p>31 颜色中的B值,转换为二进制为 0011 0001</p>
+</li>
+<li>上述色彩值转换为二进制后为<strong>1111 1111 1010 0001 0011 0001(每一位十六进制的对应4位二进制，如果位数不够记得高位补零)</strong></li>
+</ul>
+<p>通常来讲十六进制的颜色是按照上面的RGB的顺序排列的，但是并不固定，有时候可能会在其中加A(Alpha)值，具体情况按照设计为准，本文以通用情况举例。</p>
+<p>综上，我们只需把对应位的值转换为10进制然后/255.0f就可得到RGB色彩值，从而转换为UIColor</p>
+<h4 id="转换代码"><a href="#转换代码" class="headerlink" title="转换代码"></a>转换代码</h4><p>先列出代码，后续解析</p>
+<figure class="highlight processing"><table><tr><td class="code"><pre><span class="line">- (UIColor *)colorWithHex:(<span class="keyword">long</span>)hexColor <span class="built_in">alpha</span>:(<span class="built_in">float</span>)opacity</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">//将传入的十六进制颜色0xffa131 转换为UIColor</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">float</span> <span class="built_in">red</span> = ((hexColor &amp; <span class="number">0xFF0000</span>) &gt;&gt; <span class="number">16</span>)/<span class="number">255.0</span>f;</span><br><span class="line">    <span class="built_in">float</span> <span class="built_in">green</span> = ((hexColor &amp; <span class="number">0xFF00</span>) &gt;&gt; <span class="number">8</span>)/<span class="number">255.0</span>f;</span><br><span class="line">    <span class="built_in">float</span> <span class="built_in">blue</span> = (hexColor &amp; <span class="number">0xFF</span>)/<span class="number">255.0</span>f;</span><br><span class="line">    <span class="keyword">return</span> [UIColor colorWithRed:<span class="built_in">red</span> <span class="built_in">green</span>:<span class="built_in">green</span> <span class="built_in">blue</span>:<span class="built_in">blue</span> <span class="built_in">alpha</span>:opacity];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>大概原理可以看出将RGB每个值都解析出来然后变成UIColor，先拿第一步转换红色值来说，我们按照运算顺序一步步来讲(默认将参数代入，用0xffa131代替hexColor)</p>
+<ul>
+<li><p><strong>0xffa131 &amp; 0xFF0000</strong></p>
+<p> 我们知道红色值是前两位也就是<strong>ff</strong>，所以这一步我们既然要取出红色值就要把其他位全部置零来排除干扰，这步操作便是如此，在计算机系统内是二进制来实现的，即：<br><br> 1111 1111 1010 0001 0011 0001<br>——————————————-  =&gt; &amp; =&gt; 1111 1111 0000 0000 0000<br><br> 1111 1111 0000 0000 0000 0000<br>这部操作做完后可以看出将除了R值之外的G值B值全部置零了，但是离最终结果还差点，因为0xFF是1111 1111，而我们的结果后面多出了16个0，所以便有了第二步操作</p>
+</li>
+<li><p><strong>&gt;&gt; 16</strong></p>
+<p>  将上一步得到的结果右移16位即得到<strong>0000 0000 0000 0000 1111 1111</strong>高位的零可以忽略，这也是最终的结果</p>
+</li>
+<li><p><strong>/ 255.0f</strong></p>
+<p>  这一步应该都知道UIColor中传入的数值范围在0~1，所以我们要做下转换</p>
+</li>
+<li><p>后续的G值和B值都是一样的，只是大家注意位数就可以了，<strong>值得注意的是两个二进制数进行位运算一定保证两个数的位数相同，位数不够的那个数高位要用0补齐</strong></p>
+</li>
+</ul>
+<h2 id="101：枚举"><a href="#101：枚举" class="headerlink" title="101：枚举"></a>101：枚举</h2><p>关于枚举中使用位运算我们之前也讲过，下面我们自己来写一个枚举(伪代码)</p>
+<figure class="highlight lsl"><table><tr><td class="code"><pre><span class="line">typedef NS_OPTIONS(NSUInteger, TestOptions) &#123;</span><br><span class="line">     TestOptionOne     =    <span class="number">1</span> &lt;&lt; <span class="number">0</span>, （<span class="number">000001</span>)</span><br><span class="line"></span><br><span class="line">  	 TestOptionTwo     =    <span class="number">1</span> &lt;&lt; <span class="number">1</span>,	(<span class="number">000010</span>)</span><br><span class="line"></span><br><span class="line">	 TestOptionThree   =    <span class="number">1</span> &lt;&lt; <span class="number">2</span>,	(<span class="number">000100</span>)</span><br><span class="line"></span><br><span class="line">	 TestOptionFour    =    <span class="number">1</span> &lt;&lt; <span class="number">3</span>,	(<span class="number">001000</span>)</span><br><span class="line"></span><br><span class="line">	 TestOptionFive    =    <span class="number">1</span> &lt;&lt; <span class="number">4</span>,	(<span class="number">010000</span>)</span><br><span class="line"></span><br><span class="line">	 TestOptionSix     =    <span class="number">1</span> &lt;&lt; <span class="number">5</span>,	(<span class="number">100000</span>)</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">.</span><br></pre></td></tr></table></figure>
+<ul>
+<li>解析<br>上面的枚举我后面用括号表明了位移后对应的二进制的值。这样写枚举的好处是我可以对其中选项多选比如<strong>TestOptionOne | TestOptionTwo （000001 | 000010 =&gt; 000011）</strong> 或者有其他的自定义组合。</li>
+</ul>
+<h2 id="110：加密"><a href="#110：加密" class="headerlink" title="110：加密"></a>110：加密</h2><p>在iOS中我们可以利用异或来进行加解密，异或的特性如下<br><figure class="highlight nix"><table><tr><td class="code"><pre><span class="line">A ^ <span class="attr">B</span> = <span class="attr">C</span> =&gt; C ^ <span class="attr">A</span> = <span class="attr">B</span> =&gt; C ^ <span class="attr">B</span> = A</span><br></pre></td></tr></table></figure></p>
+<p>上文我们可以把A认为是需要加密的数据，B认为是密钥 C是加密后的数据<br>比如:</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line">main()</span><br><span class="line">&#123;</span><br><span class="line">   <span class="keyword">char</span> a[]=<span class="string">"MyPassword"</span>;        <span class="comment">/*要加密的密码*/</span></span><br><span class="line">   <span class="keyword">char</span> b[]=<span class="string">"cryptographic"</span>;     <span class="comment">/*密钥*/</span></span><br><span class="line">   <span class="keyword">int</span> i;</span><br><span class="line">   <span class="comment">/*加密代码*/</span></span><br><span class="line">   <span class="keyword">for</span>(i=<span class="number">0</span>;a[i]!=<span class="string">'\0'</span>;i++)</span><br><span class="line">a[i]=a[i]^b[i];</span><br><span class="line">   <span class="built_in">printf</span>(<span class="string">"You Password encrypted: %s\n"</span>,a);</span><br><span class="line">   <span class="comment">/*解密代码*/</span></span><br><span class="line">   <span class="keyword">for</span>(i=<span class="number">0</span>;a[i]!=<span class="string">'\0'</span>;i++)</span><br><span class="line">a[i]=a[i]^b[i];</span><br><span class="line">   <span class="built_in">printf</span>(<span class="string">"You Password: %s\n"</span>,a);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="111：其他应用"><a href="#111：其他应用" class="headerlink" title="111：其他应用"></a>111：其他应用</h2><ul>
+<li>记得iOS总有一道面试题<strong>在不使用第三个变量的情况下交换两个变量的值</strong>，这里用到异或的上面加解密中的特性。我有x、y两个个变量，做如下位运算操作</li>
+</ul>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">void</span> exchange(int x , int y)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="attribute">x</span><span class="regexp"> ^=</span> y;</span><br><span class="line">    <span class="attribute">y</span><span class="regexp"> ^=</span> x;</span><br><span class="line">    <span class="attribute">x</span><span class="regexp"> ^=</span> y;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>判断一个数的奇偶性，其实我们可以用<strong>%2</strong>来判断，代码量不高，但是之前讲过，除法运算的时钟周期非常多，所以代码虽然不多并不代表效率高，我们可以用如下运算来完成:</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">(<span class="keyword">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (x&amp;<span class="number">1</span>) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"奇数"</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"偶数"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>原理很简单，因为二进制是满二进一，一旦超过1就会变0并进一位，这时候和00001做<strong>&amp;</strong>操作一定会为0，反之不为零。这样写效率会更高。</p>
+<ul>
+<li>计算两个数的平均值，通常我们都是（x+y）/2,先不考虑效率问题，这样还会引起一个其他的问题，那就是x+y的值很有可能溢出大于INT_MAX，所以我们采用位运算的办法来解决即可：</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">average</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;    </span><br><span class="line">    <span class="keyword">return</span> (x&amp;y)+((x^y)&gt;&gt;<span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="1000：总结"><a href="#1000：总结" class="headerlink" title="1000：总结"></a>1000：总结</h2><p>其实位运算的应用远远不止这些，在算法方面适当的使用还是很有帮助的。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Molier
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://oliverqueen.cn/2018/01/19/位运算的简单理解😊/" title="位运算的简单理解😊">https://oliverqueen.cn/2018/01/19/位运算的简单理解😊/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/算法/" rel="tag"># 算法</a>
+          
+            <a href="/tags/C语言/" rel="tag"># C语言</a>
+          
+            <a href="/tags/排序/" rel="tag"># 排序</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/19/test-source/" rel="prev" title="Welcome To My Site">
+                Welcome To My Site <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://ws4.sinaimg.cn/large/006tKfTcgy1fnqkpikcyeg30f00f0njv.gif"
+                alt="Molier" />
+            
+              <p class="site-author-name" itemprop="name">Molier</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">29</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    <span class="site-state-item-count">48</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:371099694@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/zhangninghao?refer_flag=1005055010_" target="_blank" title="新浪微博">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>新浪微博</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/fd21f41fb522" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-superpowers"></i>简书</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/586c624bac502e12d631545f" target="_blank" title="掘金">
+                      
+                        <i class="fa fa-fw fa-juejin"></i>掘金</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Friends
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://reuixiy.github.io/" rel="external nofollow" title="reuixiy" target="_blank">reuixiy</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://billchan.me/" rel="external nofollow" title="CMB" target="_blank">CMB</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://mashirosorata.vicp.io/" rel="external nofollow" title="Mashiro_Sorata" target="_blank">Mashiro_Sorata</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.saitjr.com/" rel="external nofollow" title="saitjr <br>(iOS大神，持续集成，几乎全栈)" target="_blank">saitjr <br>(iOS大神，持续集成，几乎全栈)</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+         
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1：背景"><span class="nav-text">1：背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10：计算机计算原理"><span class="nav-text">10：计算机计算原理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#加法和乘法"><span class="nav-text">加法和乘法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#减法和除法"><span class="nav-text">减法和除法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11：位运算符"><span class="nav-text">11：位运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#100：颜色转换"><span class="nav-text">100：颜色转换</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#背景"><span class="nav-text">背景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#原理分析"><span class="nav-text">原理分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#转换代码"><span class="nav-text">转换代码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#101：枚举"><span class="nav-text">101：枚举</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#110：加密"><span class="nav-text">110：加密</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#111：其他应用"><span class="nav-text">111：其他应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1000：总结"><span class="nav-text">1000：总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Molier</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">茉莉儿的小站</div>
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.1"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<script type="text/javascript">
+const gitalk = new Gitalk({
+clientID: '991238e983176ecf9dbd',
+clientSecret: '299ec7e920c736040adf969a0b0a4148ade5953f',
+repo: 'GitMent',
+owner: 'MolierQueen',
+admin: 'MolierQueen'.split(','),
+pagerDirection: 'first',
+id: md5(window.location.pathname),
+distractionFreeMode: false
+})
+gitalk.render('gitalk-container')
+</script>
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,Facebook,Twitter,Linkedin";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+  
+<!-- <script type="text/javascript"
+color="255,255,255" opacity='1' zIndex="-2" count="100" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script> -->
+
+
+</body>
+</html>

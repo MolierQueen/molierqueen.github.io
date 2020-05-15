@@ -1,0 +1,1402 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-mac-osx.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="KAj10O4WT-YoszaSxxDUTKP4VzNZxQwduVLhOojJJ7U" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.1" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.1" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.0.1',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+  
+  <meta name="keywords" content="音频,唱吧,K歌,AVFoundation," />
+
+
+<meta name="description" content="简介AVFoundation在iOS上多媒体的处理主要依赖的是AVFoundation框架，而AVFoundation是基于CoreAudio、CoreVideo、CoreMedia、CoreAnimation之上高层框架，在AVFoundation框架之上苹果还提供给我们更高层一些处理媒体数据的框架。">
+<meta name="keywords" content="音频,唱吧,K歌,AVFoundation">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于实现唱吧清唱功能的理解">
+<meta property="og:url" content="https://oliverqueen.cn/2018/06/19/MusicAbout/index.html">
+<meta property="og:site_name" content="Molier">
+<meta property="og:description" content="简介AVFoundation在iOS上多媒体的处理主要依赖的是AVFoundation框架，而AVFoundation是基于CoreAudio、CoreVideo、CoreMedia、CoreAnimation之上高层框架，在AVFoundation框架之上苹果还提供给我们更高层一些处理媒体数据的框架。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://wx4.sinaimg.cn/large/006tNc79gy1fsgu5859czj30ol0et75h.jpg">
+<meta property="og:image" content="https://wx2.sinaimg.cn/large/006tNc79gy1fsgusaq6ttj316208i41t.jpg">
+<meta property="og:image" content="https://wx1.sinaimg.cn/large/006tNc79gy1fsgvxmt21cj310c0dpq4l.jpg">
+<meta property="og:image" content="https://wx1.sinaimg.cn/large/006tNc79gy1fsgv4t4pd6j30n602ujsg.jpg">
+<meta property="og:image" content="https://wx2.sinaimg.cn/large/006tNc79gy1fsgxpydeq8j30hw0cwq32.jpg">
+<meta property="og:updated_time" content="2020-05-15T08:44:23.871Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="关于实现唱吧清唱功能的理解">
+<meta name="twitter:description" content="简介AVFoundation在iOS上多媒体的处理主要依赖的是AVFoundation框架，而AVFoundation是基于CoreAudio、CoreVideo、CoreMedia、CoreAnimation之上高层框架，在AVFoundation框架之上苹果还提供给我们更高层一些处理媒体数据的框架。">
+<meta name="twitter:image" content="https://wx4.sinaimg.cn/large/006tNc79gy1fsgu5859czj30ol0et75h.jpg">
+
+
+
+
+
+
+  <link rel="canonical" href="https://oliverqueen.cn/2018/06/19/MusicAbout/"/>
+
+
+  <title>关于实现唱吧清唱功能的理解 | Molier</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Molier</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">Tomorrow is another day</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://oliverqueen.cn/2018/06/19/MusicAbout/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Molier">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ws4.sinaimg.cn/large/006tKfTcgy1fnqkpikcyeg30f00f0njv.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Molier">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">关于实现唱吧清唱功能的理解</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-19T14:44:56+08:00">2018-06-19</time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2020-05-15T16:44:23+08:00">2020-05-15</time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/iOS开发/" itemprop="url" rel="index"><span itemprop="name">iOS开发</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <script src="/assets/js/APlayer.min.js"> </script><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><h4 id="AVFoundation"><a href="#AVFoundation" class="headerlink" title="AVFoundation"></a>AVFoundation</h4><p>在iOS上多媒体的处理主要依赖的是AVFoundation框架，而AVFoundation是基于CoreAudio、CoreVideo、CoreMedia、CoreAnimation之上高层框架，在AVFoundation框架之上苹果还提供给我们更高层一些处理媒体数据的框架。</p>
+<p><img src="https://wx4.sinaimg.cn/large/006tNc79gy1fsgu5859czj30ol0et75h.jpg" alt=""><br><a id="more"></a></p>
+<p>如AVKit、iOS的UIKit、OS的AppKit。AVFoundation提供了大量强大的工具集，可通过这个框架处理音视频编程，但是如同苹果中的的Kit一样，封装的越高级，个性化就会困难些，一些实际项目中的奇葩需求难以实现。本章所讲的内容是AVFoundation上层加下层的AVAudioEngine实现。</p>
+<h4 id="AVAudioEngine"><a href="#AVAudioEngine" class="headerlink" title="AVAudioEngine"></a>AVAudioEngine</h4><p>AVAudioEngine是Objective-C的音频API接口，具有低延迟(low-latency)和实时(real-time)的音频功能，并且具有如下特点：</p>
+<ul>
+<li><p>读写所有Core Audio支持的格式音频文件</p>
+</li>
+<li><p>播放和录音使用 (files) 和音频缓冲区 (buffers)</p>
+</li>
+<li><p>动态配置音频处理模块 (audio processing blocks)</p>
+</li>
+<li><p>可以进行音频挖掘处理 (tap processing)</p>
+</li>
+<li><p>可以进行立体声音频信号混合和3d效果的混合</p>
+</li>
+<li><p>音乐设备数字接口MIDI 回放和控制，通过乐器的采样器</p>
+</li>
+</ul>
+<p>AVAudioEngine的工作原理可以简单的分为三个部分:</p>
+<p><img src="https://wx2.sinaimg.cn/large/006tNc79gy1fsgusaq6ttj316208i41t.jpg" alt=""></p>
+<p>从图中可以看出AVAudioEngine的每一步操作都是一个音频操作节点(Node)，每个完整的操作都包含输入节点和输出节点以及经中间的若干个处理节点，包括但不限于，添加音效、混音、音频处理等。整体的流程和GPUImage的流程差不多，都是链式结构，通过节点来链接成一个完整的流水线，其中每个节点都有自己特有的属性，可以通过改变属性的值来改变经由该节点后的音频输出效果，用音效节点举例：一个声音流通过这个音效节点，假如这个节点可以给该段声音添加一个回响的效果，那么通过该节点特有的属性可以设置回想的间隔、干湿程度等，这样一来经过这个节点处理过的声音流就会变成我们想要的样子，然后他作为为一个输入了再次流入其他节点。上图的Mixer其实是包含若干个这样的音效节点</p>
+<p><img src="https://wx1.sinaimg.cn/large/006tNc79gy1fsgvxmt21cj310c0dpq4l.jpg" alt=""></p>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>清唱的功能很简单，就是通过麦克风录制声音，然后添加音效或者做一些处理之后再输出，因为不要配乐，所以省略了一大部分操作(添加配乐完整K歌在下期会讲到)，但是有一个问题就是耳返，也叫返送：</p>
+<p><img src="https://wx1.sinaimg.cn/large/006tNc79gy1fsgv4t4pd6j30n602ujsg.jpg" alt=""></p>
+<p>这个东西是必不可少的，因为有了耳返你就可以实时调整自己的声音，极大的降低了走调的风险和尴尬，一个很简单的例子，现在有不少人喜欢在水房唱歌或者是洗澡的时候唱歌，原因就是在水房或者是卫生间通常会有回音，而回音就是天然的耳返，所以在有回音的地方唱歌就会感觉自己的声音洪亮而且音准很好(因为你可以实时的通过回音来调整自己的声调)。演唱会上唱歌的人的耳机中都是耳返。而且耳返要有一个要求就是，你所听到的你自己的声音一定要和观众或者是其他的人听到的一样，不然就不会有作用，我们平时自己说话自己能听到是因为声音通过骨传导到达我们的耳朵，而听众听到的是通过空气介质传播，所以是否有耳返直接决定了你演唱质量的好坏。</p>
+<p>使用AVAudioEngine来完成这个功能其实就是运用了他的实时音频的特点，他可以几乎在没有延迟的情况下同时创建音频的输入和输出，而且对这个做了高度的封装使我们能更加关心音效调整</p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><h6 id="创建音频文件用来接收待录制的声音："><a href="#创建音频文件用来接收待录制的声音：" class="headerlink" title="创建音频文件用来接收待录制的声音："></a>创建音频文件用来接收待录制的声音：</h6><figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line"><span class="comment">//创建音频文件。</span></span><br><span class="line">   <span class="built_in">NSString</span> * path = <span class="built_in">NSSearchPathForDirectoriesInDomains</span>(<span class="built_in">NSDocumentDirectory</span>, <span class="built_in">NSUserDomainMask</span>, <span class="literal">YES</span>)[<span class="number">0</span>];</span><br><span class="line">   <span class="built_in">NSString</span> * filePath = [path stringByAppendingPathComponent:<span class="string">@"123.caf"</span>];</span><br><span class="line">   <span class="built_in">NSURL</span> * url = [<span class="built_in">NSURL</span> fileURLWithPath:filePath];</span><br></pre></td></tr></table></figure>
+<h6 id="创建AVAudioEngine，并打通输入和输出节点："><a href="#创建AVAudioEngine，并打通输入和输出节点：" class="headerlink" title="创建AVAudioEngine，并打通输入和输出节点："></a>创建AVAudioEngine，并打通输入和输出节点：</h6><ul>
+<li><p>创建AVAudioEngine，并初始化。这里要弄成属性不然会被释放，没有效果</p>
+<figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ViewController</span> ()</span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">AVAudioEngine</span> * engine;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">AVAudioMixerNode</span> * mixer;</span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight inform7"><table><tr><td class="code"><pre><span class="line">self.engine = <span class="comment">[<span class="comment">[AVAudioEngine alloc]</span> init]</span>;</span><br><span class="line">self.mixer = <span class="comment">[<span class="comment">[AVAudioMixerNode alloc]</span> init]</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>打通输入和输出节点：</p>
+<figure class="highlight sqf"><table><tr><td class="code"><pre><span class="line">[<span class="variable">_engine</span> connect:<span class="variable">_engine</span>.inputNode <span class="keyword">to</span>:<span class="variable">_engine</span>.outputNode <span class="built_in">format</span>:[<span class="variable">_engine</span>.inputNode inputFormatForBus:AVAudioPlayerNodeBufferLoops]];</span><br></pre></td></tr></table></figure>
+<p>所使用的是如下方法。</p>
+<figure class="highlight vbnet"><table><tr><td class="code"><pre><span class="line">/*!	@method connect:<span class="keyword">to</span>:format:</span><br><span class="line">	@abstract</span><br><span class="line">		Establish a connection between two nodes</span><br><span class="line">	@discussion</span><br><span class="line">		This calls connect:<span class="keyword">to</span>:fromBus:toBus:format: <span class="keyword">using</span> bus <span class="number">0</span> <span class="keyword">on</span> the source node,</span><br><span class="line">		<span class="keyword">and</span> bus <span class="number">0</span> <span class="keyword">on</span> the destination node, except <span class="keyword">in</span> the <span class="keyword">case</span> <span class="keyword">of</span> a destination which <span class="keyword">is</span> a mixer,</span><br><span class="line">		<span class="keyword">in</span> which <span class="keyword">case</span> the destination <span class="keyword">is</span> the mixer<span class="comment">'s nextAvailableInputBus.</span></span><br><span class="line">*/</span><br><span class="line">- (void)connect:(AVAudioNode *)node1 <span class="keyword">to</span>:(AVAudioNode *)node2 format:(AVAudioFormat * __nullable)format;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>开启AVAudioEngine:</p>
+<p>该方法可能会开启失败，需要开发者自定去处理</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="section">[_engine startAndReturnError:nil]</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>以上步骤走完后并且开启成功你就会发现你从耳机里面可以实时的听到你的声音了。</p>
+</li>
+<li><p>音效：</p>
+<p>正常来说光有耳返还不够，因为清唱虽然没有配乐伴奏，但是是支持用户调节音效的，类似于变声。这就用到AVAudioEngine中的AVAudioUnitEffect类。</p>
+<p><img src="https://wx2.sinaimg.cn/large/006tNc79gy1fsgxpydeq8j30hw0cwq32.jpg" alt=""></p>
+<ul>
+<li>1.AVAudioUnitReverb:混响，混响可以模拟咱们在一个空旷的环境，比如教堂、大房间等，这样咱们在说话的时候，就会有回音，并且声音也比较有立体感。其中该类别下面又分为<figure class="highlight elm"><table><tr><td class="code"><pre><span class="line">typedef <span class="type">NS_ENUM</span>(<span class="type">NSInteger</span>, <span class="type">AVAudioUnitReverbPreset</span>) &#123;</span><br><span class="line">  <span class="type">AVAudioUnitReverbPresetSmallRoom</span>       = 0,</span><br><span class="line">  <span class="type">AVAudioUnitReverbPresetMediumRoom</span>      = 1,</span><br><span class="line">  <span class="type">AVAudioUnitReverbPresetLargeRoom</span>       = 2,</span><br><span class="line">  <span class="type">AVAudioUnitReverbPresetMediumHall</span>      = 3,</span><br><span class="line">  <span class="type">AVAudioUnitReverbPresetLargeHall</span>       = 4,</span><br><span class="line">  <span class="type">AVAudioUnitReverbPresetPlate</span>           = 5,</span><br><span class="line">  <span class="type">AVAudioUnitReverbPresetMediumChamber</span>   = 6,</span><br><span class="line">  <span class="type">AVAudioUnitReverbPresetLargeChamber</span>    = 7,</span><br><span class="line">  <span class="type">AVAudioUnitReverbPresetCathedral</span>       = 8,</span><br><span class="line">  <span class="type">AVAudioUnitReverbPresetLargeRoom2</span>      = 9,</span><br><span class="line">  <span class="type">AVAudioUnitReverbPresetMediumHall2</span>     = 10,</span><br><span class="line">  <span class="type">AVAudioUnitReverbPresetMediumHall3</span>     = 11,</span><br><span class="line">  <span class="type">AVAudioUnitReverbPresetLargeHall2</span>      = 12</span><br><span class="line">  &#125; <span class="type">NS_ENUM_AVAILABLE</span>(10_10, 8_0);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>从名字可以看出是在模拟不同环境下的音效，比如其中的大中小屋子，大厅等。</p>
+<p>  该类别可以自定义的属性是wetDryMix，就是可以让我们的声音更空灵。</p>
+  <figure class="highlight crmsh"><table><tr><td class="code"><pre><span class="line">  /*! @<span class="keyword">property</span><span class="title"> </span>wetDryMix</span><br><span class="line">    @abstract</span><br><span class="line">    Blend of the wet <span class="keyword">and</span> dry signals</span><br><span class="line">    Range:      <span class="number">0</span> (all dry) -&gt; <span class="number">100</span> (all wet)</span><br><span class="line">    Unit:       Percent</span><br><span class="line">  */</span><br><span class="line">@<span class="keyword">property</span><span class="title"> </span>(nonatomic) float wetDryMix;</span><br></pre></td></tr></table></figure>
+<p>  可以通过如下方式创建AVAudioUnitReverb</p>
+  <figure class="highlight armasm"><table><tr><td class="code"><pre><span class="line"><span class="symbol">AVAudioUnitReverb</span> * <span class="keyword">reverd </span>= [[AVAudioUnitReverb alloc] init]<span class="comment">;</span></span><br><span class="line"><span class="keyword">reverd.wetDryMix </span>= <span class="number">100</span><span class="comment">;</span></span><br><span class="line">[<span class="keyword">reverd </span>loadFactoryPreset:AVAudioUnitReverbPresetLargeRoom]<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>2.AVAudioUnitEQ:均衡器，咱们可以使用均衡器来调节咱们音频的各个频段，比如，我想让我的低音更加浑厚，我就可以调节EQ的20-150HZ的频段，如果你想让你的声音更加明亮，那可以调节500-1KHZ的频段,这个调节涉及到一些专业方面的知识，如果只是想让用户去使用的话，可以用苹果给我们更封装好的几个效果即可，这个就类似于photoshop和美图秀秀的区别。</p>
+<figure class="highlight elm"><table><tr><td class="code"><pre><span class="line">typedef <span class="type">NS_ENUM</span>(<span class="type">NSInteger</span>, <span class="type">AVAudioUnitEQFilterType</span>) &#123;</span><br><span class="line">  <span class="type">AVAudioUnitEQFilterTypeParametric</span>        = 0,</span><br><span class="line">  <span class="type">AVAudioUnitEQFilterTypeLowPass</span>           = 1,</span><br><span class="line">  <span class="type">AVAudioUnitEQFilterTypeHighPass</span>          = 2,</span><br><span class="line">  <span class="type">AVAudioUnitEQFilterTypeResonantLowPass</span>   = 3,</span><br><span class="line">  <span class="type">AVAudioUnitEQFilterTypeResonantHighPass</span>  = 4,</span><br><span class="line">  <span class="type">AVAudioUnitEQFilterTypeBandPass</span>          = 5,</span><br><span class="line">  <span class="type">AVAudioUnitEQFilterTypeBandStop</span>          = 6,</span><br><span class="line">  <span class="type">AVAudioUnitEQFilterTypeLowShelf</span>          = 7,</span><br><span class="line">  <span class="type">AVAudioUnitEQFilterTypeHighShelf</span>         = 8,</span><br><span class="line">  <span class="type">AVAudioUnitEQFilterTypeResonantLowShelf</span>  = 9,</span><br><span class="line">  <span class="type">AVAudioUnitEQFilterTypeResonantHighShelf</span> = 10,</span><br><span class="line">  &#125; <span class="type">NS_ENUM_AVAILABLE</span>(10_10, 8_0);</span><br></pre></td></tr></table></figure>
+<p>上面是一些苹果帮助我们定义好的滤波器，比如低通滤波器 衰弱高频、可以引发共鸣的 低通滤波器<br>不过一般在清唱的时候这个用处不大，这个效果主要用到在配合伴奏的时候，如果伴奏音调过高，可以使用该方法适当的提高人声音调或者降低伴奏的音调，</p>
+<p>可以通过如下方式使用,然后更改这个节点一些属性值。</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">AVAudioUnitEQ * eq = [[AVAudioUnitEQ alloc] initWithNumberOfBands:1];</span><br><span class="line">AVAudioUnitEQFilterParameters *<span class="built_in"> filter </span>= eq.bands.firstObject;</span><br><span class="line">filter.filterType = AVAudioUnitEQFilterTypeResonantHighShelf;</span><br><span class="line">filter.bandwidth = 10;</span><br><span class="line">filter.gain = 20;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>3.AVAudioUnitDistortion：失真，这个就是我们常说的电音，一般说唱或者摇滚，重金属之类的曲风会用到这个效果，同样苹果给我们提供了预设的几个效果，如果不是有专业的需求我们可以直接使用。</p>
+<figure class="highlight elm"><table><tr><td class="code"><pre><span class="line">  typedef <span class="type">NS_ENUM</span>(<span class="type">NSInteger</span>, <span class="type">AVAudioUnitDistortionPreset</span>) &#123;</span><br><span class="line">    <span class="type">AVAudioUnitDistortionPresetDrumsBitBrush</span>           = 0,</span><br><span class="line">    <span class="type">AVAudioUnitDistortionPresetDrumsBufferBeats</span>        = 1,</span><br><span class="line">    <span class="type">AVAudioUnitDistortionPresetDrumsLoFi</span>               = 2,</span><br><span class="line">    <span class="type">AVAudioUnitDistortionPresetMultiBrokenSpeaker</span>      = 3,</span><br><span class="line">    <span class="type">AVAudioUnitDistortionPresetMultiCellphoneConcert</span>   = 4,</span><br><span class="line">    <span class="type">AVAudioUnitDistortionPresetMultiDecimated1</span>         = 5,</span><br><span class="line">    <span class="type">AVAudioUnitDistortionPresetMultiDecimated2</span>         = 6,</span><br><span class="line">    <span class="type">AVAudioUnitDistortionPresetMultiDecimated3</span>         = 7,</span><br><span class="line">    <span class="type">AVAudioUnitDistortionPresetMultiDecimated4</span>         = 8,</span><br><span class="line">    <span class="type">AVAudioUnitDistortionPresetMultiDistortedFunk</span>      = 9,</span><br><span class="line">    <span class="type">AVAudioUnitDistortionPresetMultiDistortedCubed</span>     = 10,</span><br><span class="line">    <span class="type">AVAudioUnitDistortionPresetMultiDistortedSquared</span>   = 11,</span><br><span class="line">    <span class="type">AVAudioUnitDistortionPresetMultiEcho1</span>              = 12,</span><br><span class="line">    <span class="type">AVAudioUnitDistortionPresetMultiEcho2</span>              = 13,</span><br><span class="line">    <span class="type">AVAudioUnitDistortionPresetMultiEchoTight1</span>         = 14,</span><br><span class="line">    <span class="type">AVAudioUnitDistortionPresetMultiEchoTight2</span>         = 15,</span><br><span class="line">    <span class="type">AVAudioUnitDistortionPresetMultiEverythingIsBroken</span> = 16,</span><br><span class="line">    <span class="type">AVAudioUnitDistortionPresetSpeechAlienChatter</span>      = 17,</span><br><span class="line">    <span class="type">AVAudioUnitDistortionPresetSpeechCosmicInterference</span> = 18,</span><br><span class="line">    <span class="type">AVAudioUnitDistortionPresetSpeechGoldenPi</span>          = 19,</span><br><span class="line">    <span class="type">AVAudioUnitDistortionPresetSpeechRadioTower</span>        = 20,</span><br><span class="line">    <span class="type">AVAudioUnitDistortionPresetSpeechWaves</span>             = 21</span><br><span class="line">&#125; <span class="type">NS_ENUM_AVAILABLE</span>(10_10, 8_0);</span><br></pre></td></tr></table></figure>
+<p>其实里面有些还是比较有感觉的，比如扭曲的立方体，或者外星人的喋喋不休等。有兴趣的可以说都试试</p>
+<p>使用方式同之前的效果一样</p>
+<figure class="highlight mipsasm"><table><tr><td class="code"><pre><span class="line">AVAudioUnitDistortion * <span class="keyword">dist </span>= [[AVAudioUnitDistortion alloc] init]<span class="comment">;</span></span><br><span class="line">[<span class="keyword">dist </span>loadFactoryPreset:AVAudioUnitDistortionPresetDrumsBitBrush]<span class="comment">;</span></span><br><span class="line"><span class="keyword">dist.preGain </span>= <span class="number">4</span><span class="comment">;</span></span><br><span class="line"><span class="keyword">dist.wetDryMix </span>= <span class="number">100</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>4.AVAudioUnitDelay:延迟，延迟就是 发出一个声音之后，过段时间再次发出，一直衰减到听不见。类似咱们的回声。可以通过里面的属性去细微的调节延迟的时间、速度等。</p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>添加音效：<br>主要流程就是链式关系</p>
+<p><strong>input(Mic或者音频文件) -&gt;效果器-&gt;output</strong></p>
+<p>如果是多个音效</p>
+<p><strong>input(Mic或者音频文件) -&gt;效果器1-&gt;效果器2-&gt;output</strong></p>
+<p>我们以AVAudioUnitReverb效果为例</p>
+<figure class="highlight sqf"><table><tr><td class="code"><pre><span class="line">AVAudioUnitReverb * reverb = [[AVAudioUnitReverb alloc] init];</span><br><span class="line">[reverb loadFactoryPreset:AVAudioUnitReverbPresetLargeRoom];</span><br><span class="line">reverb.wetDryMix = <span class="number">100</span>;</span><br><span class="line"><span class="comment">//把混响附着到音频引擎</span></span><br><span class="line">[<span class="variable">_engine</span> attachNode:reverb];</span><br><span class="line"><span class="comment">//依次链接输入-&gt; 混响 -&gt; 输出</span></span><br><span class="line">[<span class="variable">_engine</span> connect:<span class="variable">_engine</span>.inputNode <span class="keyword">to</span>:reverb <span class="built_in">format</span>:[<span class="variable">_engine</span>.inputNode inputFormatForBus:AVAudioPlayerNodeBufferLoops]];</span><br><span class="line">[<span class="variable">_engine</span> connect:reverb <span class="keyword">to</span>:<span class="variable">_engine</span>.outputNode <span class="built_in">format</span>:[<span class="variable">_engine</span>.inputNode inputFormatForBus:AVAudioPlayerNodeBufferLoops]];</span><br><span class="line"><span class="comment">//启动引擎</span></span><br><span class="line">[<span class="variable">_engine</span> startAndReturnError:<span class="literal">nil</span>];</span><br></pre></td></tr></table></figure>
+<p>同理添加多个音效则需要严格按照 <strong>input(Mic或者音频文件) -&gt;效果器1-&gt;效果器2-&gt;output</strong> 顺序来添加</p>
+<p>综上：完成了以上所有操作后你就可以实时在耳机中听到自己经过音效处理过的声音了，而且这样带着耳机唱歌效果会非常好，声音洪亮不易跑调。还可以针对不同的曲风调整自己的音效。</p>
+</li>
+</ul>
+<h6 id="声音混合、写入本地："><a href="#声音混合、写入本地：" class="headerlink" title="声音混合、写入本地："></a>声音混合、写入本地：</h6><p>我们需要把我们清唱的歌曲录制到本地，正常的录制时使用AVAudioRecorder来进行录制的，像这样</p>
+<figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line"><span class="built_in">AVAudioSession</span> * session = [<span class="built_in">AVAudioSession</span> sharedInstance];</span><br><span class="line">    [session setCategory:<span class="built_in">AVAudioSessionCategoryPlayAndRecord</span> error:<span class="literal">nil</span>];</span><br><span class="line">    [session setActive:<span class="literal">YES</span> error:<span class="literal">nil</span>];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="built_in">NSString</span> * path = <span class="built_in">NSSearchPathForDirectoriesInDomains</span>(<span class="built_in">NSDocumentDirectory</span>, <span class="built_in">NSUserDomainMask</span>, <span class="literal">YES</span>)[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">self</span>.filePath = [path stringByAppendingPathComponent:<span class="string">@"SoWeak"</span>];</span><br><span class="line">    <span class="keyword">self</span>.recordFileUrl = [<span class="built_in">NSURL</span> fileURLWithPath:<span class="keyword">self</span>.filePath];</span><br><span class="line"></span><br><span class="line">    <span class="comment">//设置参数</span></span><br><span class="line">    <span class="built_in">NSDictionary</span> *recordSetting = [[<span class="built_in">NSDictionary</span> alloc] initWithObjectsAndKeys:</span><br><span class="line">                                   <span class="comment">//采样率  8000/11025/22050/44100/96000（影响音频的质量）</span></span><br><span class="line">                                   [<span class="built_in">NSNumber</span> numberWithFloat: <span class="number">8000.0</span>],<span class="built_in">AVSampleRateKey</span>,</span><br><span class="line">                                   <span class="comment">// 音频格式</span></span><br><span class="line">                                   [<span class="built_in">NSNumber</span> numberWithInt: kAudioFormatLinearPCM],<span class="built_in">AVFormatIDKey</span>,</span><br><span class="line">                                   <span class="comment">//采样位数  8、16、24、32 默认为16</span></span><br><span class="line">                                   [<span class="built_in">NSNumber</span> numberWithInt:<span class="number">16</span>],<span class="built_in">AVLinearPCMBitDepthKey</span>,</span><br><span class="line">                                   <span class="comment">// 音频通道数 1 或 2</span></span><br><span class="line">                                   [<span class="built_in">NSNumber</span> numberWithInt: <span class="number">2</span>], <span class="built_in">AVNumberOfChannelsKey</span>,</span><br><span class="line">                                   <span class="comment">//录音质量</span></span><br><span class="line">                                   [<span class="built_in">NSNumber</span> numberWithInt:<span class="built_in">AVAudioQualityHigh</span>],<span class="built_in">AVEncoderAudioQualityKey</span>,</span><br><span class="line">                                   <span class="literal">nil</span>];</span><br><span class="line">    <span class="keyword">self</span>.recorder = [[<span class="built_in">AVAudioRecorder</span> alloc] initWithURL:<span class="keyword">self</span>.recordFileUrl settings:recordSetting error:<span class="literal">nil</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>.recorder) &#123;</span><br><span class="line">        _recorder.meteringEnabled = <span class="literal">YES</span>;</span><br><span class="line">        [_recorder prepareToRecord];</span><br><span class="line">        [_recorder record];</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>但是很明显这样录制声音需要开启session 而声音的session是一个单利，如果这样开启了那么我们后面就不能用AVAudioEngine来进行音频采集了，也就没有之前的效果。所有根据以往的经验，AVAudioEngine在开启引擎之后一定会有一个delegate或者是block回调出采集到的数据的。于是我们找到了AudioNode中的这个方法：<br><figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)installTapOnBus:(<span class="built_in">AVAudioNodeBus</span>)bus bufferSize:(<span class="built_in">AVAudioFrameCount</span>)bufferSize format:(<span class="built_in">AVAudioFormat</span> * __<span class="keyword">nullable</span>)format block:(<span class="built_in">AVAudioNodeTapBlock</span>)tapBlock;</span><br></pre></td></tr></table></figure></p>
+<p>其中的block的buffer 便是我们采集到的数据。</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*!	<span class="doctag">@typedef</span> AVAudioNodeTapBlock</span></span><br><span class="line"><span class="comment">	<span class="doctag">@abstract</span> A block that receives copies of the output of an AVAudioNode.</span></span><br><span class="line"><span class="comment">	<span class="doctag">@param</span> buffer</span></span><br><span class="line"><span class="comment">		a buffer of audio captured from the output of an AVAudioNode</span></span><br><span class="line"><span class="comment">	<span class="doctag">@param</span> when</span></span><br><span class="line"><span class="comment">		the time at which the buffer was captured</span></span><br><span class="line"><span class="comment">	<span class="doctag">@discussion</span></span></span><br><span class="line"><span class="comment">		CAUTION: This callback may be invoked on a thread other than the main thread.</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">typedef void (^AVAudioNodeTapBlock)(AVAudioPCMBuffer *buffer, AVAudioTime *when);</span><br></pre></td></tr></table></figure>
+<p>我们需要把buffer转成AVAudioFile然后通过AVAudioFile的write方法写入<br><figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">初始化AVAudioFile</span><br><span class="line">AVAudioFile * audioFile = [[AVAudioFile alloc] <span class="string">initForWriting:</span>url <span class="string">settings:</span>@&#123;&#125; <span class="string">error:</span>nil];</span><br><span class="line">然后在block中实现</span><br><span class="line">[audioFile <span class="string">writeFromBuffer:</span>buffer <span class="string">error:</span>nil];</span><br></pre></td></tr></table></figure></p>
+<p>这个时候写入成功然后播放本地录音文件发现只有自己的原生，并没有后面添加的音效，回音等效果。</p>
+<p>其实是因为我们虽然添加了音效但是我们没有把音效和原生混合在一起，即使我们实时听到的是没有问题的，但是当保存到本地之后如果没有做混合，系统会默认将最原始的声音写入本地，这里我们需要用到</p>
+<p><strong>AVAudioMixerNode</strong></p>
+<p>他是继承与AVAudioNode 也属于一个特殊音频处理节点，使用方式和之前的音效节点一样，添加在所有的处理之后、输出之前即可，像这样</p>
+<p><strong>input(Mic或者音频文件) -&gt;效果器1-&gt;效果器2-&gt;Mixer-&gt;output</strong></p>
+<p>不过唯一需要注意的是这个mixer最好也写成属性、不然会出问题。</p>
+<p>所以一个完整的带音效的清唱录制为：<br><figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line"><span class="comment">//创建音频文件。</span></span><br><span class="line">    <span class="built_in">NSString</span> * path = <span class="built_in">NSSearchPathForDirectoriesInDomains</span>(<span class="built_in">NSDocumentDirectory</span>, <span class="built_in">NSUserDomainMask</span>, <span class="literal">YES</span>)[<span class="number">0</span>];</span><br><span class="line">    <span class="built_in">NSString</span> * filePath = [path stringByAppendingPathComponent:<span class="string">@"123.caf"</span>];</span><br><span class="line">    <span class="built_in">NSURL</span> * url = [<span class="built_in">NSURL</span> fileURLWithPath:filePath];</span><br><span class="line">    <span class="built_in">AVAudioFile</span> * audioFile = [[<span class="built_in">AVAudioFile</span> alloc] initForWriting:url settings:@&#123;&#125; error:<span class="literal">nil</span>];</span><br><span class="line">    <span class="keyword">self</span>.recordFileUrl = url;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="built_in">AVAudioUnitReverb</span> * reverd = [[<span class="built_in">AVAudioUnitReverb</span> alloc] init];</span><br><span class="line">    reverd.wetDryMix = <span class="number">100</span>;</span><br><span class="line">    [reverd loadFactoryPreset:<span class="built_in">AVAudioUnitReverbPresetLargeRoom</span>];</span><br><span class="line">    [<span class="keyword">self</span>.engine attachNode:reverd];</span><br><span class="line"></span><br><span class="line">    [<span class="keyword">self</span>.engine attachNode:_mixer];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    [<span class="keyword">self</span>.engine connect:<span class="keyword">self</span>.engine.inputNode to:reverd format:audioFile.processingFormat];</span><br><span class="line">    [<span class="keyword">self</span>.engine connect:reverd to:_mixer format:audioFile.processingFormat];</span><br><span class="line">    [<span class="keyword">self</span>.engine connect:_mixer to:<span class="keyword">self</span>.engine.outputNode format:audioFile.processingFormat];</span><br><span class="line"></span><br><span class="line">    [_mixer installTapOnBus:<span class="number">0</span> bufferSize:<span class="number">4096</span> format:[_engine.inputNode inputFormatForBus:<span class="built_in">AVAudioPlayerNodeBufferLoops</span>] block:^(<span class="built_in">AVAudioPCMBuffer</span> * _Nonnull buffer, <span class="built_in">AVAudioTime</span> * _Nonnull when) &#123;</span><br><span class="line">        [audioFile writeFromBuffer:buffer error:<span class="literal">nil</span>];</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"我录制到的数据是 === %@"</span>, buffer);</span><br><span class="line">    &#125;];</span><br><span class="line"></span><br><span class="line">    [<span class="keyword">self</span>.engine startAndReturnError:<span class="literal">nil</span>];</span><br></pre></td></tr></table></figure></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过如上方法可以完整的实现清唱功能，但是唱吧清唱使用的是AudioUnit，AudioUnit是iOS中音频的非常底层的实现，由C语言实现，因为唱吧中除了清唱之外还有很多非常复杂的音频处理功能，所以只有AudioUnit可以满足，但是对于清唱这个功能来说，两种实现方式达到了同样的效果，本文介绍的更加轻量级，不过关于AudioUnit也正在学习过程，后续会输出相应的文章。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Molier
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://oliverqueen.cn/2018/06/19/MusicAbout/" title="关于实现唱吧清唱功能的理解">https://oliverqueen.cn/2018/06/19/MusicAbout/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/音频/" rel="tag"># 音频</a>
+          
+            <a href="/tags/唱吧/" rel="tag"># 唱吧</a>
+          
+            <a href="/tags/K歌/" rel="tag"># K歌</a>
+          
+            <a href="/tags/AVFoundation/" rel="tag"># AVFoundation</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/08/RX-Swift-Study-One/" rel="next" title="关于RxSwift的一点理解">
+                <i class="fa fa-chevron-left"></i> 关于RxSwift的一点理解
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/23/GitFlow/" rel="prev" title="GitFlow流程">
+                GitFlow流程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://ws4.sinaimg.cn/large/006tKfTcgy1fnqkpikcyeg30f00f0njv.gif"
+                alt="Molier" />
+            
+              <p class="site-author-name" itemprop="name">Molier</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">29</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    <span class="site-state-item-count">48</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:371099694@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/zhangninghao?refer_flag=1005055010_" target="_blank" title="新浪微博">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>新浪微博</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/fd21f41fb522" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-superpowers"></i>简书</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/586c624bac502e12d631545f" target="_blank" title="掘金">
+                      
+                        <i class="fa fa-fw fa-juejin"></i>掘金</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Friends
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://reuixiy.github.io/" rel="external nofollow" title="reuixiy" target="_blank">reuixiy</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://billchan.me/" rel="external nofollow" title="CMB" target="_blank">CMB</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://mashirosorata.vicp.io/" rel="external nofollow" title="Mashiro_Sorata" target="_blank">Mashiro_Sorata</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.saitjr.com/" rel="external nofollow" title="saitjr <br>(iOS大神，持续集成，几乎全栈)" target="_blank">saitjr <br>(iOS大神，持续集成，几乎全栈)</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+         
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-text">简介</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#AVFoundation"><span class="nav-text">AVFoundation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AVAudioEngine"><span class="nav-text">AVAudioEngine</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原理"><span class="nav-text">原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现"><span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#创建音频文件用来接收待录制的声音："><span class="nav-text">创建音频文件用来接收待录制的声音：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#创建AVAudioEngine，并打通输入和输出节点："><span class="nav-text">创建AVAudioEngine，并打通输入和输出节点：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#声音混合、写入本地："><span class="nav-text">声音混合、写入本地：</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Molier</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">茉莉儿的小站</div>
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.1"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<script type="text/javascript">
+const gitalk = new Gitalk({
+clientID: '991238e983176ecf9dbd',
+clientSecret: '299ec7e920c736040adf969a0b0a4148ade5953f',
+repo: 'GitMent',
+owner: 'MolierQueen',
+admin: 'MolierQueen'.split(','),
+pagerDirection: 'first',
+id: md5(window.location.pathname),
+distractionFreeMode: false
+})
+gitalk.render('gitalk-container')
+</script>
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,Facebook,Twitter,Linkedin";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+  
+<!-- <script type="text/javascript"
+color="255,255,255" opacity='1' zIndex="-2" count="100" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script> -->
+
+
+</body>
+</html>

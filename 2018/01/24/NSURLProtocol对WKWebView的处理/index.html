@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-mac-osx.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="KAj10O4WT-YoszaSxxDUTKP4VzNZxQwduVLhOojJJ7U" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.1" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.1" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.0.1',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+  
+  <meta name="keywords" content="webview,hook," />
+
+
+<meta name="description" content="之前写过一篇文章是关于基于NSURLProtocol做的DNS解析，其中对NSURLProtocol也有了简单的介绍，我们都知道他可以拦截所有基于URL Loading System 中的请求，但是对于WKWebview里面所发出的请求即使他是http/https 也无能为力，先来简单的了解下WKWebView.">
+<meta name="keywords" content="webview,hook">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NSURLProtocol对WKWebView的处理">
+<meta property="og:url" content="https://oliverqueen.cn/2018/01/24/NSURLProtocol对WKWebView的处理/index.html">
+<meta property="og:site_name" content="Molier">
+<meta property="og:description" content="之前写过一篇文章是关于基于NSURLProtocol做的DNS解析，其中对NSURLProtocol也有了简单的介绍，我们都知道他可以拦截所有基于URL Loading System 中的请求，但是对于WKWebview里面所发出的请求即使他是http/https 也无能为力，先来简单的了解下WKWebView.">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://wx2.sinaimg.cn/large/006tNc79gy1fo6k80vn82j3087036wem.jpg">
+<meta property="og:image" content="https://wx2.sinaimg.cn/large/006tNc79gy1fo6k8agxuoj308002smx3.jpg">
+<meta property="og:image" content="https://wx4.sinaimg.cn/large/006tNc79gy1fo6k8kigkxj30i80t0tg8.jpg">
+<meta property="og:image" content="https://wx1.sinaimg.cn/large/006tNc79gy1fo6k8wgu6tj30yg04x40p.jpg">
+<meta property="og:image" content="https://wx1.sinaimg.cn/large/006tNc79gy1fo6k93edfij30rw05ijsb.jpg">
+<meta property="og:image" content="https://wx1.sinaimg.cn/large/006tNc79gy1fo6k9nobq7j30yg04tmzt.jpg">
+<meta property="og:image" content="https://wx1.sinaimg.cn/large/006tNc79gy1fo6ka7rv18g307o0ds7wl.gif">
+<meta property="og:updated_time" content="2020-05-15T08:44:23.862Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NSURLProtocol对WKWebView的处理">
+<meta name="twitter:description" content="之前写过一篇文章是关于基于NSURLProtocol做的DNS解析，其中对NSURLProtocol也有了简单的介绍，我们都知道他可以拦截所有基于URL Loading System 中的请求，但是对于WKWebview里面所发出的请求即使他是http/https 也无能为力，先来简单的了解下WKWebView.">
+<meta name="twitter:image" content="https://wx2.sinaimg.cn/large/006tNc79gy1fo6k80vn82j3087036wem.jpg">
+
+
+
+
+
+
+  <link rel="canonical" href="https://oliverqueen.cn/2018/01/24/NSURLProtocol对WKWebView的处理/"/>
+
+
+  <title>NSURLProtocol对WKWebView的处理 | Molier</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Molier</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">Tomorrow is another day</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://oliverqueen.cn/2018/01/24/NSURLProtocol对WKWebView的处理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Molier">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ws4.sinaimg.cn/large/006tKfTcgy1fnqkpikcyeg30f00f0njv.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Molier">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">NSURLProtocol对WKWebView的处理</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-24T12:24:06+08:00">2018-01-24</time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2020-05-15T16:44:23+08:00">2020-05-15</time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/iOS开发/" itemprop="url" rel="index"><span itemprop="name">iOS开发</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <script src="/assets/js/APlayer.min.js"> </script><p>之前写过一篇<a href="http://www.jianshu.com/p/cd4c1bf1fd5f" target="_blank" rel="noopener">文章</a>是关于基于NSURLProtocol做的DNS解析，其中对NSURLProtocol也有了简单的介绍，我们都知道他可以拦截所有基于URL Loading System 中的请求，但是对于WKWebview里面所发出的请求即使他是http/https 也无能为力，先来简单的了解下WKWebView.<br><a id="more"></a></p>
+<h5 id="WKWebview"><a href="#WKWebview" class="headerlink" title="WKWebview"></a>WKWebview</h5><p>  iOS8以后，苹果推出了新框架Webkit，提供了替换UIWebView的组件WKWebView。各种UIWebView的问题没有了，速度更快了，占用内存少了，一句话，WKWebView是App内部加载网页的最佳选择！我们做开发最关系的是内存问题，基本上网上所有的资料都在说WKWebview的内存占用会更少，但是到底少了多少我这边做了下测试，同样是加载163的首页</p>
+<p><img src="https://wx2.sinaimg.cn/large/006tNc79gy1fo6k80vn82j3087036wem.jpg" alt="使用UIWebView的内存"><br><img src="https://wx2.sinaimg.cn/large/006tNc79gy1fo6k8agxuoj308002smx3.jpg" alt="使用WKWebview的内存"></p>
+<p>从上图看出内存大概能优化百分之八十左右，而且从网页的滑动上也确实有所改善。这么明显的性能提升但是苹果并没有完全放弃UIWebView也一定有他的道理，就拿本文要讲的NSURLProtocol拦截请求来说，WKWebview的兼容并不UIWebView好，还需要开发者做一些操作。</p>
+<h5 id="WebKit源码分析"><a href="#WebKit源码分析" class="headerlink" title="WebKit源码分析"></a>WebKit源码分析</h5><p>  由于WKWebview是基于webkit内核来做的，所以我们在使用的时候需要导入一个这样的东西。</p>
+<pre><code>#import &lt;WebKit/WebKit.h&gt;
+</code></pre><p>通过这个我们可以猜到WKWebview中所有的请求以及一些逻辑肯定走的都是webkit里面的东西，所以他对于网页的加载之之类的操作也不会走系统本省的URL Loading System，这么说来他的请求不能被NSURLProtocol拦截也是理所当然的了。不过WKWebview是否真的和NSURLProtocol一点关系都没有还需要去研究，幸好webkit是开源的，github上很容易找到<a href="https://github.com/WebKit/webkit" target="_blank" rel="noopener">源码</a>（大小大概是1G多点的zip，花了我将近一天时间来看）。拉下代码直接搜索NSURLProtocol，看看有没有有关的信息<br><img src="https://wx4.sinaimg.cn/large/006tNc79gy1fo6k8kigkxj30i80t0tg8.jpg" alt="搜索结果"></p>
+<p>看来的确是有和NSURLProtocol有关系，后面通过断点的调用栈中也找到了</p>
+<pre><code>+ [NSURLProtocol canInitWithRequest:]
+</code></pre><p>这样的字样，再通过网上查一些资料也证实了我的猜想，其实WKWebview在一开始时候是会调用到NSURLProtocol中的入口方法canInitWithRequest的，但是就没有然后了，也就是说WKWebview是和NSURLProtocol有一定关联，只是在NSURLProtocol的入口处返回NO所以导致NSURLProtocol不接管WKWebview的请求。我们点进webkit源码中的CustomProtocol可以看到，整体的结构我们都差不多，但是我注意到每个CustomProtocol的入口函数都有这样一个判断：<br><img src="https://wx1.sinaimg.cn/large/006tNc79gy1fo6k8wgu6tj30yg04x40p.jpg" alt="入口函数1"></p>
+<p><img src="https://wx1.sinaimg.cn/large/006tNc79gy1fo6k93edfij30rw05ijsb.jpg" alt="入口函数2"><br>(粉色的可以暂时认定为是它内部的一个custom字符串)通过这个可以猜想，WKWebview并不是不走NSURLProtocol，而是需要满足他的一个规则，他才会在入口函数这里返回YES来给你放行，这个规则便是你所请求的URL的Scheme要和它内部配置的CustomScheme相同。不过这里有一个疑问，苹果在使用webkit时候为什么会把http/https这样大众化的scheme过滤掉，看来他是不建议开发者来使用NSURLProtocol。接下来我们来看这个CustomScheme，既然苹果内部规定好的那么一定能通过某种方式来注册一个自己的scheme，实在不行就hook嘛。通过翻他的源码发现最终都指向一句代码    </p>
+<pre><code>[WKBrowsingContextController registerSchemeForCustomProtocol:testScheme];
+</code></pre><p>方法实现为</p>
+<pre><code>+ (void)registerSchemeForCustomProtocol:(NSString *)scheme
+{
+    WebProcessPool::registerGlobalURLSchemeAsHavingCustomProtocolHandlers(scheme);
+}
+</code></pre><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">void</span> WebProcessPool::registerGlobalURLSchemeAsHavingCustomProtocolHandlers(<span class="keyword">const</span> String&amp; urlScheme)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (!urlScheme)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    globalURLSchemesWithCustomProtocolHandlers().add(urlScheme);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span>* processPool : allProcessPools())</span><br><span class="line">        processPool-&gt;registerSchemeForCustomProtocol(urlScheme);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过方法名字可以看出这个就是那个向webkit注册CustomScheme的方法，只要我们在注册完我们自己的CustomProtocol之后在调用该方法应该就可以了。通过他的源码也进一步印证了我的猜想(他也是这么写的)<br><img src="https://wx1.sinaimg.cn/large/006tNc79gy1fo6k9nobq7j30yg04tmzt.jpg" alt="webkit源码"></p>
+<h5 id="具体实施"><a href="#具体实施" class="headerlink" title="具体实施"></a>具体实施</h5><p>  找到了方法就要去实施，不过因为registerSchemeForCustomProtocol是WKBrowsingContextController的类方法，所以只能用WKBrowsingContextController去调用，但是在webkit的头文件发现WKBrowsingContextController并没有开放出来，所以我们采用NSClassFromString和NSSelectorFromString方法来拿到类和对应的方法，整体代码如下<br><figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line"><span class="comment">//注册自己的protocol</span></span><br><span class="line">[<span class="built_in">NSURLProtocol</span> registerClass:[CustomProtocol <span class="keyword">class</span>]];</span><br><span class="line"></span><br><span class="line"><span class="comment">//创建WKWebview</span></span><br><span class="line"><span class="built_in">WKWebViewConfiguration</span> * config = [[<span class="built_in">WKWebViewConfiguration</span> alloc] init];</span><br><span class="line"><span class="built_in">WKWebView</span> * wkWebView = [[<span class="built_in">WKWebView</span> alloc] initWithFrame:<span class="built_in">CGRectMake</span>(<span class="number">0</span>, <span class="number">0</span>, [<span class="built_in">UIScreen</span> mainScreen].bounds.size.width, [<span class="built_in">UIScreen</span> mainScreen].bounds.size.height) configuration:config];</span><br><span class="line">[wkWebView loadRequest:webViewReq];</span><br><span class="line">[<span class="keyword">self</span>.view addSubview:wkWebView];</span><br><span class="line"></span><br><span class="line"><span class="comment">//注册scheme</span></span><br><span class="line">Class cls = <span class="built_in">NSClassFromString</span>(<span class="string">@"WKBrowsingContextController"</span>);</span><br><span class="line">SEL sel = <span class="built_in">NSSelectorFromString</span>(<span class="string">@"registerSchemeForCustomProtocol:"</span>);</span><br><span class="line"><span class="keyword">if</span> ([cls respondsToSelector:sel]) &#123;</span><br><span class="line">    <span class="comment">// 通过http和https的请求，同理可通过其他的Scheme 但是要满足ULR Loading System</span></span><br><span class="line">    [cls performSelector:sel withObject:<span class="string">@"http"</span>];</span><br><span class="line">    [cls performSelector:sel withObject:<span class="string">@"https"</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>  实现效果。我将网页中所有的图片替换成了柴犬图片</p>
+<p><img src="https://wx1.sinaimg.cn/large/006tNc79gy1fo6ka7rv18g307o0ds7wl.gif" alt="效果"></p>
+<h5 id="值得注意"><a href="#值得注意" class="headerlink" title="值得注意"></a>值得注意</h5><ul>
+<li>关于私有API</li>
+</ul>
+<p>  因为WKBrowsingContextController和registerSchemeForCustomProtocol应该是私有的所以使用时候需要对字符串做下处理，用加密的方式或者其他就可以了，实测可以过审核的。</p>
+<ul>
+<li>关于post请求<br>大家会发现拦截不了post请求(拦截到的post请求body体为空)，这个其实和WKWebview没有关系，这个是苹果为了提高效率加快流畅度所以在NSURLProtocol拦截之后索性就不复制body体内的东西，因为body的大小没有限制，开发者可能会把很大的数据放进去那就不好办了。我们可以采取httpbodystream的方式拿到body，这个在之前的<a href="http://www.jianshu.com/p/cd4c1bf1fd5f" target="_blank" rel="noopener">文章</a>也有提过</li>
+</ul>
+<figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line"><span class="meta">#pragma mark -</span></span><br><span class="line"><span class="meta">#pragma mark 处理POST请求相关POST  用HTTPBodyStream来处理BODY体</span></span><br><span class="line">- (<span class="built_in">NSMutableURLRequest</span> *)handlePostRequestBodyWithRequest:(<span class="built_in">NSMutableURLRequest</span> *)request &#123;</span><br><span class="line">    <span class="built_in">NSMutableURLRequest</span> * req = [request mutableCopy];</span><br><span class="line">    <span class="keyword">if</span> ([request.HTTPMethod isEqualToString:<span class="string">@"POST"</span>]) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!request.HTTPBody) &#123;</span><br><span class="line">            uint8_t d[<span class="number">1024</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">            <span class="built_in">NSInputStream</span> *stream = request.HTTPBodyStream;</span><br><span class="line">            <span class="built_in">NSMutableData</span> *data = [[<span class="built_in">NSMutableData</span> alloc] init];</span><br><span class="line">            [stream open];</span><br><span class="line">            <span class="keyword">while</span> ([stream hasBytesAvailable]) &#123;</span><br><span class="line">                <span class="built_in">NSInteger</span> len = [stream read:d maxLength:<span class="number">1024</span>];</span><br><span class="line">                <span class="keyword">if</span> (len &gt; <span class="number">0</span> &amp;&amp; stream.streamError == <span class="literal">nil</span>) &#123;</span><br><span class="line">                    [data appendBytes:(<span class="keyword">void</span> *)d length:len];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            req.HTTPBody = [data <span class="keyword">copy</span>];</span><br><span class="line">            [stream close];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> req;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Molier
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://oliverqueen.cn/2018/01/24/NSURLProtocol对WKWebView的处理/" title="NSURLProtocol对WKWebView的处理">https://oliverqueen.cn/2018/01/24/NSURLProtocol对WKWebView的处理/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/webview/" rel="tag"># webview</a>
+          
+            <a href="/tags/hook/" rel="tag"># hook</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/24/iOS-Runtime简单介绍，以及不同类的Method-Swizzling/" rel="next" title="iOS Runtime简单介绍，以及不同类的Method Swizzling">
+                <i class="fa fa-chevron-left"></i> iOS Runtime简单介绍，以及不同类的Method Swizzling
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/24/自定义AlertView/" rel="prev" title="自定义AlertView">
+                自定义AlertView <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://ws4.sinaimg.cn/large/006tKfTcgy1fnqkpikcyeg30f00f0njv.gif"
+                alt="Molier" />
+            
+              <p class="site-author-name" itemprop="name">Molier</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">29</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    <span class="site-state-item-count">48</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:371099694@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/zhangninghao?refer_flag=1005055010_" target="_blank" title="新浪微博">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>新浪微博</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/fd21f41fb522" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-superpowers"></i>简书</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/586c624bac502e12d631545f" target="_blank" title="掘金">
+                      
+                        <i class="fa fa-fw fa-juejin"></i>掘金</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Friends
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://reuixiy.github.io/" rel="external nofollow" title="reuixiy" target="_blank">reuixiy</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://billchan.me/" rel="external nofollow" title="CMB" target="_blank">CMB</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://mashirosorata.vicp.io/" rel="external nofollow" title="Mashiro_Sorata" target="_blank">Mashiro_Sorata</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.saitjr.com/" rel="external nofollow" title="saitjr <br>(iOS大神，持续集成，几乎全栈)" target="_blank">saitjr <br>(iOS大神，持续集成，几乎全栈)</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+         
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#WKWebview"><span class="nav-text">WKWebview</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#WebKit源码分析"><span class="nav-text">WebKit源码分析</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#具体实施"><span class="nav-text">具体实施</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#值得注意"><span class="nav-text">值得注意</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Molier</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">茉莉儿的小站</div>
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.1"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<script type="text/javascript">
+const gitalk = new Gitalk({
+clientID: '991238e983176ecf9dbd',
+clientSecret: '299ec7e920c736040adf969a0b0a4148ade5953f',
+repo: 'GitMent',
+owner: 'MolierQueen',
+admin: 'MolierQueen'.split(','),
+pagerDirection: 'first',
+id: md5(window.location.pathname),
+distractionFreeMode: false
+})
+gitalk.render('gitalk-container')
+</script>
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,Facebook,Twitter,Linkedin";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+  
+<!-- <script type="text/javascript"
+color="255,255,255" opacity='1' zIndex="-2" count="100" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script> -->
+
+
+</body>
+</html>
