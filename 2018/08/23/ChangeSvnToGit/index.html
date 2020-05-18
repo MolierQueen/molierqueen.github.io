@@ -126,7 +126,10 @@
 <meta property="og:description" content="背景：SVN和Git同样都是在特定时代下比较优秀的版本控制系统，但是随着时代的发展，SVN越来越不能满足多人开发的需求，尤其是在多种多样，天马星空的业务场景面前，SVN会显得力不从心。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://wx4.sinaimg.cn/large/006tNbRwgy1fujxnf8ilhj30zk0m8gm9.jpg">
-<meta property="og:updated_time" content="2020-05-15T08:44:23.872Z">
+<meta property="og:image" content="https://image-1256056152.cos.ap-nanjing.myqcloud.com/wz0geut3a8.jpg">
+<meta property="og:image" content="https://image-1256056152.cos.ap-nanjing.myqcloud.com/072709.jpg">
+<meta property="og:image" content="https://image-1256056152.cos.ap-nanjing.myqcloud.com/073257.jpg">
+<meta property="og:updated_time" content="2020-05-18T07:40:45.631Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SVN切换到Git">
 <meta name="twitter:description" content="背景：SVN和Git同样都是在特定时代下比较优秀的版本控制系统，但是随着时代的发展，SVN越来越不能满足多人开发的需求，尤其是在多种多样，天马星空的业务场景面前，SVN会显得力不从心。">
@@ -364,7 +367,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2020-05-15T16:44:23+08:00">2020-05-15</time>
+              <time title="更新于" itemprop="dateModified" datetime="2020-05-18T15:40:45+08:00">2020-05-18</time>
             
           </span>
 
@@ -422,6 +425,45 @@
         <script src="/assets/js/APlayer.min.js"> </script><h2 id="背景："><a href="#背景：" class="headerlink" title="背景："></a>背景：</h2><p>SVN和Git同样都是在特定时代下比较优秀的版本控制系统，但是随着时代的发展，SVN越来越不能满足多人开发的需求，尤其是在多种多样，天马星空的业务场景面前，SVN会显得力不从心。</p>
 <p><img src="https://wx4.sinaimg.cn/large/006tNbRwgy1fujxnf8ilhj30zk0m8gm9.jpg" alt=""></p>
 <a id="more"></a>
+<p>最近在将公司的项目从SVN迁移到git，踩了不少坑，所以来记录下:</p>
+<p>因为迁移的快慢和整个仓库的大小，电脑配置有关，所以我先说下这边的情况</p>
+<ul>
+<li><p>仓库：<br>仓库大概是3.5G左右，包含了14500+的提交次数，其中包含了超过500M的单个文件</p>
+</li>
+<li><p>电脑：<br>电脑配置就看图吧 ：</p>
+<p><img src="https://image-1256056152.cos.ap-nanjing.myqcloud.com/wz0geut3a8.jpg" alt=""></p>
+</li>
+</ul>
+<p>在以上两种情况下，排除掉采坑的时间，总耗时在10小时左右，当时中途我也用过一台联系X1的本尝试过，配置如下：</p>
+<p><img src="https://image-1256056152.cos.ap-nanjing.myqcloud.com/072709.jpg" alt=""><br>后来联想这台电脑放弃了，因为总耗时已经超过30小时，</p>
+<h2 id="操作："><a href="#操作：" class="headerlink" title="操作："></a>操作：</h2><h4 id="1-生成作者文件："><a href="#1-生成作者文件：" class="headerlink" title="1.生成作者文件："></a>1.生成作者文件：</h4><p>因为我们知道，在SVN上提交和在Git上提交对应提交者的信息展示是不同的，SVN只会保存一个用户名，而Git会保存该用户的邮箱，所以我们迁移的第一步就要生成一个映射文件，将SVN上的用户名和其邮箱对应起来,就比如  <code>molier = molier &lt;123456@qq.com&gt;</code>,转换的办法有很多，如果你团队里面的人不是很多的是时候,可以自己去提交记录中手动生成这样一个TXT文件<br><figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">XXX</span> = XXX &lt;XXX<span class="variable">@XXX</span>.com&gt;XXX = XXX &lt;XXX<span class="variable">@XXX</span>.com&gt;....</span><br></pre></td></tr></table></figure></p>
+<p>但是如果，多人开发人数很多的时候,手动转很累，我们就需要一个Atlassian的工具包 <code>svn-migration-scripts.jar</code>，通过命令拉取SVN仓库的用户并生成对应的开发者信息映射文件，需要Java运行时环境支持,大家可能还需要安装JDK：</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">java -jar svn-migration-scripts<span class="selector-class">.jar</span> authors https:<span class="comment">//svn.example.com &gt; authors.txt</span></span><br></pre></td></tr></table></figure>
+<p>这样之后会在当前目录生成一个 <code>authors.txt</code> 文件</p>
+<h4 id="2-转换仓库"><a href="#2-转换仓库" class="headerlink" title="2.转换仓库"></a>2.转换仓库</h4><ul>
+<li><p>整体转换: </p>
+<p>标准的SVN文件布局：<br>如果SVN仓库使用标准的了/trunk, /branches和/tags的目录结构，就可在运行命令时加上参数–stdlayout，使用如下命令 </p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">git svn clone --stdlayout --authors-file=authors.txt <span class="tag">&lt;<span class="name">svn-repo</span>&gt;</span>/<span class="tag">&lt;<span class="name">project</span>&gt;</span> <span class="tag">&lt;<span class="name">克隆到文件夹的名字</span>&gt;</span>非标准的的SVN文件布局:</span><br></pre></td></tr></table></figure>
+<p>如果SVN仓库是非标准的目录布局，那就需要分别显示指定参数–trunk, –branches, –tags。 </p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">git svn clone <span class="attribute">--trunk</span>=/trunk <span class="attribute">--branches</span>=/branches <span class="attribute">--branches</span>=/bugfixes <span class="attribute">--tags</span>=/tags <span class="attribute">--authors-file</span>=authors.txt &lt;svn-repo&gt;/&lt;project&gt;&lt;克隆到文件夹的名字&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>部分转换:</p>
+<p>如果仓库非常庞大的话可以选择部分转换，也就只转换指定提交之后的提交，可以试用如下代码</p>
+<figure class="highlight crmsh"><table><tr><td class="code"><pre><span class="line">git svn <span class="keyword">clone</span> <span class="title">-r123456</span>:HEAD --stdlayout --<span class="attr">authors-file=</span>authors.txt <span class="tag">&lt;svn-repo&gt;</span> <span class="tag">&lt;克隆到文件夹的名字&gt;</span></span><br></pre></td></tr></table></figure>
+<p>不过这里需要注意的是如果使用这种方式来转换那么一定要指定SVN的代码根部，而不能指定分支，因为SVN的提交编号都是按照时间顺序来往下依次排列，不同的分支也可能提交编号是连续的，所以如果只关心编号的话就不能再指定分支了。</p>
+<p>以上三步中所用到的 <code>authors.txt</code> 即为上一步所生成的，<code>作者 -&gt; 作者 &lt;作者邮箱&gt;</code> 的对应关系文件.</p>
+</li>
+</ul>
+<h2 id="坑点"><a href="#坑点" class="headerlink" title="坑点"></a>坑点</h2><p>完成以上操作的话如果一切正常那么你就会获得一个新的Git仓库，然后就可以添加到远端，进行多人开发了，至于git的操作并不在本文的范围内，下面会讲一下遇到的坑以及解决办法。</p>
+<h4 id="坑点一：时间久"><a href="#坑点一：时间久" class="headerlink" title="坑点一：时间久"></a>坑点一：时间久</h4><p>转换仓库是比较耗时的，因为他会一个提交一个提交的转换，转换的速度和你的仓库提交次数和电脑配置成正比，我当时转了十几个小时比较正常，而且转换完之后他还有个自己整理文件的过程也是很耗时的，不过如果你选择部分转换的话也可能很快，假如你一共15000个提交，然后你从14999来转换可能几分钟就够了。当然最好的办法就是下班前开始执行，第二天来了基本就差不多了。不过别高兴的太早，请看坑点二。</p>
+<h4 id="坑点二：垃圾过多导致暂停"><a href="#坑点二：垃圾过多导致暂停" class="headerlink" title="坑点二：垃圾过多导致暂停"></a>坑点二：垃圾过多导致暂停</h4><p>因为是要遍历所有的历史提交，所以可能会有很多的无用文件 比如项目一开始代文件结构很乱，然后慢慢的经过重构，之类的优化步入正轨，这过程中必然会删掉大量的无用、冗余的文件，虽然这些文件已经不复存在了，但是提交记录会有，而且通过git的原理来看他还是会把这些东西一一保存下来，所以就会造成大量无用的文件越来越多，而Git是有一个缓冲区(具体大小不确定)当你无用文件把缓冲区沾满了，那么转换过程会停止会爆出如下错误<br><figure class="highlight livecodeserver"><table><tr><td class="code"><pre><span class="line">Auto packing <span class="keyword">the</span> repository <span class="keyword">in</span> background <span class="keyword">for</span> optimum performance.</span><br><span class="line">See <span class="string">"git help gc"</span> <span class="keyword">for</span> manual housekeeping.error: The <span class="keyword">last</span> gc run reported <span class="keyword">the</span> following. </span><br><span class="line">Please correct <span class="keyword">the</span> root cause <span class="keyword">and</span> remove .git/gc.<span class="built_in">log</span>.</span><br><span class="line">Automatic cleanup will <span class="keyword">not</span> be performed <span class="keyword">until</span> <span class="keyword">the</span> <span class="built_in">file</span> is removed.</span><br><span class="line">warning: There are too many unreachable loose objects; </span><br><span class="line">run <span class="string">'git prune'</span> <span class="built_in">to</span> remove them.gc <span class="comment">--auto: command returned error: 255</span></span><br></pre></td></tr></table></figure></p>
+<p>大概意思是垃圾太多，转移暂停让你先清理垃圾，其实只要按照他说的 进到我们转了一半的仓库 进行 <code>git gc</code> 就可以，但是这样一来我们就需要一直守在电脑前，随时准备输入 <code>git gc</code> 而且假如你下班前开始跑结果第二天上班一看跑到一半就暂停了，白白浪费了一晚上的时间，真的会崩溃的。所以通过google找到了解决办法</p>
+<p><img src="https://image-1256056152.cos.ap-nanjing.myqcloud.com/073257.jpg" alt=""></p>
+<p>也就是开始转换的时候先进入仓库输入 <code>git config gc.auto 0</code> 关闭gc功能，然后就可以一直跑到黑了，你大可以放心的运行命令然后下班回家。不过还有一点需要注意的是垃圾文件是否过多和你仓库大小没有太大关系，及时你仓库提交不多，但是每次提交都有很大改动的话也还是会出现这个问题，所以这里建议不管你仓库多大，都要先进行一下这个操作，以防万一。</p>
+<h4 id="坑点三：大文件处理"><a href="#坑点三：大文件处理" class="headerlink" title="坑点三：大文件处理"></a>坑点三：大文件处理</h4><p>git和SVN不同，在git上提交的单个文件是有大小限制的，超过这个大小就不允许提交到仓库中，通常我们会用git LFS来解决，具体的安装，添加步骤网上大把的教程，就不在这里说，不过他只会告诉你大文件的大小和限制的大小，具体的大文件是哪个他不会告诉你，这里可以用以下命令查看<br><figure class="highlight excel"><table><tr><td class="code"><pre><span class="line">git ls-tree -r -<span class="built_in">t</span> -l --full-name HEAD | sort -<span class="built_in">n</span> -k <span class="number">4</span> | tail -<span class="built_in">n</span> <span class="number">10</span> //查找git 仓库中排名前十的大文件(升序)</span><br></pre></td></tr></table></figure></p>
+<p>他会输出前十个最大的文件，然后你再按需处理。但是当你把大文件添加到LFS中后再次推送还是会爆出同样的错误，而且还是同样的文件，也就是说你根本没添加成功，其实并不是这样的，在添加LFS中只要你操作没错，就是添加成功了，他还会报错的原因是因为虽然你工程中的大文件已经添加，但是你的历史提交记录中是包含大文件的代码快照的，所以你需要将历史上所有包含大文件的提交记录重写，删掉大文件相关的东西，git 中重写commit的命令是：<br><figure class="highlight vim"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">filter</span>-branch --force --<span class="built_in">index</span>-<span class="built_in">filter</span> <span class="string">'git rm -rf --cached --ignore-unmatch 你大文件所在的目录'</span> --prune-<span class="built_in">empty</span> --<span class="keyword">tag</span>-name-<span class="built_in">filter</span> <span class="keyword">cat</span> -- --<span class="keyword">all</span></span><br></pre></td></tr></table></figure></p>
+<p>这个过程也比较漫长，他会便利你所有的提交记录并一一修改，不过就是漫长的等待就可以了，等到完成之后我们需要将代码push到远端，因为我们修改了所有的commit 我们需要强制push使用如下命令<br><figure class="highlight crmsh"><table><tr><td class="code"><pre><span class="line">git push origin <span class="keyword">master</span> <span class="title">--force</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="坑点四-打包时间过长"><a href="#坑点四-打包时间过长" class="headerlink" title="坑点四: 打包时间过长"></a>坑点四: 打包时间过长</h4><p>再上一步我们执行完推送命令的时候，会先进行文件打包处理，这个过程也是非常漫长，而且非常消耗电脑资源的，按照我的电脑配置来说，这个过程一旦开始，电脑基本就是内存、cpu全满的状态，鼠标也没法动，所以这个过程要有心理准备。漫长的等待之后就推送成功了。</p>
 
       
     </div>
@@ -688,7 +730,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景："><span class="nav-text">背景：</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景："><span class="nav-text">背景：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#操作："><span class="nav-text">操作：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-生成作者文件："><span class="nav-text">1.生成作者文件：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-转换仓库"><span class="nav-text">2.转换仓库</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#坑点"><span class="nav-text">坑点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#坑点一：时间久"><span class="nav-text">坑点一：时间久</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#坑点二：垃圾过多导致暂停"><span class="nav-text">坑点二：垃圾过多导致暂停</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#坑点三：大文件处理"><span class="nav-text">坑点三：大文件处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#坑点四-打包时间过长"><span class="nav-text">坑点四: 打包时间过长</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
