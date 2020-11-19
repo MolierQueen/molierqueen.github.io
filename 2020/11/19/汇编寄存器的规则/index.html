@@ -126,12 +126,17 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/0081Kckwgy1gkulov9q1ej31c10u0x6s.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/0081Kckwgy1gktboylxxdj322z0li150.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/0081Kckwgy1gktcxe1lm2j30c902xgll.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/0081Kckwgy1gktd6atsyvj32140mv4bh.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/0081Kckwgy1gktgwlp1cuj30x40glgoh.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/0081Kckwgy1gktm1acug7j30ws0c8n13.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/0081Kckwgy1gkuam4sxojj30qo0i8go0.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/0081Kckwgy1gkujcb1fmaj30en0qk0xc.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/0081Kckwgy1gkujaok2e0j30hf0v2aft.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/0081Kckwgy1gkujb8rg0aj30k60tj787.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/0081Kckwgy1gkujmtqa2qj30dz0qoq82.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/0081Kckwgy1gkujqoz7vsj30x50j2q7u.jpg">
-<meta property="og:updated_time" content="2020-11-19T09:17:11.756Z">
+<meta property="og:updated_time" content="2020-11-19T09:30:49.015Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="汇编寄存器的规则">
 <meta name="twitter:description" content="汇编寄存器的规则在本章中，您将了解到CPU使用的寄存器，并研究和修改传入函数的参数。您还将了解常见的苹果计算机架构，以及如何在函数中使用它们的寄存器。这就是所谓的架构调用约定。">
@@ -369,7 +374,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2020-11-19T17:17:11+08:00">2020-11-19</time>
+              <time title="更新于" itemprop="dateModified" datetime="2020-11-19T17:30:49+08:00">2020-11-19</time>
             
           </span>
 
@@ -429,40 +434,189 @@
 <h2 id="汇编101"><a href="#汇编101" class="headerlink" title="汇编101"></a>汇编101</h2><p>等等，所以到底什么是汇编？来看一个场景：您是否曾经打了一个断点，但是中断到没有源代码的地方？然后看到看到大量内存地址和可怕的简短命令?你是不是缩成一团，悄悄地对自己说你再也不会看这些密集的东西了?嗯…这就是所谓的汇编!<br>这里有一张Xcode中的断点调试图，它展示了模拟器中函数的汇编。<br><img src="https://tva1.sinaimg.cn/large/0081Kckwgy1gktboylxxdj322z0li150.jpg" alt=""></p>
 <p>通过上图可以看出汇编代码可以被分成几个不同的部分。汇编指令中的每一行都包含一个操作码，可以认为是对计算机来说非常简单的指令。那么操作码是什么样子的呢？操作码是在计算机上执行一项简单任务的指令。例如下面的程序集片段:</p>
 <figure class="highlight mel"><table><tr><td class="code"><pre><span class="line">pushq   %rbx</span><br><span class="line">subq    $0x228, %rsp </span><br><span class="line">movq    %rdi, %rbx</span><br></pre></td></tr></table></figure>
-<p>在这个汇编模块中，您可以看到三种操作码:<code>pushq</code>、<code>subq</code> 和 <code>movq</code>可以将操作码项看作要执行的操作。操作码后面的内容是源标签和目标标签。也就是说，这些是操作码所作用的对象。在上面的示例中，有几个寄存器，显示为 <code>rbx</code> 、<code>rsp</code> 、<code>rdi</code> 和 <code>rbp</code>。前面的 <code>%</code> 告诉您这是一个寄存器。<br>此外，您还可以找到一个十六进制的数字常量，如0x228。这个常数之前的美元符号告诉你它是一个绝对值。现在不需要知道这段代码在做什么，因为您首先需要了解每个符号的含义。然后你会学到更多关于操作码的知识，并在以后的章节中编写你自己的程序。</p>
+<p>在这个汇编模块中，您可以看到三种操作码:<code>pushq</code>、<code>subq</code> 和 <code>movq</code>可以将操作码项看作要执行的操作。操作码后面的内容是源标签和目标标签。也就是说，这些是操作码所作用的对象。在上面的示例中，有几个寄存器，显示为 <code>rbx</code> 、<code>rsp</code> 、<code>rdi</code> 和 <code>rbp</code>。前面的 <code>%</code> 告诉您这是一个寄存器。</p>
+<p>此外，您还可以找到一个十六进制的数字常量，如0x228。这个常数之前的美元符号告诉你它是一个绝对值。现在不需要知道这段代码在做什么，因为您首先需要了解每个符号的含义。然后你会学到更多关于操作码的知识，并在以后的章节中编写你自己的程序。</p>
 <blockquote>
 <p>注意：在上面的示例中，请注意，在寄存器和常量之前有一堆％和$。 这就是反汇编程序格式化程序集的展示方式。 但是可以通过两种主要方式展示汇编。 第一个是 <code>英特尔程序集</code> ，第二个是 <code>AT＆T程序集</code> 。默认情况下，Apple的反汇编程序工具都会以AT＆T格式显示，就如上例所示。 尽管这是一种很好的格式，但在眼睛上可能会有些困难。 在下一章中，您将把汇编格式更改为Intel，并且从那以后将完全使用Intel汇编语法。</p>
 </blockquote>
-<h2 id="x86-64-vs-ARM64"><a href="#x86-64-vs-ARM64" class="headerlink" title="x86_64 vs ARM64"></a>x86_64 vs ARM64</h2><p>作为Apple平台的开发人员，学习汇编时要处理两种主要架构：x86_64架构和ARM64架构。 x86_64是最可能在macOS计算机上使用的体系结构，除非您运行的是“古老”的Macintosh。</p>
-<p>x86_64是64位体系结构，这意味着每个地址最多可以容纳64个1或0。 另外，较旧的Mac使用32位架构，但是Apple在2010年底停止生产32位Mac。 在macOS下运行的程序可能是64位兼容的，包括Simulator上的程序。 话虽如此，即使您的macOS是x86_64，它仍然可以运行32位程序。<br>如果对使用的硬件架构有疑问，可以在终端中运行以下命令来获取计算机的硬件架构：</p>
-<figure class="highlight x86asm"><table><tr><td class="code"><pre><span class="line">uname -m</span><br><span class="line"><span class="string">```</span> </span><br><span class="line">![](https://tva1.sinaimg.cn/large/0081Kckwgy1gktcxe1lm2j30c902xgll.jpg)</span><br><span class="line"></span><br><span class="line">在能耗要求很高的移动设备（如iPhone）上使用ARM64体系结构。ARM强调节能功能，因此它减少了一组操作码，有助于简化复杂的汇编指令，从而降低了能耗。 这对您来说是个好消息，因为关于ARM的体系结构你需要学习的并不多。这是与之前显示的方法相同的屏幕截图，除了这次是在iPhone <span class="number">7</span>上的ARM64程序集中：</span><br><span class="line">![](https://tva1.sinaimg.cn/large/0081Kckwgy1gktd6atsyvj32140mv4bh.jpg)</span><br><span class="line">您现在可能无法区分这两种架构，但是您很快就会知道它们就像手背一样.</span><br><span class="line"></span><br><span class="line"> Apple最初在其许多iOS设备中都提供了<span class="number">32</span>位ARM处理器，但此后便转移到了<span class="number">64</span>位ARM处理器。 <span class="number">32</span>位iOS设备几乎已过时，因为Apple已通过各种iOS版本逐步淘汰了它们。 例如，iPhone <span class="number">5</span>是最终的<span class="number">32</span>位iOS设备，iOS <span class="number">11</span>不支持该设备。支持iOS <span class="number">11</span>的“最低” iPhone是<span class="number">64</span>位设备iPhone 5s。近年来，<span class="number">32</span>位设备已出现在其他Apple产品中。 Apple Watch的前两代是<span class="number">32</span>位设备，但是第三代是<span class="number">64</span>位设备。 此外，在较新的macOS设备上发现的Apple Touch Bar（无疑是花哨的）也使用<span class="number">32</span>位架构。</span><br><span class="line"></span><br><span class="line">由于最好专注于您将来的需求，因此本书将主要关注两种架构的<span class="number">64</span>位汇编。 此外，您将首先开始学习x86_64程序集，然后过渡到学习ARM64程序集，以免感到困惑。 好吧，不要太困惑。</span><br><span class="line"></span><br><span class="line">## x86_64 寄存器调用规则</span><br><span class="line"></span><br><span class="line">您的<span class="meta">CPU</span>使用一组寄存器来操纵正在运行的程序中的数据。这些是存储的基础，就像计算机中的RAM一样。但是，它们位于<span class="meta">CPU</span>本身上，因此<span class="meta">CPU</span>的这些部分可以快速访问这些寄存器。效率非常高，大多数指令涉及一个或多个寄存器，并执行一些操作，例如将寄存器的内容写入内存，将存储器的内容读取到寄存器或对两个寄存器执行算术运算例如 加，减等。</span><br><span class="line"></span><br><span class="line">在x64中（从现在开始，x64是x86_64的缩写），机器使用<span class="number">16</span>个通用寄存器来操纵数据。</span><br><span class="line">这些寄存器是<span class="built_in">RAX</span>，<span class="built_in">RBX</span>，<span class="built_in">RCX</span>，<span class="built_in">RDX</span>，<span class="built_in">RDI</span>，<span class="built_in">RSI</span>，<span class="built_in">RSP</span>，<span class="built_in">RBP</span>和<span class="built_in">R8</span>至<span class="built_in">R15</span>。这些名称对您现在意义不大，但是您很快就会发现每个寄存器的重要性。“在x64中调用函数时，寄存器的方式和使用遵循非常特定的规则。这决定了函数的参数应该去哪里以及函数完成时函数的返回值应该在哪里。这很重要，因此可以将一个编译器编译的代码与另一个编译器编译的代码一起使用。</span><br><span class="line"></span><br><span class="line">比如你看下面这个行代码：</span><br></pre></td></tr></table></figure>
-<p>NSString *name = @”Zoltan”;<br>NSLog(@”Hello world, I am %@. I’m %d, and I live in %@.”, name, 30, @”my father’s basement”);<br><figure class="highlight x86asm"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">NSLog函数调用中传递了四个参数。 其中一些值按原样传递，而一个参数存储在局部变量中，然后在函数中作为参数引用。 但是，通过汇编查看代码时，计算机并不关心变量的名称(name)； 它只关心该变量在内存中的位置。</span><br><span class="line"></span><br><span class="line">在x64汇编中调用函数时，以下寄存器用作参数。 尝试将它们提交到内存中，因为将来您会经常使用它们：</span><br><span class="line">    </span><br><span class="line">    第一个参数：<span class="built_in">RDI</span></span><br><span class="line">    第二个参数：<span class="built_in">RSI</span></span><br><span class="line">    第三个参数：<span class="built_in">RDX</span></span><br><span class="line">    第四个参数：<span class="built_in">RCX</span></span><br><span class="line">    第五个参数：<span class="built_in">R8</span></span><br><span class="line">    第六个参数：<span class="built_in">R9</span></span><br><span class="line"></span><br><span class="line">如果有六个以上的参数，则使用程序的堆栈将其他参数传递给该函数。</span><br><span class="line"></span><br><span class="line">回到简单的Objective-C代码，上面的OC代码可以像下面这样的伪代码流程在寄存器中传递：</span><br></pre></td></tr></table></figure></p>
-<p>RDI = @”Hello world, I am %@. I’m %d, and I live in %@.”;<br>RSI = @”Zoltan”;<br>RDX = 30;<br>RCX = @”my father’s basement”;<br>NSLog(RDI, RSI, RDX, RCX);<br><figure class="highlight clean"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">NSLog调用完成后，指定的寄存器将包含如上所述的适当值。但是，一旦函数序言（准备堆栈和寄存器的函数的开始部分）完成执行，这些寄存器中的值就可能改变。生成的程序集可能会覆盖存储在这些寄存器中的值，或者在代码不再需要这些引用时丢弃这些引用。</span><br><span class="line">这意味着，一旦离开函数的开始，就不能再假定这些寄存器将保存您要观察的期望值，除非您实际查看汇编代码看看它在做什么。</span><br><span class="line">使用此调用规则的浏览寄存器会严重影响您的调试（和断点）策略。必须在函数调用开始时停止以查看或修改参数，而不必实际进入程序集。</span><br><span class="line"></span><br><span class="line">## Objective-C 和寄存器</span><br><span class="line"></span><br><span class="line">如上一节所述，寄存器使用特定的调用规则。 您也可以将该知识其应用于其他语言。</span><br><span class="line">当Objective-C执行方法时，将执行一个名为 `objc_msgSend` 的特殊C函数。 这些功能实际上有几种不同的类型，但稍后会介绍更多。 这是Objective-C动态消息分发的核心。 作为第一个参数，objc_msgSend获取在其上发送消息的对象的引用。 随后是一个选择器，它只是一个char *，用于指定在对象上调用的方法的名称。 最后，如果选择器指定应有参数，则objc_msgSend在函数中采用可变数量的参数。</span><br><span class="line">让我们来看一个在iOS环境中的具体示例：</span><br></pre></td></tr></table></figure></p>
-<p>id UIApplicationClass = [UIApplication class];<br>objc_msgSend(UIApplicationClass, “sharedApplication”);<br><figure class="highlight mathematica"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">第一个参数是对UIApplication类的引用，其后是sharedApplication选择器 其实就是需要被调用的方法。 判断是否有参数的一种简单方法是简单地检查Objective-<span class="keyword">C</span>选择器中的冒号。 每个冒号将代表一个方法中的参数。</span><br><span class="line">我们下面来看一个OC的方法：</span><br></pre></td></tr></table></figure></p>
-<p>NSString *helloWorldString = [@”Can’t Sleep; “stringByAppendingString:@”Clowns will eat me”];<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">最终编译会变成：</span><br></pre></td></tr></table></figure></p>
-<p>NSString *helloWorldString;<br>helloWorldString = objc_msgSend(@”Can’t Sleep; “, “stringByAppendingString:”, @”Clowns will eat me”);<br><figure class="highlight stata"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">第一个参数是NSString的实例（@“ Can't <span class="keyword">Sleep</span>;”），后跟方法选择器，然后是方法调用的参数。</span><br><span class="line"></span><br><span class="line">## 将理论付诸实践</span><br><span class="line">在本节中，您将使用本章资源包中提供的名为Registers的项目。</span><br><span class="line">通过Xcode打开该项目，然后运行。</span><br><span class="line"></span><br><span class="line">![](https:<span class="comment">//tva1.sinaimg.cn/large/0081Kckwgy1gktgwlp1cuj30x40glgoh.jpg)</span></span><br><span class="line"></span><br><span class="line">这是一个非常简单的应用程序，仅显示64位寄存器里面的内容。 需要注意的是，该应用程序不会实时的显示寄存器的值； 它只能在特定的函数调用期间显示寄存器的值。 这意味着您不会看到这些寄存器的值有太多更改，因为在调用获取寄存器值的函数时它们可能具有相同（或相似）的值。</span><br><span class="line">现在，您已经了解了Registers macOS应用程序背后的功能，为NSViewController的viewDidLoad方法创建一个符号断点。 记住，因为您正在使用<span class="keyword">Mac</span>应用程序，所以请使用“ NS”代替“ UI”。</span><br><span class="line"></span><br><span class="line">![](https:<span class="comment">//tva1.sinaimg.cn/large/0081Kckwgy1gktm1acug7j30ws0c8n13.jpg)</span></span><br><span class="line"></span><br><span class="line">生成并重新运行该应用程序。触发断点后在LLDB控制台中键入以下内容：</span><br><span class="line"><span class="comment">* (lldb) register read</span></span><br><span class="line"></span><br><span class="line">这将列出处于暂停执行状态的所有主要寄存器。 但是输出了太多信息。 您应该有选择地打印出寄存器，并将其视为Objective-C对象。如果您还记得的话，-[NSViewController viewDidLoad]将被转换为以下程序集伪代码：</span><br></pre></td></tr></table></figure></p>
-<p>RDI = UIViewControllerInstance<br>RSI = “viewDidLoad”<br>objc_msgSend(RDI, RSI)<br><figure class="highlight mipsasm"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">考虑到x64调用规则，并且知道objc_msgSend的工作方式，您可以找到要加载的特定NSViewController。</span><br><span class="line">在<span class="keyword">LLDB控制台中键入以下内容：</span></span><br><span class="line"><span class="keyword">* </span>(<span class="keyword">lldb) </span>po $rdi </span><br><span class="line"></span><br><span class="line">然后你会看到如下输出：</span><br></pre></td></tr></table></figure></p>
-<p><registers.viewcontroller: 0x6080000c13b0=""><br><figure class="highlight mipsasm"><table><tr><td class="code"><pre><span class="line">它输出了RDI寄存器中的NSViewController引用，您现在知道该引用是该方法的第一个参数的位置。</span><br><span class="line"></span><br><span class="line">在<span class="keyword">LLDB中，为寄存器加上$字符很重要，因此LLDB知道您需要的是寄存器的值，而不是源代码中与范围相关的变量。 </span>是的，这与您在刚刚反汇编视图中看到的汇编不同！ 烦人吧？</span><br><span class="line"></span><br><span class="line">&gt; 注：善于观察的你可能已经注意到了在OC代码中打断点，在<span class="keyword">LLDB的回溯内看不到objc_msgSend的影子。这是因为objc_msgSend方法簇执行了jmp。意思就是说objc_msgSend扮演了中转的角色，一但OC代码开始执行，所有的关于objc_msgSend的栈中的回溯都将消失。这是一种叫做尾递归调用的优化。因为mesgsend开始执行证明之前的栈帧已经清空了。</span></span><br><span class="line"><span class="keyword"></span></span><br><span class="line"><span class="keyword">尝试打印出RSI寄存器，不出意外的话应该是方法名。 </span>在<span class="keyword">LLDB控制台中输入以下内容：</span></span><br><span class="line"><span class="keyword">* </span>(<span class="keyword">lldb) </span>po $rsi </span><br><span class="line"></span><br><span class="line">结果你会输出这个</span><br></pre></td></tr></table></figure></registers.viewcontroller:></p>
-<p>140735181830794<br><figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">为什么是这样？ Objective-C选择器基本上只是一个char *。 这意味着，像所有C类型一样，LLDB不知道如何格式化此数据。 因此，您必须将此引用显式转换为所需的数据类型。</span><br><span class="line">将RSI寄存器强制转换为正确的类型使用如下指令</span><br><span class="line">* po (char *)<span class="variable">$rsi</span> 或者  po (SEL)<span class="variable">$rsi</span></span><br><span class="line"> </span><br><span class="line">便可以得到方法名字</span><br></pre></td></tr></table></figure></p>
-<p>“viewDidLoad”<br><figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">现在，该探讨带有参数的Objective-C方法了。 由于您已经断点了viewDidLoad，因此可以放心地假设<span class="built_in">NSView</span>实例已加载。 感兴趣的方法是mouseUp：由<span class="built_in">NSView</span>的父类<span class="built_in">NSResponder</span>实现的选择器。</span><br><span class="line">在LLDB中，在<span class="built_in">NSResponder</span>的mouseUp：选择器上创建一个断点，然后继续执行。 如果您不记得该怎么做，则需要以下命令：</span><br><span class="line"></span><br><span class="line">* (lldb) b -[<span class="built_in">NSResponder</span> mouseUp:]</span><br><span class="line">* (lldb) <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">现在，点击应用程序窗口。 确保单击<span class="built_in">NSScrollView</span>的外部，因为<span class="built_in">NSScrollView</span>它会拦截您的单击，并且不会命中-[<span class="built_in">NSResponder</span> mouseUp：]断点。</span><br><span class="line"></span><br><span class="line">点击后，LLDB就会在mouseUp：断点处停止。 通过在LLDB控制台中键入以下内容，打印出<span class="built_in">NSResponder</span>的引用：</span><br><span class="line"></span><br><span class="line">* (lldb) po $rdi </span><br><span class="line"></span><br><span class="line">会出现如下的输出</span><br></pre></td></tr></table></figure></p>
-<p><nsview: 0x608000120140=""><br><figure class="highlight mipsasm"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">但是，该方法是带参数的！ 在<span class="keyword">LLDB控制台中输入以下内容：</span></span><br><span class="line"><span class="keyword">* </span>(<span class="keyword">lldb) </span>po $rdx </span><br><span class="line"></span><br><span class="line">输出</span><br></pre></td></tr></table></figure></nsview:></p>
-<p>“NSEvent: type=LMouseUp loc=(351.672,137.914) time=175929.4 flags=0 win=0x6100001e0400 winNum=8622 ctxt=0x0 evNum=10956 click=1 buttonNumber=0 pressure=0 deviceID:0x300000014400000 subtype=NSEventSubtypeTouch”<br><figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">也可以看到参数类型</span><br><span class="line"></span><br><span class="line">* po [$rdx <span class="class"><span class="keyword">class</span>]</span></span><br></pre></td></tr></table></figure></p>
-<p>NSEvent<br><figure class="highlight autoit"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">太酷了，是吗？有时使用寄存器和断点很有用，以便获得内存中还存在的对象的引用。例如，如果您想将前部NSWindow更改为红色，但是在代码中没有对该视图的引用，又不想重新编译任何代码怎么办？ 您只需创建一个断点就可以轻松调试，从寄存器中获取引用并根据需要操纵该对象的实例。 您现在将尝试将主窗口更改为红色。”</span><br><span class="line"></span><br><span class="line">&gt; 注：尽管NSResponder实现了<span class="built_in">mouseDown</span>:方法，但NSWindow重写了它。你可以输出所有实现了<span class="built_in">mouseDown</span>:的类，你就可以看出这个方法被那些类重写了，而不用去看源码。输出所有实现了<span class="built_in">mouseDown</span>:方法的OC类的命令是：&lt;u&gt;image lookup -rn <span class="string">'\ mouseDown:&lt;/u&gt;'</span></span><br><span class="line"></span><br><span class="line">首先使用LLDB控制台删除所有以前的断点：</span><br><span class="line">* breakpoint delete</span><br><span class="line"></span><br><span class="line">像如下输出</span><br></pre></td></tr></table></figure></p>
-<p>(lldb) breakpoint delete<br>About to delete all breakpoints, do you want to do that?: [Y/n] Y<br>All breakpoints removed. (3 breakpoints)<br>(lldb)<br><figure class="highlight vim"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">然后在LLDB控制台中键入以下内容：</span><br><span class="line"></span><br><span class="line">* (lldb) breakpoint <span class="keyword">set</span> -<span class="keyword">o</span> -S <span class="comment">"-[NSWindow mouseDown:]</span></span><br><span class="line">* (lldb) <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">这句话的作用是设置一个单发断点，只会触发一次，然后点击应用程序触发断点，在LLDB控制台中键入以下内容：</span><br><span class="line"></span><br><span class="line">* (lldb) <span class="keyword">po</span> [$rdi setBackgroundColor:[NSColor redColor]]</span><br><span class="line">* (lldb) <span class="keyword">continue</span> </span><br><span class="line"></span><br><span class="line">之后就可以看到效果</span><br><span class="line"></span><br><span class="line">![](http<span class="variable">s:</span>//tva1.sinaimg.<span class="keyword">cn</span>/large/<span class="number">0081</span>Kckwgy1gkuam4sxojj30qo0i8go0.jpg)</span><br><span class="line"></span><br><span class="line">## Swift和寄存器</span><br><span class="line"></span><br><span class="line">在Swift中探索寄存器时，您将遇到两个问题，这使汇编调试比Objective-C困难。</span><br><span class="line"></span><br><span class="line">* 首先，在Swift调试上下文内寄存器不可用。意味着你不得不获取到任何你想要的数据，并使用OC调试上下文打印出传入Swift函数的寄存器。记住你可以使用expression -<span class="keyword">l</span> objc -O命令，或者使用在书中第八章（“Persisting <span class="built_in">and</span> Customizing Commands”）的cpo命令。幸运的是，register <span class="keyword">read</span>命令依然是可以使用的。</span><br><span class="line"></span><br><span class="line">* 其次，Swift相对于OC并不是动态的。事实上，有时候最好假设Swift像C语言一样。如果知道了一个内存地址，你应该显示地强转为你想要的类型。不然Swift调试器没有任何线索去解释内存地址。</span><br><span class="line"></span><br><span class="line">话虽这么说，但是Swift使用了相同的寄存器调用规则。 但是有一个非常重要的区别。 当Swift调用一个函数时，它__不需要使用objc_msgSend__，除非您当然标记了使用动态方法。 这意味着当Swift调用函数时，先前分配给选择器的RSI寄存器实际上就是函数的第二个参数。好了，足够的理论-是时候将其付诸实践了。</span><br><span class="line"></span><br><span class="line">在Registers项目中，导航到ViewController.swift并将以下函数添加到该类：</span><br></pre></td></tr></table></figure></p>
-<p>func executeLotsOfArguments(one: Int, two: Int, three: Int,<br>                                four: Int, five: Int, six: Int,<br>                                seven: Int, eight: Int, nine: Int,<br>                                ten: Int) {<br>        print(“arguments are: (one), (two), (three), (four), (five), (six), (seven), (eight), (nine), (ten)”)<br>        }<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">现在，在viewDidLoad中，使用适当的参数调用此函数：</span><br></pre></td></tr></table></figure></p>
-<p>self.executeLotsOfArguments(one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10)<br><figure class="highlight arduino"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">在与executeLotsOfArguments声明相同的行上放置一个断点，以便调试器将在函数的开始处停止。 这很重要，否则如果函数已经开始执行，则寄存器可能会被破坏。然后删除您在-[NSViewController viewDidLoad]上设置的符号断点。生成并运行该应用程序，然后等待executeLotsOfArguments断点停止执行。我们先列出所有的寄存器。 在LLDB中，键入以下内容：</span><br><span class="line"></span><br><span class="line">* <span class="keyword">register</span> <span class="built_in">read</span> -f d</span><br><span class="line"></span><br><span class="line">这将列出所有的寄存器，并使用-f d选项以十进制显示格式。 输出将类似于以下内容：</span><br></pre></td></tr></table></figure></p>
-<p>(lldb) register read -f d<br>General Purpose Registers:<br>       rax = 10<br>       rbx = 7<br>       rcx = 4<br>       rdx = 3<br>       rdi = 1<br>       rsi = 2<br>       rbp = 140732785005232<br>       rsp = 140732785004720<br>        r8 = 5<br>        r9 = 6<br>       r10 = 9<br>       r11 = 8<br>       r12 = 140668105198352<br>       r13 = 105553138827696<br>       r14 = 104<br>       r15 = 8<br>       rip = 4430734802  Registers`Registers.ViewController.executeLotsOfArguments(one: Swift.Int, two: Swift.Int, three: Swift.Int, four: Swift.Int, five: Swift.Int, six: Swift.Int, seven: Swift.Int, eight: Swift.Int, nine: Swift.Int, ten: Swift.Int) -&gt; () + 178 at ViewController.swift:68:15<br>    rflags = 514<br>        cs = 43<br>        fs = 0<br>        gs = 0</p>
-<p>(lldb)<br><figure class="highlight x86asm"><table><tr><td class="code"><pre><span class="line">如您所见，寄存器遵循x64调用规则。 <span class="built_in">RDI</span>，<span class="built_in">RSI</span>，<span class="built_in">RDX</span>，<span class="built_in">RCX</span>，<span class="built_in">R8</span>和<span class="built_in">R9</span>保留您的前六个参数。</span><br><span class="line"></span><br><span class="line">&gt; 注意:关于LLDB，我一直没有告诉您的是，LLDB可以以$arg&#123;X&#125;形式来引用寄存器，其中X是参数号。还记得<span class="built_in">RDI</span>是第一个参数，而<span class="built_in">RSI</span>是第二个参数吗?在LLDB中，可以通过$arg1引用第一个参数(<span class="built_in">RDI</span>)。随着示例的进行，您可以使用$arg2引用第二个参数(<span class="built_in">RSI</span>)，以此类推。这些方便值也可以在ARM64调用约定中使用，即使ARM64使用不同的寄存器。您应该记住寄存器调用规则，以便本书尽量减少使用这些寄存器辅助变量。</span><br><span class="line"></span><br><span class="line">您可能还会注意到其他参数存储在其他一些其他寄存器中。 确实如此，但这只是为其余参数设置堆栈的代码中的剩余部分。 请记住，第六个参数之后的参数将进入堆栈。</span><br><span class="line"></span><br><span class="line">## <span class="built_in">RAX</span>，用于返回的寄存器</span><br><span class="line"></span><br><span class="line">等等--还有呢！到这里，你已经了解了函数中六个寄存器是如何调用的，但是返回值呢？</span><br><span class="line"></span><br><span class="line">幸运的是，只有一个指定的寄存器用于返回值：<span class="built_in">RAX</span>。回到executeLotsOfArguments函数并改变函数的返回值，像这样：</span><br></pre></td></tr></table></figure></p>
-<p>func executeLotsOfArguments(one: Int, two: Int, three: Int,<br>                                four: Int, five: Int, six: Int,<br>                                seven: Int, eight: Int, nine: Int,<br>                                ten: Int) -&gt; String {<br>        print(“arguments are: (one), (two), (three), (four), (five), (six), (seven), (eight), (nine), (ten)”)<br>        return “Mom, what happened to the cat?”<br>        }<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">然后viewdidlaod中调用</span><br></pre></td></tr></table></figure></p>
-<p>let _ = self.executeLotsOfArguments(one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10)</p>
-<figure class="highlight mipsasm"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">在executeLotsOfArguments中的某处创建一个断点。 再次生成并运行，然后等待函数停止执行。 接下来，在<span class="keyword">LLDB控制台中键入以下内容：</span></span><br><span class="line"><span class="keyword"></span></span><br><span class="line"><span class="keyword">* </span>(<span class="keyword">lldb) </span>finish</span><br><span class="line"></span><br><span class="line">命令会结束完成函数的执行并停住调试器。这时，函数返回值会在RAX内。输入如下命令：</span><br><span class="line"></span><br><span class="line">* (<span class="keyword">lldb) </span>register read rax </span><br><span class="line"></span><br><span class="line">你将会看见如下输出</span><br></pre></td></tr></table></figure>
-<p>rax = 0x0000000100003760  “Mom, what happened to the cat?<br><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">了解RAX中的返回值非常重要，因为它将构成您将在后面的部分中编写的调试脚本的基础。</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 改变寄存器值</span></span></span><br><span class="line"></span><br><span class="line">为了巩固您对寄存器的理解，您将在一个已编译的应用程序中修改寄存器。</span><br><span class="line">关闭Xcode和Registers项目。 打开终端窗口，然后启动iPhone X Simulator。 通过键入以下内容来执行此操作：</span><br><span class="line"></span><br><span class="line">* xcrun simctl list | grep "iPhone X”</span><br></pre></td></tr></table></figure></p>
-<p>Phone: iPhone 12 Pro Max (16A6D554-3C10-4A67-9039-31B8BE33871F) (Shutdown)<br><figure class="highlight lsl"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">UDID就是你要找的。使用它并通过如下命令打开iOS模拟器（替换其中的UDID部分）：</span><br><span class="line"></span><br><span class="line">* open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app --args -CurrentDeviceUDID <span class="number">16</span>A6D554<span class="number">-3</span>C10<span class="number">-4</span>A67<span class="number">-9039</span><span class="number">-31</span>B8BE33871F</span><br><span class="line"></span><br><span class="line">保证模拟器已经启动而且在主屏幕上。你可以通过按下Command + Shift + H键回到主屏幕。一旦模拟器准备好了，回到终端窗口将LLDB绑定到SpringBoard程序上。</span><br><span class="line"></span><br><span class="line">* lldb -n SpringBoard</span><br><span class="line"></span><br><span class="line">这样会将LLDB绑定到正在模拟器上运行的SpringBoard实例上！SpringBoard就是在iOS上控制主屏幕的程序。</span><br><span class="line"></span><br><span class="line">一旦绑定，输入如下命令：</span><br><span class="line"></span><br><span class="line">* (lldb) p/x @<span class="string">"Yay! Debugging</span></span><br><span class="line"><span class="string">可以看到类似如下的输出：</span></span><br></pre></td></tr></table></figure></p>
-<p>(__NSCFString *) $3 = 0x0000618000644080 @”Yay! Debugging!”</p>
-<figure class="highlight mipsasm"><table><tr><td class="code"><pre><span class="line">注意下刚刚创建的这个NSString实例，因为很快你会用到它。现在，给UILabel的setText:方法设置一个断点：</span><br><span class="line"></span><br><span class="line">* (<span class="keyword">lldb) </span><span class="keyword">b </span>-[UILabel setText:]</span><br><span class="line">* (<span class="keyword">lldb) </span><span class="keyword">breakpoint </span>command <span class="keyword">add </span></span><br><span class="line"></span><br><span class="line"><span class="keyword">LLDB会吐出一些输出且进入多行编辑模式。这个命令让你在刚刚打的断点处添加多个额外要执行的命令。输入如下，使用刚才的NSString地址替换下面的内存地址：</span></span><br></pre></td></tr></table></figure>
+<h2 id="x86-64-vs-ARM64"><a href="#x86-64-vs-ARM64" class="headerlink" title="x86_64 vs ARM64"></a>x86_64 vs ARM64</h2><p>作为Apple平台的开发人员，学习汇编时要处理两种主要架构：x86_64架构和ARM64架构。 x86_64是最可能在macOS计算机上使用的体系结构，除非您运行的是“古老”的Macintosh。x86_64是64位体系结构，这意味着每个地址最多可以容纳64个1或0。 另外，较旧的Mac使用32位架构，但是Apple在2010年底停止生产32位Mac。 在macOS下运行的程序可能是64位兼容的，包括Simulator上的程序。 话虽如此，即使您的macOS是x86_64，它仍然可以运行32位程序。如果对使用的硬件架构有疑问，可以在终端中运行以下命令来获取计算机的硬件架构：</p>
+<ul>
+<li>uname -m</li>
+</ul>
+<p><img src="https://tva1.sinaimg.cn/large/0081Kckwgy1gktcxe1lm2j30c902xgll.jpg" alt=""></p>
+<p>在能耗要求很高的移动设备（如iPhone）上使用ARM64体系结构。ARM强调节能功能，因此它减少了一组操作码，有助于简化复杂的汇编指令，从而降低了能耗。 这对您来说是个好消息，因为关于ARM的体系结构你需要学习的并不多。这是与之前显示的方法相同的屏幕截图，除了这次是在iPhone 7上的ARM64程序集中：<br><img src="https://tva1.sinaimg.cn/large/0081Kckwgy1gktd6atsyvj32140mv4bh.jpg" alt=""><br>您现在可能无法区分这两种架构，但是您很快就会知道它们就像手背一样.</p>
 <blockquote>
-<p>po $rdx = 0x0000618000644080<br>continue<br>DONE<br>```<br>回去重新看下你刚刚做的。你在UILabel的setText:方法上添加了一个断点。一旦遇到该方法，你就会用一个叫Yay! Debugging!的NSString实例替换RDX—第三个参数。</p>
+<p>Apple最初在其许多iOS设备中都提供了32位ARM处理器，但此后便转移到了64位ARM处理器。 32位iOS设备几乎已过时，因为Apple已通过各种iOS版本逐步淘汰了它们。 例如，iPhone 5是最终的32位iOS设备，iOS 11不支持该设备。支持iOS 11的“最低” iPhone是64位设备iPhone 5s。近年来，32位设备已出现在其他Apple产品中。 Apple Watch的前两代是32位设备，但是第三代是64位设备。 此外，在较新的macOS设备上发现的Apple Touch Bar（无疑是花哨的）也使用32位架构。</p>
 </blockquote>
+<p>由于最好专注于您将来的需求，因此本书将主要关注两种架构的64位汇编。 此外，您将首先开始学习x86_64程序集，然后过渡到学习ARM64程序集，以免感到困惑。 好吧，不要太困惑。</p>
+<h2 id="x86-64-寄存器调用规则"><a href="#x86-64-寄存器调用规则" class="headerlink" title="x86_64 寄存器调用规则"></a>x86_64 寄存器调用规则</h2><p>您的CPU使用一组寄存器来操纵正在运行的程序中的数据。这些是存储的基础，就像计算机中的RAM一样。但是，它们位于CPU本身上，因此CPU的这些部分可以快速访问这些寄存器。效率非常高，大多数指令涉及一个或多个寄存器，并执行一些操作，例如将寄存器的内容写入内存，将存储器的内容读取到寄存器或对两个寄存器执行算术运算例如 加，减等。</p>
+<p>在x64中（从现在开始，x64是x86_64的缩写），机器使用16个通用寄存器来操纵数据。<br>这些寄存器是RAX，RBX，RCX，RDX，RDI，RSI，RSP，RBP和R8至R15。这些名称对您现在意义不大，但是您很快就会发现每个寄存器的重要性。“在x64中调用函数时，寄存器的方式和使用遵循非常特定的规则。这决定了函数的参数应该去哪里以及函数完成时函数的返回值应该在哪里。这很重要，因此可以将一个编译器编译的代码与另一个编译器编译的代码一起使用。</p>
+<p>比如你看下面这个行代码：</p>
+<pre><code>NSString *name = @&quot;Zoltan&quot;;
+NSLog(@&quot;Hello world, I am %@. I&apos;m %d, and I live in %@.&quot;, name, 30, @&quot;my father&apos;s basement&quot;);
+</code></pre><p>NSLog函数调用中传递了四个参数。 其中一些值按原样传递，而一个参数存储在局部变量中，然后在函数中作为参数引用。 但是，通过汇编查看代码时，计算机并不关心变量的名称(name)； 它只关心该变量在内存中的位置。</p>
+<p>在x64汇编中调用函数时，以下寄存器用作参数。 尝试将它们提交到内存中，因为将来您会经常使用它们：</p>
+<pre><code>第一个参数：RDI
+第二个参数：RSI
+第三个参数：RDX
+第四个参数：RCX
+第五个参数：R8
+第六个参数：R9
+</code></pre><p>如果有六个以上的参数，则使用程序的堆栈将其他参数传递给该函数。</p>
+<p>回到简单的Objective-C代码，上面的OC代码可以像下面这样的伪代码流程在寄存器中传递：</p>
+<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">RDI = @<span class="string">"Hello world, I am %@. I'm %d, and I live in %@."</span>;</span><br><span class="line">RSI = @<span class="string">"Zoltan"</span>;</span><br><span class="line">RDX = 30;</span><br><span class="line">RCX = @<span class="string">"my father's basement"</span>;</span><br><span class="line">NSLog(RDI, RSI, RDX, RCX);</span><br></pre></td></tr></table></figure>
+<p>NSLog调用完成后，指定的寄存器将包含如上所述的适当值。但是，一旦函数序言（准备堆栈和寄存器的函数的开始部分）完成执行，这些寄存器中的值就可能改变。生成的程序集可能会覆盖存储在这些寄存器中的值，或者在代码不再需要这些引用时丢弃这些引用。<br>这意味着，一旦离开函数的开始，就不能再假定这些寄存器将保存您要观察的期望值，除非您实际查看汇编代码看看它在做什么。<br>使用此调用规则的浏览寄存器会严重影响您的调试（和断点）策略。必须在函数调用开始时停止以查看或修改参数，而不必实际进入程序集。</p>
+<h2 id="Objective-C-和寄存器"><a href="#Objective-C-和寄存器" class="headerlink" title="Objective-C 和寄存器"></a>Objective-C 和寄存器</h2><p>如上一节所述，寄存器使用特定的调用规则。 您也可以将该知识其应用于其他语言。<br>当Objective-C执行方法时，将执行一个名为 <code>objc_msgSend</code> 的特殊C函数。 这些功能实际上有几种不同的类型，但稍后会介绍更多。 这是Objective-C动态消息分发的核心。 作为第一个参数，objc_msgSend获取在其上发送消息的对象的引用。 随后是一个选择器，它只是一个char *，用于指定在对象上调用的方法的名称。 最后，如果选择器指定应有参数，则objc_msgSend在函数中采用可变数量的参数。<br>让我们来看一个在iOS环境中的具体示例：</p>
+<figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line"><span class="keyword">id</span> <span class="built_in">UIApplicationClass</span> = [<span class="built_in">UIApplication</span> <span class="keyword">class</span>];</span><br><span class="line">objc_msgSend(<span class="built_in">UIApplicationClass</span>, <span class="string">"sharedApplication"</span>);</span><br></pre></td></tr></table></figure>
+<p>第一个参数是对UIApplication类的引用，其后是sharedApplication选择器 其实就是需要被调用的方法。 判断是否有参数的一种简单方法是简单地检查Objective-C选择器中的冒号。 每个冒号将代表一个方法中的参数。<br>我们下面来看一个OC的方法：</p>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">NSString *helloWorldString = [@<span class="string">"Can't Sleep; "</span><span class="string">stringByAppendingString:</span>@<span class="string">"Clowns will eat me"</span>];</span><br></pre></td></tr></table></figure>
+<p>最终编译会变成：</p>
+<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">NSString *helloWorldString; </span><br><span class="line">helloWorldString = objc_msgSend(@<span class="string">"Can't Sleep; "</span>, <span class="string">"stringByAppendingString:"</span>, @<span class="string">"Clowns will eat me"</span>);</span><br></pre></td></tr></table></figure>
+<p>第一个参数是NSString的实例（@“ Can’t Sleep;”），后跟方法选择器，然后是方法调用的参数。</p>
+<h2 id="将理论付诸实践"><a href="#将理论付诸实践" class="headerlink" title="将理论付诸实践"></a>将理论付诸实践</h2><p>在本节中，您将使用本章资源包中提供的名为Registers的项目。<br>通过Xcode打开该项目，然后运行。</p>
+<p><img src="https://tva1.sinaimg.cn/large/0081Kckwgy1gktgwlp1cuj30x40glgoh.jpg" alt=""></p>
+<p>这是一个非常简单的应用程序，仅显示64位寄存器里面的内容。 需要注意的是，该应用程序不会实时的显示寄存器的值； 它只能在特定的函数调用期间显示寄存器的值。 这意味着您不会看到这些寄存器的值有太多更改，因为在调用获取寄存器值的函数时它们可能具有相同（或相似）的值。<br>现在，您已经了解了Registers macOS应用程序背后的功能，为NSViewController的viewDidLoad方法创建一个符号断点。 记住，因为您正在使用Mac应用程序，所以请使用“ NS”代替“ UI”。</p>
+<p><img src="https://tva1.sinaimg.cn/large/0081Kckwgy1gktm1acug7j30ws0c8n13.jpg" alt=""></p>
+<p>生成并重新运行该应用程序。触发断点后在LLDB控制台中键入以下内容：</p>
+<ul>
+<li>(lldb) register read</li>
+</ul>
+<p>这将列出处于暂停执行状态的所有主要寄存器。 但是输出了太多信息。 您应该有选择地打印出寄存器，并将其视为Objective-C对象。如果您还记得的话，-[NSViewController viewDidLoad]将被转换为以下程序集伪代码：</p>
+<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">RDI = UIViewControllerInstance </span><br><span class="line">RSI = <span class="string">"viewDidLoad"</span></span><br><span class="line">objc_msgSend(RDI, RSI)</span><br></pre></td></tr></table></figure>
+<p>考虑到x64调用规则，并且知道objc_msgSend的工作方式，您可以找到要加载的特定NSViewController。<br>在LLDB控制台中键入以下内容：</p>
+<ul>
+<li>(lldb) po $rdi </li>
+</ul>
+<p>然后你会看到如下输出：</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">&lt;Registers<span class="selector-class">.ViewController</span>: <span class="number">0</span>x6080000c13b0&gt;</span><br></pre></td></tr></table></figure>
+<p>它输出了RDI寄存器中的NSViewController引用，您现在知道该引用是该方法的第一个参数的位置。</p>
+<p>在LLDB中，为寄存器加上$字符很重要，因此LLDB知道您需要的是寄存器的值，而不是源代码中与范围相关的变量。 是的，这与您在刚刚反汇编视图中看到的汇编不同！ 烦人吧？</p>
+<blockquote>
+<p>注：善于观察的你可能已经注意到了在OC代码中打断点，在LLDB的回溯内看不到objc_msgSend的影子。这是因为objc_msgSend方法簇执行了jmp。意思就是说objc_msgSend扮演了中转的角色，一但OC代码开始执行，所有的关于objc_msgSend的栈中的回溯都将消失。这是一种叫做尾递归调用的优化。因为mesgsend开始执行证明之前的栈帧已经清空了。</p>
+</blockquote>
+<p>尝试打印出RSI寄存器，不出意外的话应该是方法名。 在LLDB控制台中输入以下内容：</p>
+<ul>
+<li>(lldb) po $rsi </li>
+</ul>
+<p>结果你会输出这个</p>
+<figure class="highlight lsl"><table><tr><td class="code"><pre><span class="line"><span class="number">140735181830794</span></span><br></pre></td></tr></table></figure>
+<p>为什么是这样？ Objective-C选择器基本上只是一个char *。 这意味着，像所有C类型一样，LLDB不知道如何格式化此数据。 因此，您必须将此引用显式转换为所需的数据类型。<br>将RSI寄存器强制转换为正确的类型使用如下指令</p>
+<ul>
+<li>po (char *)$rsi 或者  po (SEL)$rsi</li>
+</ul>
+<p>便可以得到方法名字</p>
+<figure class="highlight 1c"><table><tr><td class="code"><pre><span class="line"><span class="string">"viewDidLoad"</span></span><br></pre></td></tr></table></figure>
+<p>现在，该探讨带有参数的Objective-C方法了。 由于您已经断点了viewDidLoad，因此可以放心地假设NSView实例已加载。 感兴趣的方法是mouseUp：由NSView的父类NSResponder实现的选择器。<br>在LLDB中，在NSResponder的mouseUp：选择器上创建一个断点，然后继续执行。 如果您不记得该怎么做，则需要以下命令：</p>
+<ul>
+<li>(lldb) b -[NSResponder mouseUp:]</li>
+<li>(lldb) continue</li>
+</ul>
+<p>现在，点击应用程序窗口。 确保单击NSScrollView的外部，因为NSScrollView它会拦截您的单击，并且不会命中-[NSResponder mouseUp：]断点。</p>
+<p>点击后，LLDB就会在mouseUp：断点处停止。 通过在LLDB控制台中键入以下内容，打印出NSResponder的引用：</p>
+<ul>
+<li>(lldb) po $rdi </li>
+</ul>
+<p>会出现如下的输出</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="section">&lt;NSView: 0x608000120140&gt;</span></span><br></pre></td></tr></table></figure>
+<p>但是，该方法是带参数的！ 在LLDB控制台中输入以下内容：</p>
+<ul>
+<li>(lldb) po $rdx </li>
+</ul>
+<p>输出</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">“NSEvent: <span class="attribute">type</span>=LMouseUp loc=(351.672,137.914) <span class="attribute">time</span>=175929.4 <span class="attribute">flags</span>=0 <span class="attribute">win</span>=0x6100001e0400 <span class="attribute">winNum</span>=8622 <span class="attribute">ctxt</span>=0x0 <span class="attribute">evNum</span>=10956 <span class="attribute">click</span>=1 <span class="attribute">buttonNumber</span>=0 <span class="attribute">pressure</span>=0 deviceID:0x300000014400000 <span class="attribute">subtype</span>=NSEventSubtypeTouch”</span><br></pre></td></tr></table></figure>
+<p>也可以看到参数类型</p>
+<ul>
+<li>po [$rdx class]</li>
+</ul>
+<figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">NSEvent</span></span><br></pre></td></tr></table></figure>
+<p>太酷了，是吗？有时使用寄存器和断点很有用，以便获得内存中还存在的对象的引用。例如，如果您想将前部NSWindow更改为红色，但是在代码中没有对该视图的引用，又不想重新编译任何代码怎么办？ 您只需创建一个断点就可以轻松调试，从寄存器中获取引用并根据需要操纵该对象的实例。 您现在将尝试将主窗口更改为红色。”</p>
+<blockquote>
+<p>注：尽管NSResponder实现了mouseDown:方法，但NSWindow重写了它。你可以输出所有实现了mouseDown:的类，你就可以看出这个方法被那些类重写了，而不用去看源码。输出所有实现了mouseDown:方法的OC类的命令是：<u>image lookup -rn ‘\ mouseDown:</u>‘</p>
+</blockquote>
+<p>首先使用LLDB控制台删除所有以前的断点：</p>
+<ul>
+<li>breakpoint delete</li>
+</ul>
+<p>像如下输出</p>
+<figure class="highlight n1ql"><table><tr><td class="code"><pre><span class="line">(lldb) breakpoint <span class="keyword">delete</span></span><br><span class="line">About <span class="keyword">to</span> <span class="keyword">delete</span> <span class="keyword">all</span> breakpoints, <span class="keyword">do</span> you want <span class="keyword">to</span> <span class="keyword">do</span> that?: [Y/n] Y</span><br><span class="line"><span class="keyword">All</span> breakpoints removed. (<span class="number">3</span> breakpoints)</span><br><span class="line">(lldb)</span><br></pre></td></tr></table></figure>
+<p>然后在LLDB控制台中键入以下内容：</p>
+<ul>
+<li>(lldb) breakpoint set -o -S “-[NSWindow mouseDown:]</li>
+<li>(lldb) continue</li>
+</ul>
+<p>这句话的作用是设置一个单发断点，只会触发一次，然后点击应用程序触发断点，在LLDB控制台中键入以下内容：</p>
+<ul>
+<li>(lldb) po [$rdi setBackgroundColor:[NSColor redColor]]</li>
+<li>(lldb) continue </li>
+</ul>
+<p>之后就可以看到效果</p>
+<p><img src="https://tva1.sinaimg.cn/large/0081Kckwgy1gkuam4sxojj30qo0i8go0.jpg" alt=""></p>
+<h2 id="Swift和寄存器"><a href="#Swift和寄存器" class="headerlink" title="Swift和寄存器"></a>Swift和寄存器</h2><p>在Swift中探索寄存器时，您将遇到两个问题，这使汇编调试比Objective-C困难。</p>
+<ul>
+<li><p>首先，在Swift调试上下文内寄存器不可用。意味着你不得不获取到任何你想要的数据，并使用OC调试上下文打印出传入Swift函数的寄存器。记住你可以使用expression -l objc -O命令，或者使用在书中第八章（“Persisting and Customizing Commands”）的cpo命令。幸运的是，register read命令依然是可以使用的。</p>
+</li>
+<li><p>其次，Swift相对于OC并不是动态的。事实上，有时候最好假设Swift像C语言一样。如果知道了一个内存地址，你应该显示地强转为你想要的类型。不然Swift调试器没有任何线索去解释内存地址。</p>
+</li>
+</ul>
+<p>话虽这么说，但是Swift使用了相同的寄存器调用规则。 但是有一个非常重要的区别。 当Swift调用一个函数时，它<strong>不需要使用objc_msgSend</strong>，除非您当然标记了使用动态方法。 这意味着当Swift调用函数时，先前分配给选择器的RSI寄存器实际上就是函数的第二个参数。好了，足够的理论-是时候将其付诸实践了。</p>
+<p>在Registers项目中，导航到ViewController.swift并将以下函数添加到该类：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">executeLotsOfArguments</span><span class="params">(one: Int, two: Int, three: Int,</span></span></span><br><span class="line"><span class="function"><span class="params">                                four: Int, five: Int, six: Int,</span></span></span><br><span class="line"><span class="function"><span class="params">                                seven: Int, eight: Int, nine: Int,</span></span></span><br><span class="line"><span class="function"><span class="params">                                ten: Int)</span></span> &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">"arguments are: <span class="subst">\(one)</span>, <span class="subst">\(two)</span>, <span class="subst">\(three)</span>, <span class="subst">\(four)</span>, <span class="subst">\(five)</span>, <span class="subst">\(six)</span>, <span class="subst">\(seven)</span>, <span class="subst">\(eight)</span>, <span class="subst">\(nine)</span>, <span class="subst">\(ten)</span>"</span>)</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<p>现在，在viewDidLoad中，使用适当的参数调用此函数：</p>
+<figure class="highlight less"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">self</span><span class="selector-class">.executeLotsOfArguments</span>(<span class="attribute">one</span>: <span class="number">1</span>, <span class="attribute">two</span>: <span class="number">2</span>, <span class="attribute">three</span>: <span class="number">3</span>, <span class="attribute">four</span>: <span class="number">4</span>, <span class="attribute">five</span>: <span class="number">5</span>, <span class="attribute">six</span>: <span class="number">6</span>, <span class="attribute">seven</span>: <span class="number">7</span>, <span class="attribute">eight</span>: <span class="number">8</span>, <span class="attribute">nine</span>: <span class="number">9</span>, <span class="attribute">ten</span>: <span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+<p>在与executeLotsOfArguments声明相同的行上放置一个断点，以便调试器将在函数的开始处停止。 这很重要，否则如果函数已经开始执行，则寄存器可能会被破坏。然后删除您在-[NSViewController viewDidLoad]上设置的符号断点。生成并运行该应用程序，然后等待executeLotsOfArguments断点停止执行。我们先列出所有的寄存器。 在LLDB中，键入以下内容：</p>
+<ul>
+<li>register read -f d</li>
+</ul>
+<p>这将列出所有的寄存器，并使用-f d选项以十进制显示格式。 输出将类似于以下内容：</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">(lldb) register read -f d</span><br><span class="line">General Purpose Registers:</span><br><span class="line">       rax = <span class="number">10</span></span><br><span class="line">       rbx = <span class="number">7</span></span><br><span class="line">       rcx = <span class="number">4</span></span><br><span class="line">       rdx = <span class="number">3</span></span><br><span class="line">       rdi = <span class="number">1</span></span><br><span class="line">       rsi = <span class="number">2</span></span><br><span class="line">       rbp = <span class="number">140732785005232</span></span><br><span class="line">       rsp = <span class="number">140732785004720</span></span><br><span class="line">        r8 = <span class="number">5</span></span><br><span class="line">        r9 = <span class="number">6</span></span><br><span class="line">       r10 = <span class="number">9</span></span><br><span class="line">       r11 = <span class="number">8</span></span><br><span class="line">       r12 = <span class="number">140668105198352</span></span><br><span class="line">       r13 = <span class="number">105553138827696</span></span><br><span class="line">       r14 = <span class="number">104</span></span><br><span class="line">       r15 = <span class="number">8</span></span><br><span class="line">       rip = <span class="number">4430734802</span>  Registers`Registers<span class="selector-class">.ViewController</span><span class="selector-class">.executeLotsOfArguments</span>(one: Swift<span class="selector-class">.Int</span>, two: Swift<span class="selector-class">.Int</span>, three: Swift<span class="selector-class">.Int</span>, four: Swift<span class="selector-class">.Int</span>, five: Swift<span class="selector-class">.Int</span>, six: Swift<span class="selector-class">.Int</span>, seven: Swift<span class="selector-class">.Int</span>, eight: Swift<span class="selector-class">.Int</span>, nine: Swift<span class="selector-class">.Int</span>, ten: Swift.Int) -&gt; () + <span class="number">178</span> at ViewController<span class="selector-class">.swift</span>:<span class="number">68</span>:<span class="number">15</span></span><br><span class="line">    rflags = <span class="number">514</span></span><br><span class="line">        cs = <span class="number">43</span></span><br><span class="line">        fs = <span class="number">0</span></span><br><span class="line">        gs = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">(lldb)</span><br></pre></td></tr></table></figure>
+<p>如您所见，寄存器遵循x64调用规则。 RDI，RSI，RDX，RCX，R8和R9保留您的前六个参数。</p>
+<blockquote>
+<p>注意:关于LLDB，我一直没有告诉您的是，LLDB可以以$arg{X}形式来引用寄存器，其中X是参数号。还记得RDI是第一个参数，而RSI是第二个参数吗?在LLDB中，可以通过$arg1引用第一个参数(RDI)。随着示例的进行，您可以使用$arg2引用第二个参数(RSI)，以此类推。这些方便值也可以在ARM64调用约定中使用，即使ARM64使用不同的寄存器。您应该记住寄存器调用规则，以便本书尽量减少使用这些寄存器辅助变量。</p>
+</blockquote>
+<p>您可能还会注意到其他参数存储在其他一些其他寄存器中。 确实如此，但这只是为其余参数设置堆栈的代码中的剩余部分。 请记住，第六个参数之后的参数将进入堆栈。</p>
+<h2 id="RAX，用于返回的寄存器"><a href="#RAX，用于返回的寄存器" class="headerlink" title="RAX，用于返回的寄存器"></a>RAX，用于返回的寄存器</h2><p>等等–还有呢！到这里，你已经了解了函数中六个寄存器是如何调用的，但是返回值呢？</p>
+<p>幸运的是，只有一个指定的寄存器用于返回值：RAX。回到executeLotsOfArguments函数并改变函数的返回值，像这样：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">executeLotsOfArguments</span><span class="params">(one: Int, two: Int, three: Int,</span></span></span><br><span class="line"><span class="function"><span class="params">                                four: Int, five: Int, six: Int,</span></span></span><br><span class="line"><span class="function"><span class="params">                                seven: Int, eight: Int, nine: Int,</span></span></span><br><span class="line"><span class="function"><span class="params">                                ten: Int)</span></span> -&gt; <span class="type">String</span> &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">"arguments are: <span class="subst">\(one)</span>, <span class="subst">\(two)</span>, <span class="subst">\(three)</span>, <span class="subst">\(four)</span>, <span class="subst">\(five)</span>, <span class="subst">\(six)</span>, <span class="subst">\(seven)</span>, <span class="subst">\(eight)</span>, <span class="subst">\(nine)</span>, <span class="subst">\(ten)</span>"</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Mom, what happened to the cat?"</span></span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<p>然后viewdidlaod中调用</p>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">let _ = self.executeLotsOfArguments(<span class="string">one:</span> <span class="number">1</span>, <span class="string">two:</span> <span class="number">2</span>, <span class="string">three:</span> <span class="number">3</span>, <span class="string">four:</span> <span class="number">4</span>, <span class="string">five:</span> <span class="number">5</span>, <span class="string">six:</span> <span class="number">6</span>, <span class="string">seven:</span> <span class="number">7</span>, <span class="string">eight:</span> <span class="number">8</span>, <span class="string">nine:</span> <span class="number">9</span>, <span class="string">ten:</span> <span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+<p>在executeLotsOfArguments中的某处创建一个断点。 再次生成并运行，然后等待函数停止执行。 接下来，在LLDB控制台中键入以下内容：</p>
+<ul>
+<li>(lldb) finish</li>
+</ul>
+<p>命令会结束完成函数的执行并停住调试器。这时，函数返回值会在RAX内。输入如下命令：</p>
+<ul>
+<li>(lldb) register read rax </li>
+</ul>
+<p>你将会看见如下输出</p>
+<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">rax = 0x0000000100003760  <span class="string">"Mom, what happened to the cat?</span></span><br></pre></td></tr></table></figure>
+<p>了解RAX中的返回值非常重要，因为它将构成您将在后面的部分中编写的调试脚本的基础。</p>
+<h2 id="改变寄存器值"><a href="#改变寄存器值" class="headerlink" title="改变寄存器值"></a>改变寄存器值</h2><p>为了巩固您对寄存器的理解，您将在一个已编译的应用程序中修改寄存器。<br>关闭Xcode和Registers项目。 打开终端窗口，然后启动iPhone X Simulator。 通过键入以下内容来执行此操作：</p>
+<ul>
+<li>xcrun simctl list | grep “iPhone X”</li>
+</ul>
+<figure class="highlight subunit"><table><tr><td class="code"><pre><span class="line">Phone: iPhone 12 Pro Max (16A6D554<span class="string">-3</span>C10<span class="string">-4</span>A67<span class="string">-9039</span><span class="string">-31</span>B8BE33871F) (Shutdown)</span><br></pre></td></tr></table></figure>
+<p>UDID就是你要找的。使用它并通过如下命令打开iOS模拟器（替换其中的UDID部分）：</p>
+<ul>
+<li>open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app –args -CurrentDeviceUDID 16A6D554-3C10-4A67-9039-31B8BE33871F</li>
+</ul>
+<p>保证模拟器已经启动而且在主屏幕上。你可以通过按下Command + Shift + H键回到主屏幕。一旦模拟器准备好了，回到终端窗口将LLDB绑定到SpringBoard程序上。</p>
+<ul>
+<li>lldb -n SpringBoard</li>
+</ul>
+<p>这样会将LLDB绑定到正在模拟器上运行的SpringBoard实例上！SpringBoard就是在iOS上控制主屏幕的程序。</p>
+<p>一旦绑定，输入如下命令：</p>
+<ul>
+<li>(lldb) p/x @”Yay! Debugging<br>可以看到类似如下的输出：</li>
+</ul>
+<figure class="highlight lsl"><table><tr><td class="code"><pre><span class="line">(__NSCFString *) $<span class="number">3</span> = <span class="number">0x0000618000644080</span> @<span class="string">"Yay! Debugging!"</span></span><br></pre></td></tr></table></figure>
+<p>注意下刚刚创建的这个NSString实例，因为很快你会用到它。现在，给UILabel的setText:方法设置一个断点：</p>
+<ul>
+<li>(lldb) b -[UILabel setText:]</li>
+<li>(lldb) breakpoint command add </li>
+</ul>
+<p>LLDB会吐出一些输出且进入多行编辑模式。这个命令让你在刚刚打的断点处添加多个额外要执行的命令。输入如下，使用刚才的NSString地址替换下面的内存地址：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> po <span class="variable">$rdx</span> = 0x0000618000644080</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> <span class="built_in">continue</span></span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> DONE</span></span><br></pre></td></tr></table></figure>
+<p>回去重新看下你刚刚做的。你在UILabel的setText:方法上添加了一个断点。一旦遇到该方法，你就会用一个叫Yay! Debugging!的NSString实例替换RDX—第三个参数。</p>
 <p>使用continue命令让调试器继续执行：</p>
 <ul>
 <li>(lldb) continue</li>
@@ -744,7 +898,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#汇编寄存器的规则"><span class="nav-text">汇编寄存器的规则</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#汇编101"><span class="nav-text">汇编101</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#x86-64-vs-ARM64"><span class="nav-text">x86_64 vs ARM64</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#寄存器和SDK"><span class="nav-text">寄存器和SDK</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下一步"><span class="nav-text">下一步</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#汇编寄存器的规则"><span class="nav-text">汇编寄存器的规则</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#汇编101"><span class="nav-text">汇编101</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#x86-64-vs-ARM64"><span class="nav-text">x86_64 vs ARM64</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#x86-64-寄存器调用规则"><span class="nav-text">x86_64 寄存器调用规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Objective-C-和寄存器"><span class="nav-text">Objective-C 和寄存器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#将理论付诸实践"><span class="nav-text">将理论付诸实践</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Swift和寄存器"><span class="nav-text">Swift和寄存器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RAX，用于返回的寄存器"><span class="nav-text">RAX，用于返回的寄存器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#改变寄存器值"><span class="nav-text">改变寄存器值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#寄存器和SDK"><span class="nav-text">寄存器和SDK</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下一步"><span class="nav-text">下一步</span></a></li></ol></li></ol></div>
             
 
           </div>
