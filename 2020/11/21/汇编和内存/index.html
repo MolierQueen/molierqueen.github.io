@@ -114,37 +114,38 @@
 
 
   
-  <meta name="keywords" content="翻译,优化,国外文献," />
+  <meta name="keywords" content="Molier’s Home" />
 
 
-<meta name="description" content="产生的背景  在移动设备上内存是一块公用的区域，如果一个App没有做好内存管理那么一定会导致性能急剧下降甚至会崩溃。Facebook的iOS端有许多的地方都共享着一块内存，如果任何一个地方占用太多的内存的话就会影响到整个App，比如一个地发生了内存泄漏，就会出现这种情况。我们把一组内存分配我们的一个对象，但是当我们使用完之后忘记释放他，这就通常就会引起内存泄漏，这就意味着系统永远不能回收这块内存也">
-<meta name="keywords" content="翻译,优化,国外文献">
+<meta name="description" content="汇编和内存你已经开了汇编学习的旅程，并且在前几章中你已经学习了汇编调用的一些黑魔法，你现在知道了，当一个函数被调用，他的参数和返回值是如何传递的。但是您还没学到的是将代码加载到内存后如何执行代码。 在本章中，您将探索程序的执行方式。 您将看到一个特殊的寄存器，该寄存器用于告诉处理器应该从何处读取下一条指令，以及不同大小和内存分组如何产生截然不同的结果。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="iOS端自动内存泄漏检测工具">
-<meta property="og:url" content="https://oliverqueen.cn/2018/01/24/iOS端自动内存泄漏检测工具/index.html">
+<meta property="og:title" content="汇编和内存">
+<meta property="og:url" content="https://oliverqueen.cn/2020/11/21/汇编和内存/index.html">
 <meta property="og:site_name" content="Molier">
-<meta property="og:description" content="产生的背景  在移动设备上内存是一块公用的区域，如果一个App没有做好内存管理那么一定会导致性能急剧下降甚至会崩溃。Facebook的iOS端有许多的地方都共享着一块内存，如果任何一个地方占用太多的内存的话就会影响到整个App，比如一个地发生了内存泄漏，就会出现这种情况。我们把一组内存分配我们的一个对象，但是当我们使用完之后忘记释放他，这就通常就会引起内存泄漏，这就意味着系统永远不能回收这块内存也">
+<meta property="og:description" content="汇编和内存你已经开了汇编学习的旅程，并且在前几章中你已经学习了汇编调用的一些黑魔法，你现在知道了，当一个函数被调用，他的参数和返回值是如何传递的。但是您还没学到的是将代码加载到内存后如何执行代码。 在本章中，您将探索程序的执行方式。 您将看到一个特殊的寄存器，该寄存器用于告诉处理器应该从何处读取下一条指令，以及不同大小和内存分组如何产生截然不同的结果。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://wx1.sinaimg.cn/large/006tNc79gy1fnrkogrtqbj30kg0cndhd.jpg">
-<meta property="og:image" content="https://wx4.sinaimg.cn/large/006tNc79gy1fo6kvv1735j30yg0mv0ug.jpg">
-<meta property="og:image" content="https://wx2.sinaimg.cn/large/006tNc79gy1fnrkpskc4zj30kg0fd76k.jpg">
-<meta property="og:image" content="https://wx2.sinaimg.cn/large/006tNc79gy1fnrkrd6o9oj30kg0j6acn.jpg">
-<meta property="og:image" content="https://wx3.sinaimg.cn/large/006tNc79gy1fnrkrs9hmvj30kg0660ua.jpg">
-<meta property="og:updated_time" content="2020-05-18T07:22:34.256Z">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/0081Kckwgy1gkww85fg8yj30u012ob29.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/0081Kckwgy1gkwqomut9kj31v30u0h5e.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/0081Kckwgy1gkwqrg4bs4j30u00w8tq1.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/0081Kckwgy1gkwqpnpyuwj32b30u0b29.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/0081Kckwgy1gkwra1dlerj31m00u0hdu.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/0081Kckwgy1gkwsm5uzn1j30wj0u0qf1.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/0081Kckwgy1gkwvrtvgixj30u01efnix.jpg">
+<meta property="og:updated_time" content="2020-11-21T08:52:48.449Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="iOS端自动内存泄漏检测工具">
-<meta name="twitter:description" content="产生的背景  在移动设备上内存是一块公用的区域，如果一个App没有做好内存管理那么一定会导致性能急剧下降甚至会崩溃。Facebook的iOS端有许多的地方都共享着一块内存，如果任何一个地方占用太多的内存的话就会影响到整个App，比如一个地发生了内存泄漏，就会出现这种情况。我们把一组内存分配我们的一个对象，但是当我们使用完之后忘记释放他，这就通常就会引起内存泄漏，这就意味着系统永远不能回收这块内存也">
-<meta name="twitter:image" content="https://wx1.sinaimg.cn/large/006tNc79gy1fnrkogrtqbj30kg0cndhd.jpg">
+<meta name="twitter:title" content="汇编和内存">
+<meta name="twitter:description" content="汇编和内存你已经开了汇编学习的旅程，并且在前几章中你已经学习了汇编调用的一些黑魔法，你现在知道了，当一个函数被调用，他的参数和返回值是如何传递的。但是您还没学到的是将代码加载到内存后如何执行代码。 在本章中，您将探索程序的执行方式。 您将看到一个特殊的寄存器，该寄存器用于告诉处理器应该从何处读取下一条指令，以及不同大小和内存分组如何产生截然不同的结果。">
+<meta name="twitter:image" content="https://tva1.sinaimg.cn/large/0081Kckwgy1gkww85fg8yj30u012ob29.jpg">
 
 
 
 
 
 
-  <link rel="canonical" href="https://oliverqueen.cn/2018/01/24/iOS端自动内存泄漏检测工具/"/>
+  <link rel="canonical" href="https://oliverqueen.cn/2020/11/21/汇编和内存/"/>
 
 
-  <title>iOS端自动内存泄漏检测工具 | Molier</title>
+  <title>汇编和内存 | Molier</title>
   
 
 
@@ -325,7 +326,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://oliverqueen.cn/2018/01/24/iOS端自动内存泄漏检测工具/">
+    <link itemprop="mainEntityOfPage" href="https://oliverqueen.cn/2020/11/21/汇编和内存/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Molier">
@@ -342,7 +343,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">iOS端自动内存泄漏检测工具</h2>
+          <h2 class="post-title" itemprop="name headline">汇编和内存</h2>
         
 
         <div class="post-meta">
@@ -354,7 +355,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-24T11:41:50+08:00">2018-01-24</time>
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-11-21T16:50:53+08:00">2020-11-21</time>
             
 
             
@@ -368,7 +369,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2020-05-18T15:22:34+08:00">2020-05-18</time>
+              <time title="更新于" itemprop="dateModified" datetime="2020-11-21T16:52:48+08:00">2020-11-21</time>
             
           </span>
 
@@ -384,7 +385,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/译文/" itemprop="url" rel="index"><span itemprop="name">译文</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/iOS开发/" itemprop="url" rel="index"><span itemprop="name">iOS开发</span></a></span>
 
                 
                 
@@ -423,56 +424,246 @@
       
 
       
-        <script src="/assets/js/APlayer.min.js"> </script><h4 id="产生的背景"><a href="#产生的背景" class="headerlink" title="产生的背景"></a>产生的背景</h4><p>  在移动设备上内存是一块公用的区域，如果一个App没有做好内存管理那么一定会导致性能急剧下降甚至会崩溃。<br>Facebook的iOS端有许多的地方都共享着一块内存，如果任何一个地方占用太多的内存的话就会影响到整个App，比如一个地发生了内存泄漏，就会出现这种情况。我们把一组内存分配我们的一个对象，但是当我们使用完之后忘记释放他，这就通常就会引起内存泄漏，这就意味着系统永远不能回收这块内存也就导致这块内存一直不能分配给别的对象。在Facebook里我们有许多许多的工程师在代码的不同部分工作，内存泄漏时不可避免的，当一旦有内存泄漏发生我们就需要立即找到并且修复。虽然现在有好多检测内存泄漏的工具但是这些工具并不完善，他们仍然需要开发者去做一些工作：<br><a id="more"></a></p>
+        <script src="/assets/js/APlayer.min.js"> </script><h1 id="汇编和内存"><a href="#汇编和内存" class="headerlink" title="汇编和内存"></a>汇编和内存</h1><p>你已经开了汇编学习的旅程，并且在前几章中你已经学习了汇编调用的一些黑魔法，你现在知道了，当一个函数被调用，他的参数和返回值是如何传递的。但是您还没学到的是将代码加载到内存后如何执行代码。</p>
+<p>在本章中，您将探索程序的执行方式。 您将看到一个特殊的寄存器，该寄存器用于告诉处理器应该从何处读取下一条指令，以及不同大小和内存分组如何产生截然不同的结果。</p>
+<p><img src="https://tva1.sinaimg.cn/large/0081Kckwgy1gkww85fg8yj30u012ob29.jpg" alt=""></p>
+<a id="more"></a>
+<h2 id="设置英特尔风格汇编体验™"><a href="#设置英特尔风格汇编体验™" class="headerlink" title="设置英特尔风格汇编体验™"></a>设置英特尔风格汇编体验™</h2><p>如上一章所述，显示汇编有两种主要方法。 一种类型是AT＆T程序集，这个也是LLDB的默认程序集。 这种格式具有以下格式：</p>
+<pre><code>opcode（操作码）  source（源）  destination（目的地）
+</code></pre><p>看一个具体的例子</p>
+<pre><code>movq  $0x78, %rax
+</code></pre><p>这个操作会将十六进制值 <code>0x78</code> 移动到 <code>RAX</code> 寄存器中。 尽管这种汇编形式对某些人来说很不错，但从现在开始，您将使用英特尔的表示形式。</p>
+<blockquote>
+<p>注意：汇编的选择有点像一场大战，有的人说用Inter的格式，有的说是用AT&amp;T的格式，在StackOverflow中查看以下<a href="https://stackoverflow.com/questions/972602/att-vs-intel-syntax-and-limitations" target="_blank" rel="noopener">讨论</a><br>选择使用英特尔是因为大家都觉得英特尔在阅读方面更好，但有时在写作方面更差。 由于您正在学习调试，因此大部分时间是在阅读汇编而不是编写汇编。</p>
+</blockquote>
+<p>把以下的两行内容添加进 <code>~/.lldbinit file</code> 文件底部</p>
 <ul>
-<li>1：打开Xcode并且Build</li>
-<li>2：运行instrument</li>
-<li>3：使用App尽可能的去复现</li>
-<li>4：寻找内存泄漏的来源</li>
-<li>5：解决问题
-    </li>
+<li>settings set target.x86-disassembly-flavor intel</li>
+<li>settings set target.skip-prologue false</li>
 </ul>
-<p>  这意味着需要大量的体力活，并且都是些重复无聊的工作，这也导致了我们不能在开发周期就定位并且修复问题。</p>
-<p>  将这个过程自动化可以让我们在不需要太多的开发者的情况下更快的去找到内存泄漏。为了解决这个问题我们已经建立一套工具使我们能够自动的去完成这些过程，并且这套工具已经解决了我们自己代码的一些问题，今天我们很激动的宣布我们把他们发布了出来<a href="https://github.com/facebook/FBRetainCycleDetector" target="_blank" rel="noopener">FBRetainCycleDetector</a>, <a href="https://github.com/facebook/FBAllocationTracker" target="_blank" rel="noopener">FBAllocationTracker</a>, and <a href="https://github.com/facebook/FBMemoryProfiler" target="_blank" rel="noopener">FBMemoryProfiler</a>.</p>
-<h4 id="循环引用"><a href="#循环引用" class="headerlink" title="循环引用"></a>循环引用</h4><p>  Objective-C使用引用计数来管理内存的，内存中的一个对象可以引用其他的对象，只要有一个对象使用它，那么他就会一直被留在内存中。我们也可以说一个对象持有另一个对象。</p>
-<p>&emsp;&emsp;一般来说这都没问题。但是有一种情会使我们陷入僵局。当两个obj不在相互持有，而是通过另一个obj来互相持有，这样就会陷入一个循环引用的状态就像下面这张图</p>
-<p><img src="https://wx1.sinaimg.cn/large/006tNc79gy1fnrkogrtqbj30kg0cndhd.jpg" alt="循环引用"></p>
-<p>一个View Controller持有一个Viw View中持有delegate delegate中持有ViewController。这样就形成一个环状，谁也无法释放。</p>
-<p>&emsp;&emsp;循环引用会导致一些列的的问题，如果一个对象在RAM中无限的占用空间，充其量也只是浪费一点点内存。如果这些泄漏的对象正在做一些其他的事情那么就会导致App的其他的地方再也无法使用这块内存。更严重的如果循环引用过多，就会浪费掉大量的内存最终导致程序的crash。</p>
-<p>&emsp;&emsp;在我们进行人工调试的时候我们已经找出了大量的很明显的循环引用，我们能很好地定位他，但是在运行之后我们就很难发现他们，但是我们这SDK能很轻松的做这些事。</p>
-<h4 id="在Runtime下的循环引用检测"><a href="#在Runtime下的循环引用检测" class="headerlink" title="在Runtime下的循环引用检测"></a>在Runtime下的循环引用检测</h4><p>&emsp;&emsp;在OC中找循环引用其实就类似于在一个节点为对象，链接线为引用关系的有向无环图中寻找一个环。打个比方如果A引用B那么A到B就会有箭头指向可以看这个<br><img src="https://wx4.sinaimg.cn/large/006tNc79gy1fo6kvv1735j30yg0mv0ug.jpg" alt="image.png">我们发现这张图在箭头处发生循环引用</p>
-<p>&emsp;&emsp;这个是一个很简单的引用关系我们必须确保我们能像左侧那样的来引用对象，其实对于每一个对象我们都获取他所有引用(持有的)对象，有的是强引用有的是弱引用，但是循环引用只发生在强引用上，对于每个对象我们需要搞清楚如何找到引用关系。</p>
-<p>&emsp;&emsp;幸运的是OC给我提供了强大的Runtime，这足够让我们去挖掘其中的关系，图中的一个点可能是block或者是Object中的其中一个，让我们来分别讨论下</p>
-<h4 id="Objects"><a href="#Objects" class="headerlink" title="Objects"></a>Objects</h4><p>&emsp;&emsp;Runtime中有很多工具去帮助我们了解其中的东西，首先我们搞懂到所有实例变量的引用关系<br><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">const</span> <span class="keyword">char</span> *<span class="title">class_getIvarLayout</span><span class="params">(Class cls)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">const</span> <span class="keyword">char</span> *<span class="title">class_getWeakIvarLayout</span><span class="params">(Class cls)</span></span>;</span><br></pre></td></tr></table></figure></p>
-<p>对于一个给定的对象，实例变量布局图告诉我们了他都引用了哪些对象，他会给我提供一个索引，这个索引相当于一个偏移量，该对象加上这个偏移量就是他所引用的对象的地址。运行时会给我们提供一个“弱引用”的布局图，也就是该对象所有弱引用的对象，强引用和弱引用之间的区别我们可以猜想为就是强引用的布局图。</p>
-<p>&emsp;&emsp;对于objective-c++来说我们可以用结构体来定义一个对象，这些对象不会再实例变量的布局图中被获取到，不过Runtime给我提供了“类型编码”来处理这个问题，对于每个实例变量，类型编码描述了变量是如何构造的。如果它是一个struct，类型编码可以描述出它包含的字段和类型。我们解析类型编码以找到哪些实例变量是objective-c的对象。然后我们可以像在布局图中那样计算他的偏移量然后拿到他所引用的对象的地址。</p>
-<p>&emsp;&emsp;还有一些我们不会深入讨论的边缘案例。这些都是不同的集合，我们必须列举它们来获取它们的保留对象，这可能会产生一些副作用。</p>
-<h4 id="Blocks"><a href="#Blocks" class="headerlink" title="Blocks"></a>Blocks</h4><p>&emsp;&emsp;block和对象有一点不同。运行时不允许我们轻松地查看它们的布局，但是我们仍然可以进行猜测。在处理block时，我们使用了Mike Ash在他的项目<a href="https://github.com/mikeash/Circle" target="_blank" rel="noopener">Circle</a>中提出的想法:也正是这个项目激发FBRetainCycleDetector的项目。</p>
-<p>&emsp;$emsp;我们可以使用<a href="http://clang.llvm.org/docs/Block-ABI-Apple.html" target="_blank" rel="noopener">application binary interface for blocks</a> (ABI)，他可以向我们展示一个block在内存中是什么样子的，如果我们知道了我们所研究的block的表现形式我们就可以用一个假的结构体来模仿实现block的功能，之后我们就能知道了哪些对象被block引用并且一直在那里，但是不幸的是我们并不知道这些事强引用还是弱引用。</p>
-<p>&emsp;&emsp;为了做到这些我们使用黑盒的方法，首先我们创建一个假的对象来模仿我们所研究的Block，因为是我们自己创建的假对象，所以我们可以完全的操作他，我们给这个假装的block上面装上释放探测器，释放探测器是监听发给他们的释放消息的一个对象，如果一个所有者想放弃对对象们所有权的时候，释放探测器会给他所有强引用的对象发出消息，当我们释放我们的假对象时，我们可以检查哪些探测器收到了这样的消息。便知道了哪些block是被强引用的。这样一来我们可以找到我们原始block所持有的真是的对象，如下图所示</p>
-<p><img src="https://wx2.sinaimg.cn/large/006tNc79gy1fnrkpskc4zj30kg0fd76k.jpg" alt="block"></p>
-<h4 id="自动化"><a href="#自动化" class="headerlink" title="自动化"></a>自动化</h4><p>&emsp;&emsp;员工在进行持续执行时，这个工具就会非常出色。自动化在客户端上是非常容易的，我们使用定时器来建立一个循环引用检测，用来周期性的扫描一部分内存去寻找循环引用，不过还是有点问题，我们第一次运行检测器的时候我们发现他不快速的扫描完整个内存空间，所以我们需要给他提供一个候选检测对象，为了做到这一点，我们建立了FBAllocationTracker，他可以追踪任何一个Nsobject对象的创建和销毁，他同样可以在任何给定的时刻以最小的性能开销来获取任何类的实例对象。</p>
-<p>&emsp;&emsp;在客户端上实现了这样的自动化操作意味着我们可以更加简单的在NSTimer上使用FBRetainCycleDetector和添加用了追踪实例的FBAllocationTracker，现在让我们来看下后端到底发生了什么，循环引用可以有多个对象来组成，如果创建了许多的引用环并且有一个泄漏了那么事情将会变得非常复杂。如下如所示A-&gt;B就是一个坏的引用环导致了A-&gt;B-&gt;C-&gt;D和A-&gt;B-&gt;C-&gt;E</p>
-<p><img src="https://wx2.sinaimg.cn/large/006tNc79gy1fnrkrd6o9oj30kg0j6acn.jpg" alt="引用环"></p>
-<p>遇到这样的问题就会给我们的SDK带来两个问题：</p>
+<p>第一行告诉LLDB以Intel风格显示x86汇编（32位和64位）。<br>第二行告诉LLDB不要跳过函数序言。 您在本书的前面已经了解了这一点，从现在开始，请不要跳过序言，因为您将直接从函数的第一条指令检查汇编。</p>
+<font color="#0099ff" size="3" face="黑体">关于函数序言和函数尾声可以再参考这篇<a href="https://blog.csdn.net/zang141588761/article/details/103984226" target="_blank" rel="noopener">文章</a></font>
+
+<font color="#DC143C" size="3" face="黑体">注意：在编辑〜/ .lldbinit文件时，请确保您不使用TextEdit之类的程序，因为它将在文件中添加不必要的字符，这可能导致LLDB无法正确解析该文件。 一种简单（尽管很危险）的添加方法是通过如下的Terminal命令：echo“ settings set target.x86-disassembly-flavor intel” &gt;&gt;〜/ .lldbinit。<br>确保其中有两个“ &gt;&gt;”，否则将覆盖〜/ .lldbinit文件中的所有先前内容。 如果您对终端机不满意，最好的选择是nano（您之前使用过的编辑器）。</font>
+
+<p>英特尔风格将交换源值和目标值，删除’％’和’$’字符以及进行许多其他许多更改。 由于您还不会使用AT＆T语法，因此这里就不解释全部的差异，我们只单单学习Inter程序集就够了。</p>
+<p>看下面的示例，就是以Inter风格来展示，他看起来比较干净，比较好阅读。</p>
+<pre><code>mov  rax, 0x78
+</code></pre><p>同样，这会将十六进制值0x78移到RAX寄存器中。<br>与前面显示的AT＆T风格相比，Intel风格交换了源操作数和目标操作。 现在，目标操作数在源操作数之前。 在进行汇编时，务必始终确定正确的风格，这很重要，因为如果您不清楚要使用的风格，则可能会采取不同的操作。</p>
+<p>从现在开始，我们就开始使用Inter的汇编格式了。 如果您看到以$字符开头的数字十六进制常量或以％开头的寄存器，你就要把他们转换成Inter的形式</p>
+<blockquote>
+<p>注:笔者反而觉得AT&amp;T的风格更适合中国汉语的语法，只是前面的 % 和$有些奇怪罢了</p>
+</blockquote>
+<h2 id="创建cpx命令"><a href="#创建cpx命令" class="headerlink" title="创建cpx命令"></a>创建cpx命令</h2><p>首先，您将创建自己的LLDB命令，之后会用到。<br>再次打开〜/ .lldbinit（vim）。 然后将以下内容添加到文件底部：</p>
 <ul>
-<li><p>如果这两个环是由于一个不良引用引起我们就直接标记一处不良引用就可以了，不用标记两处，这样会给开发者一个错误信号。</p>
-</li>
-<li><p>如果这两个环是虽然由一个不良引用引起但是会导致两个不同的错误，那么我们就需要将这个两个循环引用都标记出来</p>
-</li>
+<li>command alias -H “Print value in ObjC context in hexadecimal” -h “Print in hex” – cpx expression -f x -l objc – </li>
 </ul>
-<p>因此我们需要建立一个循环引用群，我们通过下面这些启发写了一种算法。</p>
+<p>cpx是一个便捷命令，您可以使用Objective-C上下文以十六进制格式打印出某些内容。 尤其是在打印出寄存器内容时会用到。<br>请记住，寄存器在Swift上下文中不可用，因此您需要使用Objective-C上下文。<br>现在，您已经具有从汇编的角度探讨本章内容所需的工具！</p>
+<h2 id="位，字节和其他术语"><a href="#位，字节和其他术语" class="headerlink" title="位，字节和其他术语"></a>位，字节和其他术语</h2><p>在开始探索内存之前，您需要了解一些有关内存分组方式的词汇。</p>
 <ul>
-<li>1：把给定日期中所检测出的所有循环引用收集起来。</li>
-<li>2：找到每个循环引用环中Facebook特定的类名。</li>
-<li>3：找到每个环中最小的那个环。</li>
-<li>4：把最小周期放到一个组中。</li>
-<li>5：仅仅只像开发者报告最小的周期。</li>
+<li>位 ：可以包含1或0的值称为位。您可以说在64位体系结构中每个地址有64位。很简单。</li>
+<li>字节：当8位组合在一起时，它们称为字节。一个字节可以容纳多少个唯一值？您可以通过计算2 ^ 8（从0开始到255的256个值）来确定。</li>
 </ul>
-<p>有了这些最后一部分就是找出谁可能会意外的引入一个循环引用，我们通过“git/hg blame”来做到这些。猜测这可能是导致出现问题的最新修改。最后一个提交代码的人会收到一个通知。整个系统可以如下展示</p>
-<p><img src="https://wx3.sinaimg.cn/large/006tNc79gy1fnrkrs9hmvj30kg0660ua.jpg" alt="系统图"></p>
-<h4 id="手工配置"><a href="#手工配置" class="headerlink" title="手工配置"></a>手工配置</h4><p>&emsp;&emsp;尽管自动化帮助简化了寻找循环引用的过程，并减少了开发人员的工作，但是手动配置仍然很重呀。我们开发的另一款工具允许任何人查看应用程序的内存使用情况，甚至不用将手机插入电脑。FBMemoryProfiler可以很容易地添加到任何应用中，让你手动配置你的工程，并在应用中运行循环引用检测，它可以通过使用FBAllocationTracker和fbretaincycle检测器来完成。</p>
-<p>原文链接 <a href="https://code.facebook.com/posts/583946315094347/automatic-memory-leak-detection-on-ios/" target="_blank" rel="noopener">https://code.facebook.com/posts/583946315094347/automatic-memory-leak-detection-on-ios/</a></p>
+<p>许多信息以字节表示。例如，C语言中 sizeof（）函数以字节为单位返回对象的大小。</p>
+<p>如果您熟悉ASCII字符编码，您会想起所有ASCII字符都可以保存在一个字节中。<br>现在是时候看看实际操作中的术语并学习一些技巧。<br>打开Registers macOS应用程序，您将在本章的资源文件夹中找到该应用程序。接下来，构建并运行该应用程序。一旦运行，请暂停程序并启动LLDB控制台。这将导致使用非Swift调试上下文，因为默认情况下暂停应用程序会带来非Swift上下文。<br>在LLDB中键入以下内容：</p>
+<ul>
+<li>p sizeof(‘A’)</li>
+</ul>
+<p>这将打印出组成’A’字符所需的字节数</p>
+<pre><code>(unsigned long) $0 = 1
+</code></pre><p>然后输入如下命令</p>
+<ul>
+<li>p/t ‘A’</li>
+</ul>
+<p>你会得到</p>
+<pre><code>(char) $1 = 0b01000001
+</code></pre><p>这是ASCII中字符A的二进制表示。<br>显示信息字节的另一种更常见的方法是使用十六进制值。 需要两个十六进制数字以十六进制表示一个信息字节。</p>
+<p>然后我们输入以下命令来打印出“ A”的十六进制表示形式：</p>
+<ul>
+<li>p/x ‘A’</li>
+</ul>
+<p>你将会得到</p>
+<pre><code>(char) $2 = 0x41
+</code></pre><p>十六进制非常适合查看内存，因为一个十六进制数字恰好代表4位。 因此，如果您有2个十六进制数字，则您有1个字节。 如果您有8个十六进制数字，则您有4个字节。 等等。<br>这里还有一些适用于您的术语，这些术语在以后的章节中会很有用：</p>
+<ul>
+<li>Nybble：4位，十六进制单个值</li>
+<li>Half word：16位或2个字节</li>
+<li>Word：32位或4个字节</li>
+<li>Double word or Giant word：64位或8字节。</li>
+</ul>
+<p>使用此术语，您将可以探索不同的内存块。</p>
+<h2 id="RIP寄存器"><a href="#RIP寄存器" class="headerlink" title="RIP寄存器"></a>RIP寄存器</h2><p>当程序执行时，将要执行的代码加载到内存中。 程序中接下来要执行的代码的位置由一个非常重要的寄存器决定：RIP或指令指针寄存器。<br>让我们来看看实际情况。 再次打开“register demo”应用程序，然后导航到AppDelegate.swift文件。 修改文件，使其包含以下代码：</p>
+<pre><code>@NSApplicationMain
+class AppDelegate: NSObject, NSApplicationDelegate {
+
+func applicationWillBecomeActive(
+    _ notification: Notification) {
+    print(&quot;\(#function)&quot;)
+    self.aBadMethod()
+}
+
+func aBadMethod() {
+    print(&quot;\(#function)&quot;)
+}
+
+func aGoodMethod() {
+    print(&quot;\(#function)&quot;)
+}
+}
+</code></pre><p>构建并运行该应用程序。 毫无疑问，控制台将会输出 该方法名 <code>applicationWillBecomeActive（_ :)</code> ，然后输出 <code>aBadMethod</code> 。我们在在aBadMethod的开始处创建一个断点：</p>
+<p><img src="https://tva1.sinaimg.cn/large/0081Kckwgy1gkwqomut9kj31v30u0h5e.jpg" alt=""></p>
+<p>再次构建并运行。 在aBadMethod的开头命中断点后，导航至Debug \ Debug Workflow \ Always Show Disassembly in Xcode。 现在，您将看到程序的实际汇编！</p>
+<p><img src="https://tva1.sinaimg.cn/large/0081Kckwgy1gkwqrg4bs4j30u00w8tq1.jpg" alt=""></p>
+<p><img src="https://tva1.sinaimg.cn/large/0081Kckwgy1gkwqpnpyuwj32b30u0b29.jpg" alt=""></p>
+<p>然后我们在控制台输入以下命令：</p>
+<pre><code>cpx $rip
+</code></pre><p>这将使用您先前创建的cpx命令打印出指令指针寄存器。<br>您会注意到输出LLDB的地址与Xcode中绿线突出显示的地址是一样的：</p>
+<pre><code>(unsigned long) $1 = 0x0000000100008910
+</code></pre><p>当然了每个人的电脑上显示的地址是不同的，而且每次执行时候的地址都可能不一样，但是在单次运行中绿线和控制台上显示的肯定是完全一样的。你试着在控制台下打以下命令：</p>
+<pre><code>(lldb) image lookup -vrn ^Registers.*aGoodMethod
+</code></pre><p>这是一个很常用的查找命令，其中包含典型的正则表达式参数以及添加的参数 <code>-v</code> ，该参数输出详细信息就像 <code>--verbose</code>。<br>您会看到很多的东西。 在控制台中使用 <code>command + F</code> 来搜索关键字 <code>range = [</code> 其中范围中的第一个值便是</p>
+<p><img src="https://tva1.sinaimg.cn/large/0081Kckwgy1gkwra1dlerj31m00u0hdu.jpg" alt=""></p>
+<p>该地址称为加载地址。 这是此函数在内存中的实际物理地址!这与您在<code>image lookup</code> 命令中看到的常规输出不同，它仅显示函数相对于可执行文件的偏移量，也称为实现偏移量。 寻找函数地址时，区分加载地址和可执行文件中的实现偏移很重要，因为它会有所不同。</p>
+<p>将这个新地址复制到范围括号的开头。 对于此特定示例，aGoodMethod的加载地址位于0x0000000100008910。 现在将aGoodMethod的地址指向RIP寄存器。输入以下指令</p>
+<ul>
+<li>register write rip 0x0000000100008910</li>
+</ul>
+<p>单击继续，使用Xcode调试按钮单击“继续”。 请一定用Xcode的按钮来继续，不要是用 <code>continue</code> 命令，因为在修改RIP寄存器并在控制台中继续操作时就会崩溃。按下Xcode继续按钮后，您会看到神奇的事情 -&gt; 未执行aBadMethod（），而是执行了aGoodMethod（）。 通过查看控制台日志中的输出来验证这一点。</p>
+<blockquote>
+<p>注意：修改RIP寄存器实际上非常危险。 您需要确RIP寄存器上的数据不会再被使用了，因为新功能将对RIP寄存器做出不正确的假设。 由于aGoodMethod和aBadMethod在功能上非常相似，因此您从一开始就停了下来，并且由于没有对Registers应用程序进行任何修改，因此不必担心。</p>
+</blockquote>
+<h2 id="寄存器和比特分解"><a href="#寄存器和比特分解" class="headerlink" title="寄存器和比特分解"></a>寄存器和比特分解</h2><p>如上一章所述，x64具有16个通用寄存器：RDI，RSI，RAX，RDX，RBP，RSP，RCX，RDX，R8，R9，R10，R11，R12，R13，R14和R15。<br>为了保持与i386的32位架构等以前的体系结构的兼容性，可以将寄存器分为32位，16位或8位值。</p>
+<p>对于具有不同体系结构历史的寄存器，寄存器名称中的最前面的字符确定寄存器的大小。 例如，RIP寄存器以R开头，它表示64位。 如果您希望使用等效于RIP寄存器的32位，则可以将R字符换成E，以获得EIP寄存器。</p>
+<p><img src="https://tva1.sinaimg.cn/large/0081Kckwgy1gkwsm5uzn1j30wj0u0qf1.jpg" alt=""></p>
+<p>为什么这些有用？ 因为使用寄存器时，有时传递到寄存器的值不需要全部使用64位。 例如，考虑布尔数据类型：您真正需要的只是1或0以指示是或否（尽管实际上，布尔值将占用寄存器一个字节）。 基于语言的功能和约束，编译器知道这一点，有时只会将信息写入寄存器的某些部分。<br>让我们来看看实际情况。<br>删除Registers项目中的所有断点。 生成并运行项目。 现在，让程序暂停。输入以下内容：</p>
+<ul>
+<li>register write rdx 0x0123456789ABCDEF</li>
+</ul>
+<p>这会将值写入RDX寄存器。让我们停一分钟。 <font color="red" size="3">提示：您应该注意，写入寄存器可能会导致程序崩溃，尤其是当您希望写入的寄存器具有某种类型的数据时</font>。 但是你现在是在demo上做调试，所以请不要担心您的程序是否崩溃！<br>确认此值已成功写入RDX寄存器：</p>
+<ul>
+<li>p/x $rdx</li>
+</ul>
+<p>输出</p>
+<pre><code>(unsigned long) $0 = 0x0123456789abcdef
+</code></pre><p>然后输入</p>
+<ul>
+<li>p/x $dx</li>
+</ul>
+<p>这将打印出DX寄存器，该寄存器是EDX寄存器的最低有效部分。 因此，这是一个半字。 您应该看到以下内容：</p>
+<pre><code>0xcdef
+</code></pre><p>再输入</p>
+<ul>
+<li>p/x $dl</li>
+</ul>
+<p>这将打印出DL寄存器，它是DX寄存器的最低有效位-这次是一个字节。 您应该看到以下内容</p>
+<pre><code>0xef
+</code></pre><p>最后输出如下指令</p>
+<ul>
+<li>p/x $dh</li>
+</ul>
+<p>这为您提供了DX寄存器的最高有效部分，即DL给出的另一半。 DL中的L代表“低”而DH中的H代表“高”也就不足为奇了。<br>探索汇编时，请注意不同尺寸的寄存器。 寄存器的大小可以为其中包含的值提供线索。 例如，您可以轻松地查找通过AL寄存器返回布尔值的函数，因为布尔值将使用8个字节，<font color="red" size="3">而AL是64位“返回值寄存器” RAX的8位部分</font></p>
+<h2 id="寄存器-R8-到-R15"><a href="#寄存器-R8-到-R15" class="headerlink" title="寄存器 R8 到 R15"></a>寄存器 R8 到 R15</h2><p>由于R8至R15系列寄存器仅针对64位架构而创建，因此它们使用完全不同的格式表示较小的寄存器。</p>
+<p>现在，您将看下R9的不同大小如何选择。生成并运行Registers应用程序，然后暂停调试器。像以前一样，将相同的十六进制值写入R9寄存器：</p>
+<ul>
+<li>register write $r9 0x0123456789abcdef</li>
+</ul>
+<p>输入以下内容，以确认您已设置R9寄存器成功：</p>
+<ul>
+<li>p/x $ r9</li>
+</ul>
+<p>输入以下内容，这将打印R9寄存器的低32位。请注意，它与您为RDX指定低32位（即EDX）的方式有何不同。</p>
+<ul>
+<li>p/x $ r9d</li>
+</ul>
+<p>然后输入以下内容，这次您获得R9的低16位。同样，这与您为RDX进行此操作的方式不同</p>
+<ul>
+<li>p/x $ r9w</li>
+</ul>
+<p>再输入以下内容，打印出R9的低8位</p>
+<ul>
+<li>p/x $ r9l</li>
+</ul>
+<p>尽管这看起来有些乏味，但是您正在建立阅读汇编语言的技巧。</p>
+<h2 id="内存中断"><a href="#内存中断" class="headerlink" title="内存中断"></a>内存中断</h2><p>现在，您已经了解了指令指针，是时候进一步探索其背后的内存了。顾名思义，指令指针实际上是一个指针。它不执行RIP寄存器中存储的指令，而是执行RIP寄存器中指向的指令。</p>
+<p>在LLDB中看到这一点也许会更好地描述它。返回Registers应用程序中，打开AppDelegate.swift并再次在aBadMethod上设置一个断点。生成并运行该应用程序。</p>
+<p>命中断点并停止程序后，导航回到汇编视图。如果您忘记了该操作，但尚未为其创建键盘快捷键，则可以在Debug \ Debug Workflow \ Always Show Disassembly下找到它。<br>您会看到一堆汇编指令。看一下RIP寄存器的位置，该位置应指向函数的最开始。<br>对于该项目，aBadMethod的起始地址始于0x100008910。和往常一样，您的地址可能会有所不同。<br>在LLDB控制台中，键入以下内容：</p>
+<ul>
+<li>cpx $rip</li>
+</ul>
+<p>到现在为止，这将打印出指令指针寄存器的内容。如预期的那样，您将获得aBadMethod起始地址。 但是同样，RIP寄存器指向内存中的值。 它指的是什么？ 嗯，您可以摆脱疯狂的C编码技巧（您还记得吗？）并取消引用指针，但是使用LLDB可以找到一种更为优雅的方法。<br>输入以下内容，将地址替换为您的aBadMethod函数的地址：</p>
+<ul>
+<li>memory read -fi -c1 0x100008910</li>
+</ul>
+<p>哇，该命令到底能做什么？ <code>memory read</code> 采用一个值，并读取您提供的内存地址所指向的内容。 <code>-f</code> 命令是一个格式参数。 在这种情况下，它是汇编指令格式。 最后，您说的是只希望使用count或-c参数打印一条汇编指令。<br>您将获得类似于以下内容的输出：</p>
+<pre><code>-&gt;  0x1000017c0: 55  pushq  %rbp
+</code></pre><p>这是一些很好的输出。 它告诉您十六进制（0x55）中提供的汇编指令以及操作码，这些指令是 <code>pushq ％rbp</code> 操作</p>
+<blockquote>
+<p>注意：等等，您看到’％’吗？！ LLDB中存在一个错误，当您以指令格式打印代码时，该错误不符合您的汇编风格。 请记住，如果您看到这种情况，则源和目标操作数将被反转！这就是inter指令集和AT&amp;T指令集的区别。</p>
+</blockquote>
+<p>让我们再看一下输出中的 “ 55”。 这是整个指令（即整个pushq ％rbp）的编码。 不相信我吗？ 您可以验证它。 在LLDB中输入以下内容：</p>
+<ul>
+<li>expression -f i -l objc – 0x55</li>
+</ul>
+<p>这实际上要求LLDB将0x55解释为x64操作码。 您将获得以下输出：</p>
+<pre><code>$1 = 55 pushq％rbp
+</code></pre><p>该命令有点长，但这是因为如果您在Swift调试上下文中，则需要切换到Objective-C上下文。 但是，如果移至Objective-C调试上下文，则可以使用简短得多的便捷表达式。</p>
+<p>尝试单击Xcode左侧面板中的其他框架，以进入一个不包含Swift或Objective-C / Swift桥接代码的Objective-C上下文。 单击Objective-C函数中的任何框架。</p>
+<p><img src="https://tva1.sinaimg.cn/large/0081Kckwgy1gkwvrtvgixj30u01efnix.jpg" alt=""></p>
+<p>下一步，在LLDB控制台中键入以下内容：</p>
+<ul>
+<li>p/i 0x55</li>
+</ul>
+<p>好多了，对吧？<br>现在，回到手中的应用程序。 在LLDB中键入以下内容，再次用aBadMethod函数地址替换地址：</p>
+<ul>
+<li>memory read -fi -c10 0x1000017c0</li>
+</ul>
+<p>你讲获得以下输出：</p>
+<pre><code>-&gt; 0x100008910: 55                    pushq  %rbp
+0x100008911: 48 89 e5              movq   %rsp, %rbp
+0x100008914: 48 81 ec c0 00 00 00  subq   $0xc0, %rsp
+0x10000891b: 4c 89 6d f8           movq   %r13, -0x8(%rbp)
+0x10000891f: b8 01 00 00 00        movl   $0x1, %eax
+0x100008924: 89 c7                 movl   %eax, %edi
+0x100008926: e8 d5 05 00 00        callq  0x100008f00               ; symbol stub for: generic specialization &lt;preserving fragile attribute, Any&gt; of Swift._allocateUninitializedArray&lt;A&gt;(Builtin.Word) -&gt; (Swift.Array&lt;A&gt;, Builtin.RawPointer)
+0x10000892b: 48 89 c7              movq   %rax, %rdi
+0x10000892e: 48 89 45 a8           movq   %rax, -0x58(%rbp)
+0x100008932: 48 89 55 a0           movq   %rdx, -0x60(%rbp)
+</code></pre><p>这里需要注意一些有趣的事情：汇编指令的长度可以变化。 看一下第一条指令，然后看输出中的其余指令。 第一条指令的长度为1个字节，用0x55表示。 以下指令的长度为三个字节。<br>确保您仍在Objective-C上下文中，并尝试打印出负责此指令的操作码。 它只有三个字节，所以您只需将它们连接在一起</p>
+<ul>
+<li>p/i 0x4889e5</li>
+</ul>
+<p>您将获得与 <code>mov ％rsp，％rbp</code> 指令完全无关的另一条指令！ 您会看到以下内容：</p>
+<pre><code>e5 89  inl    $0x89, %eax
+</code></pre><p>是怎么做到的呢？ 也许现在是谈论字节序的好时机。</p>
+<h2 id="字节序…这东西倒过来了"><a href="#字节序…这东西倒过来了" class="headerlink" title="字节序…这东西倒过来了"></a>字节序…这东西倒过来了</h2><p>x64以及ARM系列体系结构设备均使用低位字节序，这意味着数据以最低有效字节在先的形式存储在内存中。 如果要将数字0xabcd存储在内存中，则会先存储0xcd字节，然后再存储0xab字节。<br>回到指令示例，这意味着指令0x4889e5将以0xe5、0x89、0x48的形式存储在存储器中。<br>返回到您先前遇到的mov指令，请尝试反转用于构成汇编指令的字节。 在LLDB中输入以下内容：</p>
+<ul>
+<li>p/i 0xe58948</li>
+</ul>
+<p>您现在将获得预期的汇编表示：</p>
+<pre><code>$2 = 48 89 e5  movq   %rsp, %rbp
+</code></pre><p>让我们再看看一些小端实践的例子。 在LLDB中输入以下内容：</p>
+<ul>
+<li>memory read -s1 -c20 -fx 0x100008910</li>
+</ul>
+<p>此命令读取地址为0x100008910的内存。 -s1选项可读取1个字节的大小块，-c20选项可读取20个字节的大小块。 您会看到类似这样的内容：</p>
+<pre><code>0x100008910: 0x55 0x48 0x89 0xe5 0x48 0x81 0xec 0xc0
+0x100008918: 0x00 0x00 0x00 0x4c 0x89 0x6d 0xf8 0xb8
+0x100008920: 0x01 0x00 0x00 0x00
+</code></pre><p>现在，将大小增加一倍，数量减少一半，就像这样：</p>
+<ul>
+<li>memory read -s2 -c10 -fx 0x100008910</li>
+</ul>
+<p>你会看到这样的输出</p>
+<pre><code>0x100008910: 0x4855 0xe589 0x8148 0xc0ec 0x0000 0x4c00 0x6d89 0xb8f8
+0x100008920: 0x0001 0x0000
+</code></pre><p>请注意，当将内存值分组在一起时，由于使用了低位字节序，它们将被颠倒。<br>现在，将大小再增加一倍，数量再减少一半：</p>
+<ul>
+<li>memory read -s4 -c5 -fx 0x100008910</li>
+</ul>
+<p>然后你会看到如下输出</p>
+<pre><code>0x100008910: 0xe5894855 0xc0ec8148 0x4c000000 0xb8f86d89
+0x100008920: 0x00000001
+</code></pre><p>与之前的输出相比，这些值再次被颠倒。<br>记住这一点非常重要，但在探索你自己的记忆时，这会让你变得很混乱。不仅内存的大小会给您一个潜在的错误答案，而且顺序也会给您一个潜在的错误答案。当你开始对着电脑大喊大叫时，当你试图弄清楚某样东西应该如何工作时，请记住这一点!</p>
 
       
     </div>
@@ -493,7 +684,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://oliverqueen.cn/2018/01/24/iOS端自动内存泄漏检测工具/" title="iOS端自动内存泄漏检测工具">https://oliverqueen.cn/2018/01/24/iOS端自动内存泄漏检测工具/</a>
+    <a href="https://oliverqueen.cn/2020/11/21/汇编和内存/" title="汇编和内存">https://oliverqueen.cn/2020/11/21/汇编和内存/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -505,16 +696,6 @@
     
 
     <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/翻译/" rel="tag"># 翻译</a>
-          
-            <a href="/tags/优化/" rel="tag"># 优化</a>
-          
-            <a href="/tags/国外文献/" rel="tag"># 国外文献</a>
-          
-        </div>
       
 
       
@@ -540,8 +721,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/01/24/转-如何掌握所有的程序语言/" rel="next" title="(转)如何掌握所有的程序语言">
-                <i class="fa fa-chevron-left"></i> (转)如何掌握所有的程序语言
+              <a href="/2020/11/19/汇编寄存器的规则/" rel="next" title="汇编寄存器的规则">
+                <i class="fa fa-chevron-left"></i> 汇编寄存器的规则
               </a>
             
           </div>
@@ -549,10 +730,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/01/24/iOS-Runtime简单介绍，以及不同类的Method-Swizzling/" rel="prev" title="iOS Runtime简单介绍，以及不同类的Method Swizzling">
-                iOS Runtime简单介绍，以及不同类的Method Swizzling <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -741,7 +918,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#产生的背景"><span class="nav-text">产生的背景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#循环引用"><span class="nav-text">循环引用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在Runtime下的循环引用检测"><span class="nav-text">在Runtime下的循环引用检测</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Objects"><span class="nav-text">Objects</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Blocks"><span class="nav-text">Blocks</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自动化"><span class="nav-text">自动化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#手工配置"><span class="nav-text">手工配置</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#汇编和内存"><span class="nav-text">汇编和内存</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#设置英特尔风格汇编体验™"><span class="nav-text">设置英特尔风格汇编体验™</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建cpx命令"><span class="nav-text">创建cpx命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#位，字节和其他术语"><span class="nav-text">位，字节和其他术语</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RIP寄存器"><span class="nav-text">RIP寄存器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#寄存器和比特分解"><span class="nav-text">寄存器和比特分解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#寄存器-R8-到-R15"><span class="nav-text">寄存器 R8 到 R15</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存中断"><span class="nav-text">内存中断</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字节序…这东西倒过来了"><span class="nav-text">字节序…这东西倒过来了</span></a></li></ol></li></ol></div>
             
 
           </div>
