@@ -4,6 +4,24 @@
 
     
   <url>
+    <loc>https://oliverqueen.cn/2020/11/28/%E6%B1%87%E7%BC%96%E5%92%8C%E6%A0%88/</loc>
+    <lastmod>2020-11-28T08:46:35.579Z</lastmod>
+    <data>
+        <display>
+        <title>汇编和栈</title>
+        <pubTime>2020-11-28T08:44:42.000Z</pubTime>
+        
+         
+           
+             
+              <breadCrumb title="iOS开发" url="https://oliverqueen.cn/categories/iOS%E5%BC%80%E5%8F%91/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://oliverqueen.cn/2020/11/21/%E6%B1%87%E7%BC%96%E5%92%8C%E5%86%85%E5%AD%98/</loc>
     <lastmod>2020-11-21T08:52:48.449Z</lastmod>
     <data>
@@ -132,6 +150,26 @@
 
     
   <url>
+    <loc>https://oliverqueen.cn/2018/05/08/RX-Swift-Study-One/</loc>
+    <lastmod>2020-05-18T07:22:34.279Z</lastmod>
+    <data>
+        <display>
+        <title>关于RxSwift的一点理解</title>
+        <pubTime>2018-05-08T02:12:00.000Z</pubTime>
+        
+        <tag>Swift</tag>
+         
+         
+           
+             
+              <breadCrumb title="译文" url="https://oliverqueen.cn/categories/%E8%AF%91%E6%96%87/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://oliverqueen.cn/2018/03/30/AlamoFire/</loc>
     <lastmod>2020-05-18T07:22:34.279Z</lastmod>
     <data>
@@ -147,26 +185,6 @@
            
              
               <breadCrumb title="iOS开发" url="https://oliverqueen.cn/categories/iOS%E5%BC%80%E5%8F%91/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://oliverqueen.cn/2018/05/08/RX-Swift-Study-One/</loc>
-    <lastmod>2020-05-18T07:22:34.279Z</lastmod>
-    <data>
-        <display>
-        <title>关于RxSwift的一点理解</title>
-        <pubTime>2018-05-08T02:12:00.000Z</pubTime>
-        
-        <tag>Swift</tag>
-         
-         
-           
-             
-              <breadCrumb title="译文" url="https://oliverqueen.cn/categories/%E8%AF%91%E6%96%87/"/>
           
         </display>
     </data>
@@ -367,9 +385,9 @@
         <title>可能是最全的iOS端HttpDns集成方案</title>
         <pubTime>2018-01-24T05:54:36.000Z</pubTime>
         
-        <tag>网络</tag>
-         
         <tag>底层</tag>
+         
+        <tag>网络</tag>
          
         <tag>httpdns</tag>
          
@@ -430,24 +448,6 @@
 
     
   <url>
-    <loc>https://oliverqueen.cn/2018/01/23/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Http%E8%AF%B7%E6%B1%82%E3%80%81DNS%E5%8A%AB%E6%8C%81%E4%B8%8E%E8%A7%A3%E6%9E%90/</loc>
-    <lastmod>2020-05-18T07:22:34.254Z</lastmod>
-    <data>
-        <display>
-        <title>深入理解Http请求、DNS劫持与解析</title>
-        <pubTime>2018-01-23T10:12:18.000Z</pubTime>
-        
-         
-           
-             
-              <breadCrumb title="iOS开发" url="https://oliverqueen.cn/categories/iOS%E5%BC%80%E5%8F%91/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>https://oliverqueen.cn/2018/01/24/NSURLProtocol%E5%AF%B9WKWebView%E7%9A%84%E5%A4%84%E7%90%86/</loc>
     <lastmod>2020-05-18T07:22:34.254Z</lastmod>
     <data>
@@ -459,6 +459,24 @@
          
         <tag>hook</tag>
          
+         
+           
+             
+              <breadCrumb title="iOS开发" url="https://oliverqueen.cn/categories/iOS%E5%BC%80%E5%8F%91/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://oliverqueen.cn/2018/01/23/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Http%E8%AF%B7%E6%B1%82%E3%80%81DNS%E5%8A%AB%E6%8C%81%E4%B8%8E%E8%A7%A3%E6%9E%90/</loc>
+    <lastmod>2020-05-18T07:22:34.254Z</lastmod>
+    <data>
+        <display>
+        <title>深入理解Http请求、DNS劫持与解析</title>
+        <pubTime>2018-01-23T10:12:18.000Z</pubTime>
+        
          
            
              
@@ -523,9 +541,9 @@
         <title>iOS中使用OpenGL实现增高功能</title>
         <pubTime>2018-01-23T13:23:49.000Z</pubTime>
         
-        <tag>底层</tag>
-         
         <tag>OpenGL</tag>
+         
+        <tag>底层</tag>
          
         <tag>UI</tag>
          
@@ -569,9 +587,9 @@
         <title>CFNetwork的介绍和使用</title>
         <pubTime>2018-01-23T13:04:15.000Z</pubTime>
         
-        <tag>网络</tag>
-         
         <tag>底层</tag>
+         
+        <tag>网络</tag>
          
          
            

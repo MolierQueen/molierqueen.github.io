@@ -318,6 +318,160 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://oliverqueen.cn/2018/01/23/IOS下三种DNS解析方式分析（LocalDns）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Molier">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://image-1256056152.cos.ap-nanjing.myqcloud.com/shiba.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Molier">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/23/IOS下三种DNS解析方式分析（LocalDns）/" itemprop="url">IOS下三种DNS解析方式分析（LocalDns）</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-23T18:02:29+08:00">2018-01-23</time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2020-05-18T15:22:34+08:00">2020-05-18</time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/iOS开发/" itemprop="url" rel="index"><span itemprop="name">iOS开发</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>最近在做iOS的DNS解析，顺便研究了下iOS端本地的DNS解析方式（localDNS）,也就是不依赖Http请求，而是用原始的API进行解析，虽然有HttpDNS但是考虑到成本、第三方服务稳定性的问题，LocalDNS仍然是一个很重要的部分，在iOS系统下，localDNS的解析方式有三种，下面主要对三种方式进行下利弊分析及简单的原理介绍。</p>
+<h3 id="方式一"><a href="#方式一" class="headerlink" title="方式一"></a>方式一</h3><p>这个也是我一开始在项目中使用的方式。<br><figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="number">1</span>：<span class="class"><span class="keyword">struct</span> <span class="title">hostent</span></span>	*gethostbyname(<span class="keyword">const</span> <span class="built_in">char</span> *);</span><br><span class="line"><span class="number">2</span>：<span class="class"><span class="keyword">struct</span> <span class="title">hostent</span></span>	*gethostbyname2(<span class="keyword">const</span> <span class="built_in">char</span> *, int);</span><br></pre></td></tr></table></figure></p>
+<p>两个函数作用完全一样，返回值一样，但是第一个只能用于IPV4的网络环境，而第二个则IPV4和IPV6都可使用，可以通过第二个参数传入当前的网络环境。<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/01/23/IOS下三种DNS解析方式分析（LocalDns）/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://oliverqueen.cn/2018/01/19/位运算的简单理解😊/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -509,7 +663,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">31</span>
+                    <span class="site-state-item-count">32</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
