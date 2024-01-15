@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://oliverqueen.cn</id>
+    <title>Molier • Posts by &#34;评论插件&#34; tag</title>
+    <link href="https://oliverqueen.cn" />
+    <updated>2018-02-11T07:19:31.000Z</updated>
+    <category term="欢迎页" />
+    <category term="网络" />
+    <category term="底层" />
+    <category term="DNS解析" />
+    <category term="LocalDNS" />
+    <category term="OpenGL" />
+    <category term="UI" />
+    <category term="动画" />
+    <category term="性能优化" />
+    <category term="xcode" />
+    <category term="cocoapods" />
+    <category term="podfile" />
+    <category term="webview" />
+    <category term="hook" />
+    <category term="runtime" />
+    <category term="翻译" />
+    <category term="优化" />
+    <category term="国外文献" />
+    <category term="httpdns" />
+    <category term="Cocoapods" />
+    <category term="架构" />
+    <category term="AlertView" />
+    <category term="Hook" />
+    <category term="杂谈" />
+    <category term="Hexo" />
+    <category term="个人博客" />
+    <category term="网站" />
+    <category term="屏幕适配" />
+    <category term="iOS 11" />
+    <category term="评论插件" />
+    <category term="总结" />
+    <category term="回味2017展望2018" />
+    <category term="热修复" />
+    <category term="JSPath" />
+    <category term="swift" />
+    <category term="网络请求" />
+    <category term="Swift" />
+    <category term="音频" />
+    <category term="唱吧" />
+    <category term="K歌" />
+    <category term="AVFoundation" />
+    <category term="git" />
+    <category term="效率工作" />
+    <category term="回首2018展望2019" />
+    <category term="代码版本控制" />
+    <category term="iOS" />
+    <category term="Crash防护" />
+    <category term="Apple登录" />
+    <category term="WWDC2022" />
+    <category term="逆向" />
+    <category term="算法" />
+    <category term="C语言" />
+    <category term="排序" />
+    <entry>
+        <id>https://oliverqueen.cn/2018-02-11-%E5%85%B3%E4%BA%8E%E5%8D%9A%E5%AE%A2%E8%AF%84%E8%AE%BA%E6%8F%92%E4%BB%B6%E7%9A%84%E9%97%AE%E9%A2%98/</id>
+        <title>关于博客评论插件的讨论</title>
+        <link rel="alternate" href="https://oliverqueen.cn/2018-02-11-%E5%85%B3%E4%BA%8E%E5%8D%9A%E5%AE%A2%E8%AF%84%E8%AE%BA%E6%8F%92%E4%BB%B6%E7%9A%84%E9%97%AE%E9%A2%98/"/>
+        <content type="html">&lt;link rel=&#34;stylesheet&#34; class=&#34;aplayer-secondary-style-marker&#34; href=&#34;/assets/css/APlayer.min.css&#34;&gt;&lt;script src=&#34;/assets/js/APlayer.min.js&#34; class=&#34;aplayer-secondary-script-marker&#34;&gt;&lt;/script&gt;&lt;h2 id=&#34;参考资料&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#参考资料&#34;&gt;#&lt;/a&gt; 参考资料&lt;/h2&gt;
+&lt;p&gt;习惯把参考资料写在文章的前面，毕竟是踩在人家的肩膀上，先有他才有我这文章，前后顺序不能乱。他的这篇&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9ibG9nLnNodWliYS5jby9jb21tZW50LXN5c3RlbXMtcmVjb21tZW5kYXRpb24=&#34;&gt;文章&lt;/span&gt;总结的很全，但是对于每一个评论还欠缺细致的描述，这篇文章下我会做些补充，&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tKfTcgy1focjch8o98j30sg0lcta8.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;之前用的livere&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#之前用的livere&#34;&gt;#&lt;/a&gt; 之前用的 livere&lt;/h2&gt;
+&lt;p&gt;关于博客的评论插件，在最开始的搭建博客之前就有过考虑和纠结，国内的评论界面浮夸流程繁琐，且服务不稳定，说倒就倒，比如多说；国外的又时刻面临着被墙的风险，自己搭建服务器虽说不难，但是也没有精力去搞这些。后来使用了 livere，韩国的产品，一开始被他简洁的界面方便的后台吸引，而且还支持各种移动 APP 登陆，微信、QQ 之类的。不过后来使用过程中缺点显现出来了。&lt;/p&gt;
+&lt;h4 id=&#34;缺点&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#缺点&#34;&gt;#&lt;/a&gt; 缺点&lt;/h4&gt;
+&lt;p&gt;1：手机端适配不好，手机端无法进行微信登陆。&amp;lt;br&amp;gt;&lt;br /&gt;
+2：评论无法导出，不过如果哪天他也要挂了说不定也会支持导出，毕竟实现不难。&amp;lt;br&amp;gt;&lt;br /&gt;
+3：经常发评论时候当前页面卡死，其实已经发送成功了，但是界面一直卡在 loading。&amp;lt;br&amp;gt;&lt;br /&gt;
+4：加载比较慢一些。&amp;lt;br&amp;gt;&lt;/p&gt;
+&lt;h2 id=&#34;其他的评论插件&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#其他的评论插件&#34;&gt;#&lt;/a&gt; 其他的评论插件&lt;/h2&gt;
+&lt;p&gt;综上所述我决定换掉它，这种东西要趁早，不然等评论多了还需要朱转移操作。下面说下其他评论插件，因为之前放了大佬的文章，他总结的也很全面，我这边就挑几个大家耳熟能详的来说，而且只说缺点。&lt;/p&gt;
+&lt;h4 id=&#34;disqus&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#disqus&#34;&gt;#&lt;/a&gt; disqus&lt;/h4&gt;
+&lt;p&gt;他唯一一个缺点就是被墙了，他要求每一个看你博客的读者都要科学上网才可以，对于我的博客来说，不仅仅是写一下技术文档，有时候会更新下照片、游记之类的，所以不想对读者有太高的要求。&lt;/p&gt;
+&lt;h4 id=&#34;搜狐畅言&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#搜狐畅言&#34;&gt;#&lt;/a&gt; 搜狐畅言&lt;/h4&gt;
+&lt;p&gt;搜狐旗下的评论系统，比较靠谱，有搜狐做后盾也不会轻易说没就没，但是对于我来说他有着太强烈的中国元素，域名、网站需要备案，而且他的界面是在是夸张，又是盖章，又是浮窗的，有种 &amp;quot;大扎好，我系渣渣辉&amp;quot; 的感觉。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tKfTcgy1foche9mncgj31hw0veb29.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tKfTcgy1focku989hmj312s06044g.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;过年了，放上了红灯了，红鞭炮，而且水印还去不掉。最最关键是你发评论要登录，如果是用微信登陆还必须要先关注他公众号.&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tKfTcgy1fochbah9doj30ho0ngwo2.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;关注成功后还需要你绑定手机号，虽然不是强制让你绑定，但是如果你不想绑那么好，你每点击一下就会弹出绑定手机号的窗口。对于我一个主打技术的博客来说确实不太适合，如果大家想写一写娱乐微博说不定适合你。&lt;/p&gt;
+&lt;h4 id=&#34;gitment&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#gitment&#34;&gt;#&lt;/a&gt; Gitment&lt;/h4&gt;
+&lt;p&gt;基于 github 的 issue 实现的，唯一一点不好的就是使用 Gitment 评论一定要用 github 账号登陆，这点对于读者来说要求有点高吧。&lt;/p&gt;
+&lt;h4 id=&#34;valine&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#valine&#34;&gt;#&lt;/a&gt; Valine&lt;/h4&gt;
+&lt;p&gt;比较优秀的一款轻量级评论插件，这个也是我最后纠结很久的，Valine 依赖于 Leancloud 的后端服务，我们需要去 leanclould 注册一个账号，里面分为免费版和商业版还有企业版。后两个价格对于我来说有点高，如果有钱的大佬可以无视。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tKfTcgy1focgkj2vntj31kw0ry44z.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;免费版有一定限制首先 API 请求每天 30000，你可以暂时理解为每天 30000 条评论吧 (实际不到这个数，你还要刷新之类的)，这个其实对于我来说已经够了，如果你是浏览量非常大的微博 那可能有点悬；10GB 的储存空间是我最担心的，永久 10G 总有一天就会满，到时候只能升级付费版，或者换一个评论平台，不过还好，因为他是支持 markdown 的，所以图片 GIf 的之类的都是通过链接形式，10G 应该够用一阵了。不过也正是因为这个 markdown 编辑也需要一定的语法基础，不会 markdown 的传图片还是麻烦事，多为读者考虑嘛。还有一个最致命的就是他没有管理员的概念，即使你是本文的作者，那你在下面评论或者和网友互动的时候也是没有任何显示的，就像普通评论一样，这个就有点不方便了。&lt;/p&gt;
+&lt;h4 id=&#34;hypercomments&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#hypercomments&#34;&gt;#&lt;/a&gt; Hypercomments&lt;/h4&gt;
+&lt;p&gt;这个也是我最后选择的评论插件，同样也提供付费和免费的服务&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tKfTcgy1focm2c591vj31kw152jyr.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;免费版完全满足我的博客使用，没有发现以上一些第三方的缺点，同时界面也不错，唯一不足的就是新评论的邮件提醒不知道怎么调出来，我在后台配置了但是并没有提醒。综上所述整体还是比较稳定的。&lt;/p&gt;
+&lt;h2 id=&#34;最后&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#最后&#34;&gt;#&lt;/a&gt; 最后&lt;/h2&gt;
+&lt;p&gt;大概就这么多，顺便祝大家新年快乐，阖家幸福！&lt;/p&gt;
+&lt;p&gt;
+        &lt;div id=&#34;aplayer-HnDZkzfJ&#34; class=&#34;aplayer aplayer-tag-marker&#34; style=&#34;margin-bottom: 20px;&#34;&gt;&lt;/div&gt;
+			  &lt;script&gt;
+				  var options = {&#34;narrow&#34;:false,&#34;autoplay&#34;:true,&#34;showlrc&#34;:3,&#34;mutex&#34;:true,&#34;music&#34;:[{&#34;title&#34;:&#34;Love Story&#34;,&#34;author&#34;:&#34;린 (LYn)&#34;,&#34;url&#34;:&#34;https://molier-1256056152.cos.ap-guangzhou.myqcloud.com/%E1%84%85%E1%85%B5%E1%86%AB-Love%20Story.mp3&#34;,&#34;pic&#34;:&#34;https://y.gtimg.cn/music/photo_new/T002R300x300M0000048KLcQ4LDbZz.jpg?max_age=2592000&#34;,&#34;lrc&#34;:&#34;https://demo.meting.api.meto.moe/action/metingapi?server=tencent&amp;type=lrc&amp;id=0028RAj0187nEg&#34;}]};
+				  options.element = document.getElementById(&#34;aplayer-HnDZkzfJ&#34;);
+				  var ap = new APlayer(options);
+			    window.aplayers || (window.aplayers = []);
+				  window.aplayers.push(ap);
+			  &lt;/script&gt;&lt;/p&gt;
+</content>
+        <category term="Hexo" />
+        <category term="个人博客" />
+        <category term="网站" />
+        <category term="评论插件" />
+        <updated>2018-02-11T07:19:31.000Z</updated>
+    </entry>
+</feed>

@@ -1,0 +1,119 @@
+<?xml version="1.0"?>
+<rss version="2.0">
+    <channel>
+        <title>Molier • Posts by &#34;性能优化&#34; tag</title>
+        <link>https://oliverqueen.cn</link>
+        <description>iOS 开发 移动App 博客 杂谈 随笔 相册</description>
+        <language>zh-CN</language>
+        <pubDate>Tue, 23 Jan 2018 21:08:48 +0800</pubDate>
+        <lastBuildDate>Tue, 23 Jan 2018 21:08:48 +0800</lastBuildDate>
+        <category>欢迎页</category>
+        <category>网络</category>
+        <category>底层</category>
+        <category>DNS解析</category>
+        <category>LocalDNS</category>
+        <category>OpenGL</category>
+        <category>UI</category>
+        <category>动画</category>
+        <category>性能优化</category>
+        <category>xcode</category>
+        <category>cocoapods</category>
+        <category>podfile</category>
+        <category>webview</category>
+        <category>hook</category>
+        <category>runtime</category>
+        <category>翻译</category>
+        <category>优化</category>
+        <category>国外文献</category>
+        <category>httpdns</category>
+        <category>Cocoapods</category>
+        <category>架构</category>
+        <category>AlertView</category>
+        <category>Hook</category>
+        <category>杂谈</category>
+        <category>Hexo</category>
+        <category>个人博客</category>
+        <category>网站</category>
+        <category>屏幕适配</category>
+        <category>iOS 11</category>
+        <category>评论插件</category>
+        <category>总结</category>
+        <category>回味2017展望2018</category>
+        <category>热修复</category>
+        <category>JSPath</category>
+        <category>swift</category>
+        <category>网络请求</category>
+        <category>Swift</category>
+        <category>音频</category>
+        <category>唱吧</category>
+        <category>K歌</category>
+        <category>AVFoundation</category>
+        <category>git</category>
+        <category>效率工作</category>
+        <category>回首2018展望2019</category>
+        <category>代码版本控制</category>
+        <category>iOS</category>
+        <category>Crash防护</category>
+        <category>Apple登录</category>
+        <category>WWDC2022</category>
+        <category>逆向</category>
+        <category>算法</category>
+        <category>C语言</category>
+        <category>排序</category>
+        <item>
+            <guid isPermalink="true">https://oliverqueen.cn/2018-01-23-%E5%85%B3%E4%BA%8E%E8%A7%86%E5%9B%BE%E5%9C%A8%E5%88%87%E5%9C%86%E8%A7%92%E6%97%B6%E5%80%99%E7%9A%84%E5%AF%BC%E8%87%B4%E7%9A%84%E6%80%A7%E8%83%BD%E4%B8%8B%E9%99%8D%E7%9A%84%E4%B8%80%E4%BA%9B%E6%8E%A2%E8%AE%A8/</guid>
+            <title>关于视图在切圆角时候的导致的性能下降的一些探讨</title>
+            <link>https://oliverqueen.cn/2018-01-23-%E5%85%B3%E4%BA%8E%E8%A7%86%E5%9B%BE%E5%9C%A8%E5%88%87%E5%9C%86%E8%A7%92%E6%97%B6%E5%80%99%E7%9A%84%E5%AF%BC%E8%87%B4%E7%9A%84%E6%80%A7%E8%83%BD%E4%B8%8B%E9%99%8D%E7%9A%84%E4%B8%80%E4%BA%9B%E6%8E%A2%E8%AE%A8/</link>
+            <category>UI</category>
+            <category>性能优化</category>
+            <pubDate>Tue, 23 Jan 2018 21:08:48 +0800</pubDate>
+            <description><![CDATA[ &lt;link rel=&#34;stylesheet&#34; class=&#34;aplayer-secondary-style-marker&#34; href=&#34;/assets/css/APlayer.min.css&#34;&gt;&lt;script src=&#34;/assets/js/APlayer.min.js&#34; class=&#34;aplayer-secondary-script-marker&#34;&gt;&lt;/script&gt;&lt;p&gt;iOS 中有的时候我们控件要做成圆形 或者是切成圆角，这个时候我们一般都会使用.layer.cornerRadius  -&amp;gt;  clipsToBounds = YES 的属性来切，这样完全能达到我们的效果，但是如果一个界面上需要切圆角的控件很多，并且列表很长的时候，尤其是像 tableView 那样如果每一个 cell 上都有大量的控件需要切，那么就会非常卡顿，帧数严重下降 。其实原因就是这样设置会触发离屏渲染，比较消耗性能。注意：png 图片 UIImageView 处理圆角是不会产生离屏渲染的。（ios9.0 之后不会离屏渲染，ios9.0 之前还是会离屏渲染）。这里先说下离屏渲染：&lt;br /&gt;
+ ###### iOS 的渲染机制：&lt;br /&gt;
+   CPU 计算好显示内容提交到 GPU，GPU 渲染完成后将渲染结果放入帧缓冲区，随后视频控制器会逐行读取帧缓冲区的数据，经过可能的数模转换传递给显示器显示。GPU 屏幕渲染有以下两种方式：&lt;br /&gt;
+On-Screen Rendering&lt;br /&gt;
+ 意为当前屏幕渲染，指的是 GPU 的渲染操作是在当前用于显示的屏幕缓冲区中进行。&lt;br /&gt;
+Off-Screen Rendering&lt;br /&gt;
+ 意为离屏渲染，指的是 GPU 在当前屏幕缓冲区以外新开辟一个缓冲区进行渲染操作。&lt;br /&gt;
+&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;&lt;br /&gt;
+ 由以上可以看出离屏渲染需要重新开辟新的缓存空间，必定要更加消耗资源。&lt;br /&gt;
+通过查资料目前知道了设置了以下属性时，都会触发离屏绘制：&lt;br /&gt;
+shouldRasterize（光栅化）&lt;br /&gt;
+masks（遮罩）&lt;br /&gt;
+shadows（阴影）&lt;br /&gt;
+edge antialiasing（抗锯齿）&lt;br /&gt;
+group opacity（不透明）&lt;br /&gt;
+复杂形状设置圆角等&lt;br /&gt;
+渐变&lt;br /&gt;
+我用一个现有的小 DEMO 来测试下，因为这个 demo 中没有切圆角，但是有阴影，一样可以出发离屏渲染，所以效果是一样的，在 tableView 中的自定义 cell 类中我设置了阴影如图：&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo6makjj7sj30f2025aac.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;使用 Instruments 测试得到当前帧数在二三十左右&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo6maqxgt6j30uf03874d.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;同时屏幕是也出现了黄色图层&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo6mb1epsnj30dx0ou40r.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;所有黄色的高亮的图层都进行了离屏渲染，也表示这些图层存在着问题，影响性能。而且帧数过低也会直接影响我们对 APP 的体验。&lt;/p&gt;
+&lt;h6 id=&#34;如何避免离屏渲染&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#如何避免离屏渲染&#34;&gt;#&lt;/a&gt; 如何避免离屏渲染：&lt;/h6&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;方法一：使用光栅化，.layer.shouldRasterize = YES;   -&amp;gt;  .layer.rasterizationScale=[UIScreen mainScreen].scale; 设置光栅化，可以使离屏渲染的结果缓存到内存中存为位图，使用的时候直接使用缓存，节省了一直离屏渲染损耗的性能。但是如果 layer 及 sublayers 常常改变的话，它就会一直不停的渲染及删除缓存重新创建缓存，所以这种情况下建议不要使用光栅化，这样也是比较损耗性能的。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;方法二：最简单的方法，就是图片不作处理，直接覆盖一张中间为圆形透明的图片（推荐使用）这种方法 GPU 计算多层的混合渲染 blending 也是会消耗一点性能的，但比第一种方法还是好上很多的&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;方法三：Core Graphics 绘制圆角。这种方式 GPU 损耗最低，可以用 UIimageView 添加个点击手势当做 UIButton 使用。&lt;br /&gt;
+UIGraphicsBeginImageContextWithOptions(avatarImageView.bounds.size, NO, [UIScreen mainScreen].scale);&lt;br /&gt;
+[[UIBezierPath bezierPathWithRoundedRect:avatarImageView.bounds cornerRadius:50] addClip];[image drawInRect:avatarImageView.bounds];&lt;br /&gt;
+avatarImageView.image = UIGraphicsGetImageFromCurrentImageContext();UIGraphicsEndImageContext();&lt;br /&gt;
+ 这段方法可以写在 SDWebImage 的 completed 回调里，在主线程异步绘制。也可以封装到 UIImageView 里，写了个 DSRoundImageView。后台线程异步绘制，不会阻塞主线程。目前这种方法只用在 imageView 上，其他地方呢不知道怎么用，不过这种方法会耗费大量的 CPU 资源和占用内存，本人不太建议使用。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;最后给大家测试下，因为我之前的 demo 没有切圆角，而是使用的阴影，所以我就用第一种方法给大家测一下。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo6mbdmx1bj30lu04ywfj.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;然后运行，打开 Instruments，然后看屏幕&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo6mbm7cn6j30e40ox76i.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;图层都是绿色没问题，我们再来看帧数，几乎到 60 ，效果很明显。&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo6mbsz37rj30j602k747.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;由此可见以后大家再切圆角的时候多注意下，刚才就研究了这么多，有什么问题及时与我交流吧。。。&lt;/p&gt;
+ ]]></description>
+        </item>
+    </channel>
+</rss>

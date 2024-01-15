@@ -1,0 +1,122 @@
+<?xml version="1.0"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://oliverqueen.cn</id>
+    <title>Molier • Posts by &#34;屏幕适配&#34; tag</title>
+    <link href="https://oliverqueen.cn" />
+    <updated>2018-02-08T02:15:57.000Z</updated>
+    <category term="欢迎页" />
+    <category term="网络" />
+    <category term="底层" />
+    <category term="DNS解析" />
+    <category term="LocalDNS" />
+    <category term="OpenGL" />
+    <category term="UI" />
+    <category term="动画" />
+    <category term="性能优化" />
+    <category term="xcode" />
+    <category term="cocoapods" />
+    <category term="podfile" />
+    <category term="webview" />
+    <category term="hook" />
+    <category term="runtime" />
+    <category term="翻译" />
+    <category term="优化" />
+    <category term="国外文献" />
+    <category term="httpdns" />
+    <category term="Cocoapods" />
+    <category term="架构" />
+    <category term="AlertView" />
+    <category term="Hook" />
+    <category term="杂谈" />
+    <category term="Hexo" />
+    <category term="个人博客" />
+    <category term="网站" />
+    <category term="屏幕适配" />
+    <category term="iOS 11" />
+    <category term="评论插件" />
+    <category term="总结" />
+    <category term="回味2017展望2018" />
+    <category term="热修复" />
+    <category term="JSPath" />
+    <category term="swift" />
+    <category term="网络请求" />
+    <category term="Swift" />
+    <category term="音频" />
+    <category term="唱吧" />
+    <category term="K歌" />
+    <category term="AVFoundation" />
+    <category term="git" />
+    <category term="效率工作" />
+    <category term="回首2018展望2019" />
+    <category term="代码版本控制" />
+    <category term="iOS" />
+    <category term="Crash防护" />
+    <category term="Apple登录" />
+    <category term="WWDC2022" />
+    <category term="逆向" />
+    <category term="算法" />
+    <category term="C语言" />
+    <category term="排序" />
+    <entry>
+        <id>https://oliverqueen.cn/2018-02-08-%E5%85%B3%E4%BA%8EiPhone-X%E4%B8%8BHome%E9%94%AE%E7%9A%84%E9%9A%90%E8%97%8F%E5%92%8C%E5%BB%B6%E8%BF%9F%E5%93%8D%E5%BA%94/</id>
+        <title>关于iPhone X下Home键的隐藏和延迟响应</title>
+        <link rel="alternate" href="https://oliverqueen.cn/2018-02-08-%E5%85%B3%E4%BA%8EiPhone-X%E4%B8%8BHome%E9%94%AE%E7%9A%84%E9%9A%90%E8%97%8F%E5%92%8C%E5%BB%B6%E8%BF%9F%E5%93%8D%E5%BA%94/"/>
+        <content type="html">&lt;link rel=&#34;stylesheet&#34; class=&#34;aplayer-secondary-style-marker&#34; href=&#34;/assets/css/APlayer.min.css&#34;&gt;&lt;script src=&#34;/assets/js/APlayer.min.js&#34; class=&#34;aplayer-secondary-script-marker&#34;&gt;&lt;/script&gt;&lt;h1 id=&#34;ios-11通用相关&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#ios-11通用相关&#34;&gt;#&lt;/a&gt; iOS 11 通用相关&lt;/h1&gt;
+&lt;h2 id=&#34;edge-protect&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#edge-protect&#34;&gt;#&lt;/a&gt; Edge Protect&lt;/h2&gt;
+&lt;p&gt;iPhone X 刚出来的时候苹果第一时间更新了新设备的交互文档，其中针对了大家最关心的 “系统手势和 App 自带手势冲突” 的问题也给出了相应的解决办法:&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo8u9uqjehj31kw0t7h2q.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;虽然苹果用黑体字写着强烈不建议开发者干涉系统的手势，但是为了增强用户体验还是开出了接口，苹果管这个叫做 &amp;quot;edge protect&amp;quot; 因为进入 App 后系统手势都是从边缘触发，引起冲突的地方也会是在边缘中。&lt;/p&gt;
+&lt;p&gt;&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;根据官方文档描述，在冲突区域第一次执行手势的时候会优先触发 App 的内部手势，当短时间内再次进行同样的操作则会触发系统手势。也就是将系统手势延迟到下一次执行。&lt;/p&gt;
+&lt;h2 id=&#34;api-discussion&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#api-discussion&#34;&gt;#&lt;/a&gt; API Discussion&lt;/h2&gt;
+&lt;p&gt;根据官方文档找到对应的 API&lt;/p&gt;
+&lt;p&gt;&lt;figure class=&#34;highlight reasonml&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;comment&#34;&gt;// Override to return a child view controller or nil. If non-nil, that view controller&amp;#x27;s screen edges deferring system gestures will be used. If nil, self is used. Whenever the return value changes, -setNeedsScreenEdgesDeferringSystemGesturesUpdate should be called.&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;- (nullable UIViewController *)childViewControllerForScreenEdgesDeferringSystemGestures &lt;span class=&#34;constructor&#34;&gt;API_AVAILABLE(&lt;span class=&#34;params&#34;&gt;ios&lt;/span&gt;(11.0)&lt;/span&gt;) &lt;span class=&#34;constructor&#34;&gt;API_UNAVAILABLE(&lt;span class=&#34;params&#34;&gt;watchos&lt;/span&gt;, &lt;span class=&#34;params&#34;&gt;tvos&lt;/span&gt;)&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;comment&#34;&gt;// Controls the application&amp;#x27;s preferred screen edges deferring system gestures when this view controller is shown. Default is UIRectEdgeNone.&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;- (UIRectEdge)preferredScreenEdgesDeferringSystemGestures &lt;span class=&#34;constructor&#34;&gt;API_AVAILABLE(&lt;span class=&#34;params&#34;&gt;ios&lt;/span&gt;(11.0)&lt;/span&gt;) &lt;span class=&#34;constructor&#34;&gt;API_UNAVAILABLE(&lt;span class=&#34;params&#34;&gt;watchos&lt;/span&gt;, &lt;span class=&#34;params&#34;&gt;tvos&lt;/span&gt;)&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;comment&#34;&gt;// This should be called whenever the return values for the view controller&amp;#x27;s screen edges deferring system gestures have changed.&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;- (void)setNeedsUpdateOfScreenEdgesDeferringSystemGestures &lt;span class=&#34;constructor&#34;&gt;API_AVAILABLE(&lt;span class=&#34;params&#34;&gt;ios&lt;/span&gt;(11.0)&lt;/span&gt;) &lt;span class=&#34;constructor&#34;&gt;API_UNAVAILABLE(&lt;span class=&#34;params&#34;&gt;watchos&lt;/span&gt;, &lt;span class=&#34;params&#34;&gt;tvos&lt;/span&gt;)&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;h4 id=&#34;childviewcontrollerforscreenedgesdeferringsystemgestures&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#childviewcontrollerforscreenedgesdeferringsystemgestures&#34;&gt;#&lt;/a&gt; childViewControllerForScreenEdgesDeferringSystemGestures&lt;/h4&gt;
+&lt;p&gt;该方法是用来控制子试图控制器是否允许开发者控制 edge protect 的开启或是关闭。如果实现了这个方法并且返回值不为空那么子 VC 的 edge protect 设置就会遵循父 VC 的设置，跟随父 VC 是否延迟执行系统手势。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo917ycqy6j319i0bqjtr.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;h4 id=&#34;preferredscreenedgesdeferringsystemgestures&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#preferredscreenedgesdeferringsystemgestures&#34;&gt;#&lt;/a&gt; preferredScreenEdgesDeferringSystemGestures&lt;/h4&gt;
+&lt;p&gt;该方法是设置 edge protect 的方法，返回值是一个边界的枚举&lt;/p&gt;
+&lt;p&gt;&lt;figure class=&#34;highlight elm&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;typedef &lt;span class=&#34;type&#34;&gt;NS_OPTIONS&lt;/span&gt;(&lt;span class=&#34;type&#34;&gt;NSUInteger&lt;/span&gt;, &lt;span class=&#34;type&#34;&gt;UIRectEdge&lt;/span&gt;) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;type&#34;&gt;UIRectEdgeNone&lt;/span&gt;   = 0,&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;type&#34;&gt;UIRectEdgeTop&lt;/span&gt;    = 1 &amp;lt;&amp;lt; 0,&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;type&#34;&gt;UIRectEdgeLeft&lt;/span&gt;   = 1 &amp;lt;&amp;lt; 1,&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;type&#34;&gt;UIRectEdgeBottom&lt;/span&gt; = 1 &amp;lt;&amp;lt; 2,&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;type&#34;&gt;UIRectEdgeRight&lt;/span&gt;  = 1 &amp;lt;&amp;lt; 3,&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;type&#34;&gt;UIRectEdgeAll&lt;/span&gt;    = &lt;span class=&#34;type&#34;&gt;UIRectEdgeTop&lt;/span&gt; | &lt;span class=&#34;type&#34;&gt;UIRectEdgeLeft&lt;/span&gt; | &lt;span class=&#34;type&#34;&gt;UIRectEdgeBottom&lt;/span&gt; | &lt;span class=&#34;type&#34;&gt;UIRectEdgeRight&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125; &lt;span class=&#34;type&#34;&gt;NS_ENUM_AVAILABLE_IOS&lt;/span&gt;(7_0);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;因为不论我们从 shang、左、下、右边都可触发系统手势，所以方法保护了四个边框，将边界触发的手势延迟执行，这个方法从 iOS11 开始使用，不过枚举中虽然有左右的边界保护，但是系统手势中还不清楚左右滑动会触发什么效果，实验发现对于 VC 的左边界右滑动 pop 手势是无效的，也就是说这个 pop 手势一直有着最高的优先级。不过上下就很好理解，底部上拉出控制中心，顶部下拉是通知中心。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;无限制&lt;/p&gt;
+&lt;p&gt;当不做任何限制时候在顶部和底部很容易触发到系统的手势，他们会优先于 Tab.eView 的 scroll 手势执行，虽说屏幕大部分的界面还是执行 TableView 手势的，但是当用户误触到边界的时候还是会稍稍影响体验，尤其是在全屏模式下、相机、视频、游戏等&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo909u85fpg308k0goe8d.gif&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Edge Protent&lt;/p&gt;
+&lt;p&gt;在对应的 ViewControll 中添加如下代码，我们这边开启的是所有边界限制其中包括了上、下边界。在下拉或者上拉的话会先触发 App 内部手势，同时出现一个小箭头然后在箭头消失之前再次滑动就会触发系统手势。&lt;br /&gt;
+&lt;figure class=&#34;highlight objectivec&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;-(&lt;span class=&#34;built_in&#34;&gt;UIRectEdge&lt;/span&gt;)preferredScreenEdgesDeferringSystemGestures&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;keyword&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;built_in&#34;&gt;UIRectEdgeAll&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo90rfo0dig308k0go7wu.gif&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;setneedsupdateofscreenedgesdeferringsystemgestures&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#setneedsupdateofscreenedgesdeferringsystemgestures&#34;&gt;#&lt;/a&gt; setNeedsUpdateOfScreenEdgesDeferringSystemGestures&lt;/h4&gt;
+&lt;p&gt;这个方法是在应用内部动态控制 edge protect，我们可以在上个方法中返回一个 BOOL 变量，然后根据需要改变该变量的值，然后调用该方法进行刷新。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo912yvhsag308k0goe8h.gif&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;h1 id=&#34;iphone-x使用相关&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#iphone-x使用相关&#34;&gt;#&lt;/a&gt; iPhone X 使用相关&lt;/h1&gt;
+&lt;p&gt;iPhone X 在系统手势上面交互和其他设备还是有一定区别的，因为加入了 Home Indicator 的原因，引入了新的手势，同时对以往的手势也做了相应的调整。&lt;/p&gt;
+&lt;h2 id=&#34;iphone-x-edge-protect&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#iphone-x-edge-protect&#34;&gt;#&lt;/a&gt; iPhone X Edge Protect&lt;/h2&gt;
+&lt;p&gt;在 iPhone X 中通知中心和控制中心全部都移动到了由顶部刘海处下拉和右上角下拉来触发。原本底部的所有手势都被 Home Indicator 占用。其实 Edge Protect 在这里依然适用，只是对于 Home Indicator 的手势有一个小插曲。正常来说他在底部，就应该受到 UIRectEdgeBottom 或者是 UIRectEdgeAll 控制，但是一开始苹果并没有这么做，不论怎么写代码，他都有着最高的优先级，在 iPhone X 刚发布我就试图去处理交互问题，因为海报工厂并没有传统的 UITabBarController，且里面所有的 tableView 都是直通到底，但是始终都无法延迟执行与 Home Indicator 相关的任何手势。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo920zedwnj308w0j9gxa.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;后来看了其他游戏，视频类 App 在 iPhone X 上的表现也都是如此。腾讯的王者荣耀，网易的吃鸡都是一样。腾讯官方给出的解释是暂时开起引导式访问，也仍然不方便。后来在今年 1 月 25 日苹果推送了 iOS 11.2.5 的版本更新，然后王者荣耀也跟着进行了一波更新，在进入游戏时候就会发现，底部的 Home Indicator 当你一段时间不去触碰它的时候由黑色或者白色 (根据当前的屏幕显示的内容来决定) 变成非常透明的灰色，当你第一次进行操作会默认执行 App 内手势，同时激活 Home Indicator，短时间内进行第二次操作就可以返回桌面&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo935pn8dsg30go07s1l2.gif&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;一开以为是有新的 API 出现，不过看了交互文档并没有新的东西，而且小版本的系统更新应该也不会出现新的东西。所以找到了之前的 edge protect 代码运行后确实可以达到效果。对于视频，游戏等 App，确实可以起到很好的防误触的效果。遗憾的是并没有太多的人使用这个功能。目前主流的大型游戏，包括 Gameloft 出品的游戏都没做相应的处理。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo943bx7sog308h0gox6z.gif&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;h2 id=&#34;iphone-x-home-indicator-hidden&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#iphone-x-home-indicator-hidden&#34;&gt;#&lt;/a&gt; iPhone X Home Indicator Hidden&lt;/h2&gt;
+&lt;p&gt;如果说上面的 Edge Protect 适合在游戏中使用，那么 Home Indicator Hidden 则更适合在非游戏环境下增强 App 的沉浸感，尤其是全屏视屏播放、录制的时候。同样三个 API，和 Edge protect 的用法完全一样。&lt;/p&gt;
+&lt;p&gt;&lt;figure class=&#34;highlight reasonml&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;comment&#34;&gt;// Override to return a child view controller or nil. If non-nil, that view controller&amp;#x27;s home indicator auto-hiding will be used. If nil, self is used. Whenever the return value changes, -setNeedsHomeIndicatorAutoHiddenUpdate should be called.&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;- (nullable UIViewController *)childViewControllerForHomeIndicatorAutoHidden &lt;span class=&#34;constructor&#34;&gt;API_AVAILABLE(&lt;span class=&#34;params&#34;&gt;ios&lt;/span&gt;(11.0)&lt;/span&gt;) &lt;span class=&#34;constructor&#34;&gt;API_UNAVAILABLE(&lt;span class=&#34;params&#34;&gt;watchos&lt;/span&gt;, &lt;span class=&#34;params&#34;&gt;tvos&lt;/span&gt;)&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;comment&#34;&gt;// Controls the application&amp;#x27;s preferred home indicator auto-hiding when this view controller is shown.&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;- (BOOL)prefersHomeIndicatorAutoHidden &lt;span class=&#34;constructor&#34;&gt;API_AVAILABLE(&lt;span class=&#34;params&#34;&gt;ios&lt;/span&gt;(11.0)&lt;/span&gt;) &lt;span class=&#34;constructor&#34;&gt;API_UNAVAILABLE(&lt;span class=&#34;params&#34;&gt;watchos&lt;/span&gt;, &lt;span class=&#34;params&#34;&gt;tvos&lt;/span&gt;)&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;comment&#34;&gt;// This should be called whenever the return values for the view controller&amp;#x27;s home indicator auto-hiding have changed.&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;- (void)setNeedsUpdateOfHomeIndicatorAutoHidden &lt;span class=&#34;constructor&#34;&gt;API_AVAILABLE(&lt;span class=&#34;params&#34;&gt;ios&lt;/span&gt;(11.0)&lt;/span&gt;) &lt;span class=&#34;constructor&#34;&gt;API_UNAVAILABLE(&lt;span class=&#34;params&#34;&gt;watchos&lt;/span&gt;, &lt;span class=&#34;params&#34;&gt;tvos&lt;/span&gt;)&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;br /&gt;
+ 上面写的是自动隐藏，也就是说系统会根据当时的使用情况来进行显示或者隐藏，而不是永久的隐藏掉，实际测试发当界面两秒内没有进行任何交互操作的时候 Home Indicator 会逐渐隐去，直达屏幕上出现了点击的操作，注意是点击，TableView 的滑动并不能触发显示，不过只是是隐藏，但是手势依然可以使用。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo94hujx35g308h0go4qy.gif&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;如果是 feed 流界面搭配酷一点的 UI 就会提高沉浸感，比如这样：&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo94p0bmoqg308h0gox6t.gif&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;有的人可能会问如果说点击的手势会触发它再次显示那我获取 window 上的交互每次在它即将显示的时候通过&lt;strong&gt; setNeedsUpdateOfHomeIndicatorAutoHidden&lt;/strong&gt; 在让他隐藏不就好了吗？这样一来既不影响系统手势也不会让它在显示出来，其实我自己试过不行的，毕竟苹果不会让你这样改。&lt;/p&gt;
+&lt;h2 id=&#34;坑点&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#坑点&#34;&gt;#&lt;/a&gt; 坑点&lt;/h2&gt;
+&lt;p&gt;需要注意的是：prefersHomeIndicatorAutoHidden 和 preferredScreenEdgesDeferringSystemGestures 不可一起使用，如果一起使用的话后者是不生效的。&lt;/p&gt;
+</content>
+        <category term="UI" />
+        <category term="屏幕适配" />
+        <category term="iOS 11" />
+        <updated>2018-02-08T02:15:57.000Z</updated>
+    </entry>
+</feed>

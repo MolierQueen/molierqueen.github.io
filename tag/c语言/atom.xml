@@ -1,0 +1,210 @@
+<?xml version="1.0"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://oliverqueen.cn</id>
+    <title>Molier • Posts by &#34;c语言&#34; tag</title>
+    <link href="https://oliverqueen.cn" />
+    <updated>2018-01-19T06:20:39.000Z</updated>
+    <category term="欢迎页" />
+    <category term="网络" />
+    <category term="底层" />
+    <category term="DNS解析" />
+    <category term="LocalDNS" />
+    <category term="OpenGL" />
+    <category term="UI" />
+    <category term="动画" />
+    <category term="性能优化" />
+    <category term="xcode" />
+    <category term="cocoapods" />
+    <category term="podfile" />
+    <category term="webview" />
+    <category term="hook" />
+    <category term="runtime" />
+    <category term="翻译" />
+    <category term="优化" />
+    <category term="国外文献" />
+    <category term="httpdns" />
+    <category term="Cocoapods" />
+    <category term="架构" />
+    <category term="AlertView" />
+    <category term="Hook" />
+    <category term="杂谈" />
+    <category term="Hexo" />
+    <category term="个人博客" />
+    <category term="网站" />
+    <category term="屏幕适配" />
+    <category term="iOS 11" />
+    <category term="评论插件" />
+    <category term="总结" />
+    <category term="回味2017展望2018" />
+    <category term="热修复" />
+    <category term="JSPath" />
+    <category term="swift" />
+    <category term="网络请求" />
+    <category term="Swift" />
+    <category term="音频" />
+    <category term="唱吧" />
+    <category term="K歌" />
+    <category term="AVFoundation" />
+    <category term="git" />
+    <category term="效率工作" />
+    <category term="回首2018展望2019" />
+    <category term="代码版本控制" />
+    <category term="iOS" />
+    <category term="Crash防护" />
+    <category term="Apple登录" />
+    <category term="WWDC2022" />
+    <category term="逆向" />
+    <category term="算法" />
+    <category term="C语言" />
+    <category term="排序" />
+    <entry>
+        <id>https://oliverqueen.cn/%E4%BD%8D%E8%BF%90%E7%AE%97%E7%9A%84%E7%AE%80%E5%8D%95%E7%90%86%E8%A7%A3%F0%9F%98%8A/</id>
+        <title>位运算的简单理解😊</title>
+        <link rel="alternate" href="https://oliverqueen.cn/%E4%BD%8D%E8%BF%90%E7%AE%97%E7%9A%84%E7%AE%80%E5%8D%95%E7%90%86%E8%A7%A3%F0%9F%98%8A/"/>
+        <content type="html">&lt;link rel=&#34;stylesheet&#34; class=&#34;aplayer-secondary-style-marker&#34; href=&#34;/assets/css/APlayer.min.css&#34;&gt;&lt;script src=&#34;/assets/js/APlayer.min.js&#34; class=&#34;aplayer-secondary-script-marker&#34;&gt;&lt;/script&gt;&lt;h2 id=&#34;1背景&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#1背景&#34;&gt;#&lt;/a&gt; 1：背景&lt;/h2&gt;
+&lt;p&gt;从现代计算机中所有的数据二进制的形式存储在设备中。即 0、1 两种状态，计算机对二进制数据进行的运算 (+、-、*、/) 都是叫位运算，即将符号位共同参与运算的运算。&lt;/p&gt;
+&lt;p&gt;我们每一种语言最终都会通过编译器转换成机器语言来执行，所以直接使用底层的语言就不需要便编译器的转换工作从而得到更高的执行效率，当然可读性可能会降低，这也是为什么汇编在大部分情况下有更快的速度。项目中合理的运用位运算能提高我们代码的执行效率。&lt;/p&gt;
+&lt;p&gt;在 iOS 系统中位运算多见于枚举中，其他地方很少见，因为位运算是底层的计算机语言，而在 iOS 开发中不管是 Objective—C 还是 Swift 都属于高级的编程语言，大量的位运算都被苹果封装了起来，我们只关心调用的接口不用关心内部的实现。&lt;/p&gt;
+&lt;p&gt;&lt;figure class=&#34;highlight elm&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;12&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;typedef &lt;span class=&#34;type&#34;&gt;NS_OPTIONS&lt;/span&gt;(&lt;span class=&#34;type&#34;&gt;NSUInteger&lt;/span&gt;, &lt;span class=&#34;type&#34;&gt;NSLayoutFormatOptions&lt;/span&gt;) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;type&#34;&gt;NSLayoutFormatAlignAllLeft&lt;/span&gt; = (1 &amp;lt;&amp;lt; &lt;span class=&#34;type&#34;&gt;NSLayoutAttributeLeft&lt;/span&gt;),&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;type&#34;&gt;NSLayoutFormatAlignAllRight&lt;/span&gt; = (1 &amp;lt;&amp;lt; &lt;span class=&#34;type&#34;&gt;NSLayoutAttributeRight&lt;/span&gt;),&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;type&#34;&gt;NSLayoutFormatAlignAllTop&lt;/span&gt; = (1 &amp;lt;&amp;lt; &lt;span class=&#34;type&#34;&gt;NSLayoutAttributeTop&lt;/span&gt;),&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;type&#34;&gt;NSLayoutFormatAlignAllBottom&lt;/span&gt; = (1 &amp;lt;&amp;lt; &lt;span class=&#34;type&#34;&gt;NSLayoutAttributeBottom&lt;/span&gt;),&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;type&#34;&gt;NSLayoutFormatAlignAllLeading&lt;/span&gt; = (1 &amp;lt;&amp;lt; &lt;span class=&#34;type&#34;&gt;NSLayoutAttributeLeading&lt;/span&gt;),&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;type&#34;&gt;NSLayoutFormatAlignAllTrailing&lt;/span&gt; = (1 &amp;lt;&amp;lt; &lt;span class=&#34;type&#34;&gt;NSLayoutAttributeTrailing&lt;/span&gt;),&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;.&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;.&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;.&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;.&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;br /&gt;
+&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;10计算机计算原理&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#10计算机计算原理&#34;&gt;#&lt;/a&gt; 10：计算机计算原理&lt;/h2&gt;
+&lt;h4 id=&#34;加法和乘法&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#加法和乘法&#34;&gt;#&lt;/a&gt; 加法和乘法&lt;/h4&gt;
+&lt;p&gt;举一个简单的例子来看下 CPU 是如何进行计算的，比如这行代码&lt;/p&gt;
+&lt;p&gt;&lt;figure class=&#34;highlight ebnf&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;attribute&#34;&gt;int a&lt;/span&gt; = 35;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;attribute&#34;&gt;int b&lt;/span&gt; = 47;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;attribute&#34;&gt;int c&lt;/span&gt; = a + b;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;br /&gt;
+ 计算两个数的和，因为在计算机中都是以二进制来进行运算，所以上面我们所给的 int 变量会在机器内部先转换为二进制在进行相加&lt;/p&gt;
+&lt;p&gt;&lt;figure class=&#34;highlight tap&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;35: &lt;span class=&#34;number&#34;&gt; 0 &lt;/span&gt;0&lt;span class=&#34;number&#34;&gt; 1 &lt;/span&gt;0&lt;span class=&#34;number&#34;&gt; 0 &lt;/span&gt;0&lt;span class=&#34;number&#34;&gt; 1 &lt;/span&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;47: &lt;span class=&#34;number&#34;&gt; 0 &lt;/span&gt;0&lt;span class=&#34;number&#34;&gt; 1 &lt;/span&gt;0&lt;span class=&#34;number&#34;&gt; 1 &lt;/span&gt;1&lt;span class=&#34;number&#34;&gt; 1 &lt;/span&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;————————————————————&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;82: &lt;span class=&#34;number&#34;&gt; 0 &lt;/span&gt;1&lt;span class=&#34;number&#34;&gt; 0 &lt;/span&gt;1&lt;span class=&#34;number&#34;&gt; 0 &lt;/span&gt;0&lt;span class=&#34;number&#34;&gt; 1 &lt;/span&gt;0&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;再来看下乘法，执行如下的代码&lt;/p&gt;
+&lt;p&gt;&lt;figure class=&#34;highlight markdown&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;28&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;int a = 3;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;int b = 2;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;int c = a &lt;span class=&#34;emphasis&#34;&gt;* b;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;emphasis&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;emphasis&#34;&gt;3:  0 0 0 0 0 0 1 1  *&lt;/span&gt;  2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;————————————————————&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6:  0 0 0 0 0 1 1 0&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;strong&#34;&gt;****&lt;/span&gt;&lt;span class=&#34;strong&#34;&gt;****&lt;/span&gt;&lt;span class=&#34;strong&#34;&gt;****&lt;/span&gt;&lt;span class=&#34;strong&#34;&gt;****&lt;/span&gt;&lt;span class=&#34;strong&#34;&gt;****&lt;/span&gt;&lt;span class=&#34;strong&#34;&gt;****&lt;/span&gt;&lt;span class=&#34;strong&#34;&gt;****&lt;/span&gt;&lt;span class=&#34;strong&#34;&gt;****&lt;/span&gt;&lt;span class=&#34;strong&#34;&gt;****&lt;/span&gt;&lt;span class=&#34;strong&#34;&gt;****&lt;/span&gt;&lt;span class=&#34;strong&#34;&gt;****&lt;/span&gt;&lt;span class=&#34;emphasis&#34;&gt;*&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;emphasis&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;emphasis&#34;&gt;int a = 3;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;emphasis&#34;&gt;int b = 4;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;emphasis&#34;&gt;int c = a *&lt;/span&gt; b;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3:  0 0 0 0 0 0 1 1  &lt;span class=&#34;emphasis&#34;&gt;*  4&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;emphasis&#34;&gt;————————————————————&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;emphasis&#34;&gt;12:  0 0 0 0 1 1 0 0&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;emphasis&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;emphasis&#34;&gt;&lt;span class=&#34;strong&#34;&gt;****&lt;/span&gt;&lt;span class=&#34;strong&#34;&gt;****&lt;/span&gt;&lt;span class=&#34;strong&#34;&gt;****&lt;/span&gt;&lt;span class=&#34;strong&#34;&gt;****&lt;/span&gt;&lt;span class=&#34;strong&#34;&gt;****&lt;/span&gt;&lt;span class=&#34;strong&#34;&gt;****&lt;/span&gt;&lt;span class=&#34;strong&#34;&gt;****&lt;/span&gt;&lt;span class=&#34;strong&#34;&gt;****&lt;/span&gt;&lt;span class=&#34;strong&#34;&gt;****&lt;/span&gt;&lt;span class=&#34;strong&#34;&gt;****&lt;/span&gt;&lt;span class=&#34;strong&#34;&gt;****&lt;/span&gt;*&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;int a = 3;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;int b = 8;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;int c = a &lt;span class=&#34;emphasis&#34;&gt;* b;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;emphasis&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;emphasis&#34;&gt;3:  0 0 0 0 0 0 1 1  *&lt;/span&gt;  8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;————————————————————&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;24:  0 0 0 1 1 0 0 0&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;br /&gt;
+ 通过以上运算可以看出当用 a 乘 b，且如果 b 满足 2^N 的时候 就相当于把 a 的二进制数据向左移动 N 位，放到代码中 我们可以这样来写 &lt;strong&gt;a &amp;lt;&amp;lt; N&lt;/strong&gt;, 所以上面&lt;strong&gt; 3 * 2、3 * 4、3 * 8&lt;/strong&gt; 其实是可以写成&lt;strong&gt; 3&amp;lt;&amp;lt;1、3&amp;lt;&amp;lt;2、3&amp;lt;&amp;lt;3&lt;/strong&gt;，运算结果都是一样的。&lt;/p&gt;
+&lt;p&gt;那假如相乘的两个数都不满足 2&lt;sup&gt;N 怎么办呢？其实这个时候编译器会将其中一个数拆分成多个满足 2&lt;/sup&gt;N 的数相加的情况，打个比方&lt;/p&gt;
+&lt;p&gt;&lt;figure class=&#34;highlight dart&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;built_in&#34;&gt;int&lt;/span&gt; a = &lt;span class=&#34;number&#34;&gt;15&lt;/span&gt;;				&lt;span class=&#34;built_in&#34;&gt;int&lt;/span&gt; a = &lt;span class=&#34;number&#34;&gt;15&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;built_in&#34;&gt;int&lt;/span&gt; b = &lt;span class=&#34;number&#34;&gt;13&lt;/span&gt;;      =&amp;gt;    	&lt;span class=&#34;built_in&#34;&gt;int&lt;/span&gt; b = (&lt;span class=&#34;number&#34;&gt;4&lt;/span&gt; + &lt;span class=&#34;number&#34;&gt;8&lt;/span&gt; + &lt;span class=&#34;number&#34;&gt;1&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;built_in&#34;&gt;int&lt;/span&gt; c = a * b;			&lt;span class=&#34;built_in&#34;&gt;int&lt;/span&gt; c = a * b&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;br /&gt;
+ 最后其实执行相乘运算就会变成这样 &lt;strong&gt;15 * 4 + 15 * 8 + 15 * 1&lt;/strong&gt;，按照上文说的移位来转换为位运算就会变成&lt;strong&gt; 15 &amp;lt;&amp;lt; 2 + 15 &amp;lt;&amp;lt; 3 + 15 &amp;lt;&amp;lt; 0&lt;/strong&gt;&lt;/p&gt;
+&lt;h4 id=&#34;减法和除法&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#减法和除法&#34;&gt;#&lt;/a&gt; 减法和除法&lt;/h4&gt;
+&lt;p&gt;减法也是与加法同理只不过计算机内减法操作就是加上一个数的负数形式，且在操作系统中都是以补码的形式进行操作 (因为正数的源码补码反码都与本身相同)。首先，因为人脑可以知道第一位是符号位，在计算的时候我们会根据符号位，选择对真值区域的加减。但是对于计算机，加减乘数已经是最基础的运算，要设计的尽量简单。计算机辨别 &amp;quot;符号位&amp;quot; 显然会让计算机的基础电路设计变得十分复杂！于是人们想出了将符号位也参与运算的方法。我们知道，根据运算法则减去一个正数等于加上一个负数，即: 1-1 = 1 + (-1) = 0 , 所以机器可以只有加法而没有减法，这样计算机运算的设计就更简单了.&lt;/p&gt;
+&lt;p&gt;除法的话其实和乘法原理相同，不过乘法是左移而除法是右移，但是除法的计算量要比乘法大得多，其大部分的消耗都在拆分数值，和处理小数的步骤上，所以如果我们在进行生成变量的时候如果遇到多位的小数我们尽量把他换成 string 的形式，这也是为什么浮点运算会消耗大量的时钟周期 (操作系统中每进行一个移位或者加法运算的过程所消耗的时间就是一个时钟周期，3.0GHz 频率的 CPU 可以在一秒执行运算 3.0&lt;em&gt;1024&lt;/em&gt;1024*1024 个时钟周期)&lt;/p&gt;
+&lt;h2 id=&#34;11位运算符&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#11位运算符&#34;&gt;#&lt;/a&gt; 11：位运算符&lt;/h2&gt;
+&lt;p&gt;使用的运算符包括下面：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;含义&lt;/th&gt;
+&lt;th&gt;运算符&lt;/th&gt;
+&lt;th&gt;例子&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;左移&lt;/td&gt;
+&lt;td&gt;&amp;lt;&amp;lt;&lt;/td&gt;
+&lt;td&gt;0011  =&amp;gt;  0110&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;右移&lt;/td&gt;
+&lt;td&gt;&amp;gt;&amp;gt;&lt;/td&gt;
+&lt;td&gt;0110  =&amp;gt;  0011&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;按位或&lt;/td&gt;
+&lt;td&gt;︳&lt;/td&gt;
+&lt;td&gt;0011 &amp;lt;br&amp;gt; -------  =&amp;gt; 1011&amp;lt;br&amp;gt;1011&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;按位与&lt;/td&gt;
+&lt;td&gt;&amp;amp;&lt;/td&gt;
+&lt;td&gt;0011 &amp;lt;br&amp;gt; -------  =&amp;gt; 1011&amp;lt;br&amp;gt;1011&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;按位取反&lt;/td&gt;
+&lt;td&gt;~&lt;/td&gt;
+&lt;td&gt;0011  =&amp;gt; 1100&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;按位异或 (相同为零不同为一)&lt;/td&gt;
+&lt;td&gt;^&lt;/td&gt;
+&lt;td&gt;0011 &amp;lt;br&amp;gt; -------  =&amp;gt; 1000&amp;lt;br&amp;gt;1011&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;100颜色转换&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#100颜色转换&#34;&gt;#&lt;/a&gt; 100：颜色转换&lt;/h2&gt;
+&lt;h4 id=&#34;背景&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#背景&#34;&gt;#&lt;/a&gt; 背景&lt;/h4&gt;
+&lt;p&gt;上面说了 iOS 中经常见到的位运算的地方是在枚举中，那么颜色转换应该是除了枚举之外第二比较常用位运算的场景。打个比方设计师再给我们出设计稿的时候通常会在设计稿上按照 16 进制的样子给我们标色值。但是 iOS 中的 UIColor 并不支持使用十六进制的数据来初始化。所以我们需要将十六进制的色值转换为 UIColor。&lt;/p&gt;
+&lt;h4 id=&#34;原理分析&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#原理分析&#34;&gt;#&lt;/a&gt; 原理分析&lt;/h4&gt;
+&lt;p&gt;UIColor 中通常是用传入 RGB 的数值来初始化，而且每个颜色的取值范围是十进制下的 0~255，而设计同学又给的是十六进制数据，所以在操作系统中需要把这两种进制的数据统一成二进制来进行计算，这就用到了位运算。这里用一个十六进制的色值来举例子比如&lt;strong&gt; 0xffa131&lt;/strong&gt; 我们要转换就要先理解其组成&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;0x 或者 0X：十六进制的标识符，表示这个后面是个十六进制的数值，对数值本身没有任何意义&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;ff 颜色中的 R 值，转换为二进制为 1111 1111&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;a1 颜色中的 G 值，转换为二进制为 1010 0001&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;31 颜色中的 B 值，转换为二进制为 0011 0001&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;上述色彩值转换为二进制后为&lt;strong&gt; 1111 1111 1010 0001 0011 0001 (每一位十六进制的对应 4 位二进制，如果位数不够记得高位补零)&lt;/strong&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;通常来讲十六进制的颜色是按照上面的 RGB 的顺序排列的，但是并不固定，有时候可能会在其中加 A (Alpha) 值，具体情况按照设计为准，本文以通用情况举例。&lt;/p&gt;
+&lt;p&gt;综上，我们只需把对应位的值转换为 10 进制然后 / 255.0f 就可得到 RGB 色彩值，从而转换为 UIColor&lt;/p&gt;
+&lt;h4 id=&#34;转换代码&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#转换代码&#34;&gt;#&lt;/a&gt; 转换代码&lt;/h4&gt;
+&lt;p&gt;先列出代码，后续解析&lt;/p&gt;
+&lt;p&gt;&lt;figure class=&#34;highlight processing&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;9&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;- (UIColor *)colorWithHex:(&lt;span class=&#34;type&#34;&gt;long&lt;/span&gt;)hexColor &lt;span class=&#34;built_in&#34;&gt;alpha&lt;/span&gt;:(&lt;span class=&#34;type&#34;&gt;float&lt;/span&gt;)opacity&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;	&lt;span class=&#34;comment&#34;&gt;//将传入的十六进制颜色0xffa131 转换为UIColor&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;type&#34;&gt;float&lt;/span&gt; &lt;span class=&#34;built_in&#34;&gt;red&lt;/span&gt; = ((hexColor &amp;amp; &lt;span class=&#34;number&#34;&gt;0xFF0000&lt;/span&gt;) &amp;gt;&amp;gt; &lt;span class=&#34;number&#34;&gt;16&lt;/span&gt;)/&lt;span class=&#34;number&#34;&gt;255.0&lt;/span&gt;f;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;type&#34;&gt;float&lt;/span&gt; &lt;span class=&#34;built_in&#34;&gt;green&lt;/span&gt; = ((hexColor &amp;amp; &lt;span class=&#34;number&#34;&gt;0xFF00&lt;/span&gt;) &amp;gt;&amp;gt; &lt;span class=&#34;number&#34;&gt;8&lt;/span&gt;)/&lt;span class=&#34;number&#34;&gt;255.0&lt;/span&gt;f;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;type&#34;&gt;float&lt;/span&gt; &lt;span class=&#34;built_in&#34;&gt;blue&lt;/span&gt; = (hexColor &amp;amp; &lt;span class=&#34;number&#34;&gt;0xFF&lt;/span&gt;)/&lt;span class=&#34;number&#34;&gt;255.0&lt;/span&gt;f;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;keyword&#34;&gt;return&lt;/span&gt; [UIColor colorWithRed:&lt;span class=&#34;built_in&#34;&gt;red&lt;/span&gt; &lt;span class=&#34;built_in&#34;&gt;green&lt;/span&gt;:&lt;span class=&#34;built_in&#34;&gt;green&lt;/span&gt; &lt;span class=&#34;built_in&#34;&gt;blue&lt;/span&gt;:&lt;span class=&#34;built_in&#34;&gt;blue&lt;/span&gt; &lt;span class=&#34;built_in&#34;&gt;alpha&lt;/span&gt;:opacity];&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;br /&gt;
+ 大概原理可以看出将 RGB 每个值都解析出来然后变成 UIColor，先拿第一步转换红色值来说，我们按照运算顺序一步步来讲 (默认将参数代入，用 0xffa131 代替 hexColor)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;0xffa131 &amp;amp; 0xFF0000&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;我们知道红色值是前两位也就是&lt;strong&gt; ff&lt;/strong&gt;，所以这一步我们既然要取出红色值就要把其他位全部置零来排除干扰，这步操作便是如此，在计算机系统内是二进制来实现的，即：&amp;lt;br&amp;gt;&lt;br /&gt;
+1111 1111 1010 0001 0011 0001&amp;lt;br&amp;gt;-------------------------------------------  =&amp;gt; &amp;amp; =&amp;gt; 1111 1111 0000 0000 0000&amp;lt;br&amp;gt;&lt;br /&gt;
+1111 1111 0000 0000 0000 0000&amp;lt;br&amp;gt; 这部操作做完后可以看出将除了 R 值之外的 G 值 B 值全部置零了，但是离最终结果还差点，因为 0xFF 是 1111 1111，而我们的结果后面多出了 16 个 0，所以便有了第二步操作&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;&amp;gt;&amp;gt; 16&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;将上一步得到的结果右移 16 位即得到&lt;strong&gt; 0000 0000 0000 0000 1111 1111&lt;/strong&gt; 高位的零可以忽略，这也是最终的结果&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;/ 255.0f&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;这一步应该都知道 UIColor 中传入的数值范围在 0~1，所以我们要做下转换&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;后续的 G 值和 B 值都是一样的，只是大家注意位数就可以了，&lt;strong&gt;值得注意的是两个二进制数进行位运算一定保证两个数的位数相同，位数不够的那个数高位要用 0 补齐&lt;/strong&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;101枚举&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#101枚举&#34;&gt;#&lt;/a&gt; 101：枚举&lt;/h2&gt;
+&lt;p&gt;关于枚举中使用位运算我们之前也讲过，下面我们自己来写一个枚举 (伪代码)&lt;/p&gt;
+&lt;p&gt;&lt;figure class=&#34;highlight elm&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;17&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;typedef &lt;span class=&#34;type&#34;&gt;NS_OPTIONS&lt;/span&gt;(&lt;span class=&#34;type&#34;&gt;NSUInteger&lt;/span&gt;, &lt;span class=&#34;type&#34;&gt;TestOptions&lt;/span&gt;) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;     &lt;span class=&#34;type&#34;&gt;TestOptionOne&lt;/span&gt;     =    1 &amp;lt;&amp;lt; 0, （000001)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  	 &lt;span class=&#34;type&#34;&gt;TestOptionTwo&lt;/span&gt;     =    1 &amp;lt;&amp;lt; 1,	(000010)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;	 &lt;span class=&#34;type&#34;&gt;TestOptionThree&lt;/span&gt;   =    1 &amp;lt;&amp;lt; 2,	(000100)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;	 &lt;span class=&#34;type&#34;&gt;TestOptionFour&lt;/span&gt;    =    1 &amp;lt;&amp;lt; 3,	(001000)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;	 &lt;span class=&#34;type&#34;&gt;TestOptionFive&lt;/span&gt;    =    1 &amp;lt;&amp;lt; 4,	(010000)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;	 &lt;span class=&#34;type&#34;&gt;TestOptionSix&lt;/span&gt;     =    1 &amp;lt;&amp;lt; 5,	(100000)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;.&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;.&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;.&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;.&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;解析&lt;br /&gt;
+上面的枚举我后面用括号表明了位移后对应的二进制的值。这样写枚举的好处是我可以对其中选项多选比如&lt;strong&gt; TestOptionOne | TestOptionTwo （000001 | 000010 =&amp;gt; 000011）&lt;/strong&gt; 或者有其他的自定义组合。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;110加密&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#110加密&#34;&gt;#&lt;/a&gt; 110：加密&lt;/h2&gt;
+&lt;p&gt;在 iOS 中我们可以利用异或来进行加解密，异或的特性如下&lt;br /&gt;
+ &lt;figure class=&#34;highlight arcade&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;A ^ B = &lt;span class=&#34;function&#34;&gt;&lt;span class=&#34;params&#34;&gt;C&lt;/span&gt; =&amp;gt;&lt;/span&gt; C ^ A = &lt;span class=&#34;function&#34;&gt;&lt;span class=&#34;params&#34;&gt;B&lt;/span&gt; =&amp;gt;&lt;/span&gt; C ^ B = A&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;br /&gt;
+ 上文我们可以把 A 认为是需要加密的数据，B 认为是密钥 C 是加密后的数据&lt;br /&gt;
+比如:&lt;/p&gt;
+&lt;p&gt;&lt;figure class=&#34;highlight prolog&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;16&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;#include &amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;main()&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;   char a[]=&lt;span class=&#34;string&#34;&gt;&amp;quot;MyPassword&amp;quot;&lt;/span&gt;;        &lt;span class=&#34;comment&#34;&gt;/*要加密的密码*/&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;   char b[]=&lt;span class=&#34;string&#34;&gt;&amp;quot;cryptographic&amp;quot;&lt;/span&gt;;     &lt;span class=&#34;comment&#34;&gt;/*密钥*/&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;   int i;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;   &lt;span class=&#34;comment&#34;&gt;/*加密代码*/&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;   for(i=&lt;span class=&#34;number&#34;&gt;0&lt;/span&gt;;a[i]!=&lt;span class=&#34;string&#34;&gt;&amp;#x27;\0&amp;#x27;&lt;/span&gt;;i++)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;a[i]=a[i]^b[i];&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;   printf(&lt;span class=&#34;string&#34;&gt;&amp;quot;You Password encrypted: %s\n&amp;quot;&lt;/span&gt;,a);&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;   &lt;span class=&#34;comment&#34;&gt;/*解密代码*/&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;   for(i=&lt;span class=&#34;number&#34;&gt;0&lt;/span&gt;;a[i]!=&lt;span class=&#34;string&#34;&gt;&amp;#x27;\0&amp;#x27;&lt;/span&gt;;i++)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;a[i]=a[i]^b[i];&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;   printf(&lt;span class=&#34;string&#34;&gt;&amp;quot;You Password: %s\n&amp;quot;&lt;/span&gt;,a);&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;111其他应用&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#111其他应用&#34;&gt;#&lt;/a&gt; 111：其他应用&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;记得 iOS 总有一道面试题&lt;strong&gt;在不使用第三个变量的情况下交换两个变量的值&lt;/strong&gt;，这里用到异或的上面加解密中的特性。我有 x、y 两个个变量，做如下位运算操作&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;figure class=&#34;highlight nginx&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;attribute&#34;&gt;void&lt;/span&gt; exchange(int x , int y)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;attribute&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;regexp&#34;&gt; ^=&lt;/span&gt; y;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;attribute&#34;&gt;y&lt;/span&gt;&lt;span class=&#34;regexp&#34;&gt; ^=&lt;/span&gt; x;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;attribute&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;regexp&#34;&gt; ^=&lt;/span&gt; y;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;判断一个数的奇偶性，其实我们可以用 **%2** 来判断，代码量不高，但是之前讲过，除法运算的时钟周期非常多，所以代码虽然不多并不代表效率高，我们可以用如下运算来完成:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;figure class=&#34;highlight cpp&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;function&#34;&gt;&lt;span class=&#34;type&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;title&#34;&gt;test&lt;/span&gt;&lt;span class=&#34;params&#34;&gt;(&lt;span class=&#34;type&#34;&gt;int&lt;/span&gt; x)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;function&#34;&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;keyword&#34;&gt;if&lt;/span&gt; (x&amp;amp;&lt;span class=&#34;number&#34;&gt;1&lt;/span&gt;) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        &lt;span class=&#34;built_in&#34;&gt;printf&lt;/span&gt;(&lt;span class=&#34;string&#34;&gt;&amp;quot;奇数&amp;quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#125; &lt;span class=&#34;keyword&#34;&gt;else&lt;/span&gt; &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        &lt;span class=&#34;built_in&#34;&gt;printf&lt;/span&gt;(&lt;span class=&#34;string&#34;&gt;&amp;quot;偶数&amp;quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;br /&gt;
+ 原理很简单，因为二进制是满二进一，一旦超过 1 就会变 0 并进一位，这时候和 00001 做 **&amp;amp;** 操作一定会为 0，反之不为零。这样写效率会更高。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;计算两个数的平均值，通常我们都是（x+y）/2, 先不考虑效率问题，这样还会引起一个其他的问题，那就是 x+y 的值很有可能溢出大于 INT_MAX，所以我们采用位运算的办法来解决即可：&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;figure class=&#34;highlight arduino&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;function&#34;&gt;&lt;span class=&#34;type&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;title&#34;&gt;average&lt;/span&gt;&lt;span class=&#34;params&#34;&gt;(&lt;span class=&#34;type&#34;&gt;int&lt;/span&gt; x, &lt;span class=&#34;type&#34;&gt;int&lt;/span&gt; y)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;function&#34;&gt;&lt;/span&gt;&amp;#123;    &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;keyword&#34;&gt;return&lt;/span&gt; (x&amp;amp;y)+((x^y)&amp;gt;&amp;gt;&lt;span class=&#34;number&#34;&gt;1&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;1000总结&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#1000总结&#34;&gt;#&lt;/a&gt; 1000：总结&lt;/h2&gt;
+&lt;p&gt;其实位运算的应用远远不止这些，在算法方面适当的使用还是很有帮助的。&lt;/p&gt;
+</content>
+        <category term="算法" />
+        <category term="C语言" />
+        <category term="排序" />
+        <updated>2018-01-19T06:20:39.000Z</updated>
+    </entry>
+</feed>

@@ -1,0 +1,160 @@
+<?xml version="1.0"?>
+<rss version="2.0">
+    <channel>
+        <title>Molier • Posts by &#34;回味2017展望2018&#34; tag</title>
+        <link>https://oliverqueen.cn</link>
+        <description>iOS 开发 移动App 博客 杂谈 随笔 相册</description>
+        <language>zh-CN</language>
+        <pubDate>Mon, 12 Feb 2018 15:47:45 +0800</pubDate>
+        <lastBuildDate>Mon, 12 Feb 2018 15:47:45 +0800</lastBuildDate>
+        <category>欢迎页</category>
+        <category>网络</category>
+        <category>底层</category>
+        <category>DNS解析</category>
+        <category>LocalDNS</category>
+        <category>OpenGL</category>
+        <category>UI</category>
+        <category>动画</category>
+        <category>性能优化</category>
+        <category>xcode</category>
+        <category>cocoapods</category>
+        <category>podfile</category>
+        <category>webview</category>
+        <category>hook</category>
+        <category>runtime</category>
+        <category>翻译</category>
+        <category>优化</category>
+        <category>国外文献</category>
+        <category>httpdns</category>
+        <category>Cocoapods</category>
+        <category>架构</category>
+        <category>AlertView</category>
+        <category>Hook</category>
+        <category>杂谈</category>
+        <category>Hexo</category>
+        <category>个人博客</category>
+        <category>网站</category>
+        <category>屏幕适配</category>
+        <category>iOS 11</category>
+        <category>评论插件</category>
+        <category>总结</category>
+        <category>回味2017展望2018</category>
+        <category>热修复</category>
+        <category>JSPath</category>
+        <category>swift</category>
+        <category>网络请求</category>
+        <category>Swift</category>
+        <category>音频</category>
+        <category>唱吧</category>
+        <category>K歌</category>
+        <category>AVFoundation</category>
+        <category>git</category>
+        <category>效率工作</category>
+        <category>回首2018展望2019</category>
+        <category>代码版本控制</category>
+        <category>iOS</category>
+        <category>Crash防护</category>
+        <category>Apple登录</category>
+        <category>WWDC2022</category>
+        <category>逆向</category>
+        <category>算法</category>
+        <category>C语言</category>
+        <category>排序</category>
+        <item>
+            <guid isPermalink="true">https://oliverqueen.cn/2018-02-12-At-The-End-Of-2017/</guid>
+            <title>At The End Of 2017</title>
+            <link>https://oliverqueen.cn/2018-02-12-At-The-End-Of-2017/</link>
+            <category>总结</category>
+            <category>回味2017展望2018</category>
+            <pubDate>Mon, 12 Feb 2018 15:47:45 +0800</pubDate>
+            <description><![CDATA[ &lt;link rel=&#34;stylesheet&#34; class=&#34;aplayer-secondary-style-marker&#34; href=&#34;/assets/css/APlayer.min.css&#34;&gt;&lt;script src=&#34;/assets/js/APlayer.min.js&#34; class=&#34;aplayer-secondary-script-marker&#34;&gt;&lt;/script&gt;&lt;h2 id=&#34;前言&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#前言&#34;&gt;#&lt;/a&gt; 前言&lt;/h2&gt;
+&lt;p&gt;今天是 2017 年的最后一个工作日，准确的说是我最后一个工作日，公司的同事都走的差不多了，寥寥无几的办公室显得格外冷清，和安静，不过越是这样的环境越容易让我回忆、感慨，因此便有了这篇文章。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tKfTcgy1fodqkq8305j31hc0u07fp.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;我的一些朋友在元旦的时候就做了总结，而我选择在了这个时候，因为我觉得虽然是 12 月 31 日，但是我的工作并没有停止，旧的工作没有做完，新的工作还没时间规划，元旦也只是个小长假而已。虽然现在对于明年要做的事情也还是没有详细的定位，但是大致的方向应该算是有了。&lt;/p&gt;
+&lt;h2 id=&#34;辞旧&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#辞旧&#34;&gt;#&lt;/a&gt; 辞旧&lt;/h2&gt;
+&lt;p&gt;只有辞旧才能迎新，说实话 2017 年收货真的不小，今年也是我在美图成长最快的一年。2016 年 6 月 12 日凌晨从北京匆匆赶来深圳，一天的时间紧紧张张，办了户口，办了社保转移之类的手续，下午又来到公司楼下踩点儿，防止第二天入职的时候找不到地方。13 号正式成为 Meitu 的一员，刚开始都是陌生的，也可以说是懵逼的，接触的东西多了就会发现自己欠缺的东西也多了，什么都想要学，从入职到 17 年其实都是在适应期，没有什么实质性的进步，不过真的是涨了见识，知道了很多东西。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tKfTcgy1fodr6rjwo5j31kw0c5kjl.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;记得来深圳之前一个前辈跟我说过：“当你去到一个新的城市一个新的公司大多数人都需要半年左右的适应期，适应期内会觉得和公司格格不入，各种不爽，等这一阶段过去了那就会突飞猛进。” 一开始我还不相信，但是现在真的知道了。半年的适应期过去了，2017 年逐渐步入正轨，这也是我在一开始说 2017 年是我个人成长最快的一年，不光是技术，还包括其他精神层面的一些东西。&lt;/p&gt;
+&lt;h4 id=&#34;学习相关&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#学习相关&#34;&gt;#&lt;/a&gt; 学习相关&lt;/h4&gt;
+&lt;h6 id=&#34;sdk&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#sdk&#34;&gt;#&lt;/a&gt; SDK&lt;/h6&gt;
+&lt;p&gt;毕竟是做开发的，还是先从技术说起，这一年完成了 iOS 端的 DNS 解析耗时优化 SDK，也可以叫做 HttpDns。其实这个东西原理很简单 (这里就不在赘述，毕竟不是技术文章，想了解更多的可以在我的小站搜索 httpdns 字段)。但是做了很久，刚开始做的时候，我想应该是业内的前几名吧，我只看到过腾讯，阿里有过相关的文档，而阿里的也只是实现了简单的几个功能而已，腾讯的不开源，不过应该也不会有多深入。除此之外没有任何有用的文档，自己一点点摸索，一点点踩坑，项目接了好久都是有问题，也不稳定，那段时间真的很难，很痛苦。好在最后慢慢都克服了，当我把最终的文档放到网上，确实赢来了很多的阅读量，还被推上过头条，我想这就是对我付出努力的回报吧，着实很欣慰。唯一的遗憾就是由于涉及到一些业务的代码，无法做到开源。不过这将是我 2018 年的目标。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tKfTcgy1fodsdsa6zkj30eq08ct8x.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;h6 id=&#34;app&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#app&#34;&gt;#&lt;/a&gt; App&lt;/h6&gt;
+&lt;p&gt;其实完整的 App 没有做，但是也主要维护了一个 App，刚接到代码看了下最早的代码是 2012 年，一些第三方库也比较老。老旧的代码，无法发挥新设备的性能，于是开始重构、优化，几年前写代码的人大部分离职了，只能自己看，看不懂了就用自己的方式重写。每次 App 上架后盯着崩溃的后台看，是否产生了新的问题、旧的问题是否修复，然后看 App Store 用户的评论，用户最关心什么，用户会产生哪些问题，都一一记录，修改，其实每当这个时候感觉还是挺幸福的，而且正好赶上 iPhone X 发布，新的屏幕适配早就做好了，就等着真机出来去看看，应该也是公司第一个完成适配的 App，虽然当时有些小问题还没有发现。后来看着产品越来越稳定心里也是很爽的。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tKfTcgy1fodshg1fk6j31kw13hhdt.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;h6 id=&#34;其他&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#其他&#34;&gt;#&lt;/a&gt; 其他&lt;/h6&gt;
+&lt;p&gt;翻译过几篇文章、尽量保证每周在公司做一次技术分享 (感谢我的 leader 让我养成这个习惯)、建立了个人博客开始记录自己的生活、在一些技术论坛上有了属于自己的粉丝，不过我不是大佬，只是和大家沟通、讨论罢了。&lt;/p&gt;
+&lt;h4 id=&#34;生活相关&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#生活相关&#34;&gt;#&lt;/a&gt; 生活相关&lt;/h4&gt;
+&lt;h6 id=&#34;情感&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#情感&#34;&gt;#&lt;/a&gt; 情感&lt;/h6&gt;
+&lt;p&gt;2017 年首先是换了一个工作的城市，其实是为了逃离北京的雾霾，也是为自己更好的发展，不得不承认南方的环境确实要比北方强一些，政府机关的办事效率也更高一些。三月份妹子为了我也来到了深圳，真的很感动，横跨了整个中国来找我，她虽然没什么怨言，但是我知道对于一个女孩子来说这意味着什么，有时候她开玩笑总是说我没有感情，其实我只是不善表达而已，作为一个军人家庭出身的孩子，我完美的受到了家庭的影响，说一不二，对她从来不惯，从来不哄，不能容忍她矫情，不能容忍她挑食，有时候严厉的真的像我的父亲对我一样，但是同样我也会对她绝对的忠诚，因为还是很爱她，不管以后如何，她已经是我生命中除了母亲之外最重要的人。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tKfTcgy1fodsmhxyi2j31kw1c4qeh.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;h6 id=&#34;旅游&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#旅游&#34;&gt;#&lt;/a&gt; 旅游&lt;/h6&gt;
+&lt;p&gt;可能是因为沿海城市很方便的原因，这一年我们去了不少城市，走过不少地方，&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tKfTcgy1fodt98c9ojj31kw0iab29.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;其实还有很多地方，只是大部分照片没有传到 google 相册里，google 的相册我的初衷是用来保存 livephoto 的。那天看到妹子用一个本子记着我们一起去过的地方，我才发现我们走过不少地方。我当时想我可以做一个小 App 把这些地方记录下来，但是遭到拒绝，她说出去旅游就是为了放下工作，去寻找大自然中最原始，最纯净的东西，她不想因为这个增加我的工作量，而且用最原始的纸和笔更符合旅行的意义。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;香港&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tKfTcgy1fodtibvhsbj31kw16rx6r.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;澳门&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tKfTcgy1fodtjh9f65j31kw0z9npe.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;上海&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tKfTcgy1fodtkpsycej31kw0kl4qr.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;西塘&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tKfTcgy1fodtlu9fq7j31kw15v4qu.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Kota Kinabalu&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tKfTcgy1fodtmeey2yj31kw0tm4qu.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Semporna&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tKfTcgy1fodtqde670j31kw15qhdy.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;还有很多地方拍了很多照片，现在看下真的是很美好的回忆，后来我和妹子一直认为，以后即使再忙也一定要多出去走。这也是为什么我过年没有使用年假，因为年假基本会攒到出国。以后我的博客可能会开出相册模块，记录下更多的美好。&lt;/p&gt;
+&lt;h6 id=&#34;其他-2&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#其他-2&#34;&gt;#&lt;/a&gt; 其他&lt;/h6&gt;
+&lt;p&gt;2017 年也有经常健身吧，因为南方空气潮湿湿气重，如果不让自己保持大汉淋漓的话很容易生病。坚持过几个月，但是后来因为工作忙，加班等借口还是没坚持下来，没有父亲的监督果然靠自己不行。说好的八块腹肌已经要九九归一了。不过也真的明白身在异乡什么时候最孤独，最无助，那就是生病的时候。&lt;/p&gt;
+&lt;p&gt;我的 2017 差不多就这些东西，可能跟大佬们比起来真的是小打小闹，但是过得充实，心里踏实只有自己懂。&lt;/p&gt;
+&lt;h2 id=&#34;迎新&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#迎新&#34;&gt;#&lt;/a&gt; 迎新&lt;/h2&gt;
+&lt;p&gt;2018 年在短短的休息之后就会到来，虽说没有做好万全的准备，但是至少不会手足无措。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tKfTcgy1foducrbfzwj31hc0xc1jn.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;h4 id=&#34;学习相关-2&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#学习相关-2&#34;&gt;#&lt;/a&gt; 学习相关&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;还是学习为主，首先要做的就是把自己的 apple 的开发者账号续费，自己可以做一些练习、App 之类的东西，同时把各种证书、打包，持续集成这块整明白。毕竟现在用公司的证书不敢乱弄。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;自己从零到一做一个直播的 App 不管是绿色直播还是成人直播，一定要做出来保证完美运行。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;雅思词汇全掌握。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;壮大自己的博客。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;生活相关-2&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#生活相关-2&#34;&gt;#&lt;/a&gt; 生活相关&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;去一到两个国家。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;五公里坚持下来。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;成都，重庆，云南....&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;其他-3&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#其他-3&#34;&gt;#&lt;/a&gt; 其他&lt;/h4&gt;
+&lt;p&gt;之所以没在迎新中写太多东西并不是因为没计划，而是有些东西不想在这里说出来，用老罗的话说就是万一实现不了，丢人。&lt;/p&gt;
+&lt;p&gt;我记得看过一本书说 “伟大的人不是努力学习新知识的人，而是善于总结的人。” 我也不求变成伟大的人，只是希望自己的每一年都有所收货，希望自己做好迎接新一年的打算，希望过得踏实点。&lt;/p&gt;
+&lt;h2 id=&#34;最后&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#最后&#34;&gt;#&lt;/a&gt; 最后&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;在这里给大家拜个早年：祝大家新年快乐，心想事成。新的一年我会与大家分享更多的东西&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;才疏学浅，文笔拙劣，于 2018.2.13 仓促执笔....&lt;/p&gt;
+&lt;p&gt;
+        &lt;div id=&#34;aplayer-lklUIqKn&#34; class=&#34;aplayer aplayer-tag-marker&#34; style=&#34;margin-bottom: 20px;&#34;&gt;&lt;/div&gt;
+			  &lt;script&gt;
+				  var options = {&#34;narrow&#34;:false,&#34;autoplay&#34;:true,&#34;showlrc&#34;:0,&#34;mutex&#34;:true,&#34;music&#34;:[{&#34;title&#34;:&#34;에필로그 (Epilogue)&#34;,&#34;author&#34;:&#34;이동준&#34;,&#34;url&#34;:&#34;https://molier-1256056152.cos.ap-guangzhou.myqcloud.com/%E1%84%8B%E1%85%A6%E1%84%91%E1%85%B5%E1%86%AF%E1%84%85%E1%85%A9%E1%84%80%E1%85%B3.mp3&#34;,&#34;pic&#34;:&#34;https://y.gtimg.cn/music/photo_new/T002R300x300M000000RmZHf3qhLUL.jpg?max_age=2592000&#34;,&#34;lrc&#34;:&#34;https://歌词.lrc&#34;}]};
+				  options.element = document.getElementById(&#34;aplayer-lklUIqKn&#34;);
+				  var ap = new APlayer(options);
+			    window.aplayers || (window.aplayers = []);
+				  window.aplayers.push(ap);
+			  &lt;/script&gt;&lt;/p&gt;
+ ]]></description>
+        </item>
+    </channel>
+</rss>

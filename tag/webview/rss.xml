@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+<rss version="2.0">
+    <channel>
+        <title>Molier • Posts by &#34;webview&#34; tag</title>
+        <link>https://oliverqueen.cn</link>
+        <description>iOS 开发 移动App 博客 杂谈 随笔 相册</description>
+        <language>zh-CN</language>
+        <pubDate>Wed, 24 Jan 2018 12:24:06 +0800</pubDate>
+        <lastBuildDate>Wed, 24 Jan 2018 12:24:06 +0800</lastBuildDate>
+        <category>欢迎页</category>
+        <category>网络</category>
+        <category>底层</category>
+        <category>DNS解析</category>
+        <category>LocalDNS</category>
+        <category>OpenGL</category>
+        <category>UI</category>
+        <category>动画</category>
+        <category>性能优化</category>
+        <category>xcode</category>
+        <category>cocoapods</category>
+        <category>podfile</category>
+        <category>webview</category>
+        <category>hook</category>
+        <category>runtime</category>
+        <category>翻译</category>
+        <category>优化</category>
+        <category>国外文献</category>
+        <category>httpdns</category>
+        <category>Cocoapods</category>
+        <category>架构</category>
+        <category>AlertView</category>
+        <category>Hook</category>
+        <category>杂谈</category>
+        <category>Hexo</category>
+        <category>个人博客</category>
+        <category>网站</category>
+        <category>屏幕适配</category>
+        <category>iOS 11</category>
+        <category>评论插件</category>
+        <category>总结</category>
+        <category>回味2017展望2018</category>
+        <category>热修复</category>
+        <category>JSPath</category>
+        <category>swift</category>
+        <category>网络请求</category>
+        <category>Swift</category>
+        <category>音频</category>
+        <category>唱吧</category>
+        <category>K歌</category>
+        <category>AVFoundation</category>
+        <category>git</category>
+        <category>效率工作</category>
+        <category>回首2018展望2019</category>
+        <category>代码版本控制</category>
+        <category>iOS</category>
+        <category>Crash防护</category>
+        <category>Apple登录</category>
+        <category>WWDC2022</category>
+        <category>逆向</category>
+        <category>算法</category>
+        <category>C语言</category>
+        <category>排序</category>
+        <item>
+            <guid isPermalink="true">https://oliverqueen.cn/2018-01-24-NSURLProtocol%E5%AF%B9WKWebView%E7%9A%84%E5%A4%84%E7%90%86/</guid>
+            <title>NSURLProtocol对WKWebView的处理</title>
+            <link>https://oliverqueen.cn/2018-01-24-NSURLProtocol%E5%AF%B9WKWebView%E7%9A%84%E5%A4%84%E7%90%86/</link>
+            <category>webview</category>
+            <category>hook</category>
+            <pubDate>Wed, 24 Jan 2018 12:24:06 +0800</pubDate>
+            <description><![CDATA[ &lt;link rel=&#34;stylesheet&#34; class=&#34;aplayer-secondary-style-marker&#34; href=&#34;/assets/css/APlayer.min.css&#34;&gt;&lt;script src=&#34;/assets/js/APlayer.min.js&#34; class=&#34;aplayer-secondary-script-marker&#34;&gt;&lt;/script&gt;&lt;p&gt;之前写过一篇&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cDovL3d3dy5qaWFuc2h1LmNvbS9wL2NkNGMxYmYxZmQ1Zg==&#34;&gt;文章&lt;/span&gt;是关于基于 NSURLProtocol 做的 DNS 解析，其中对 NSURLProtocol 也有了简单的介绍，我们都知道他可以拦截所有基于 URL Loading System 中的请求，但是对于 WKWebview 里面所发出的请求即使他是 http/https 也无能为力，先来简单的了解下 WKWebView.&lt;br /&gt;
+&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;h5 id=&#34;wkwebview&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#wkwebview&#34;&gt;#&lt;/a&gt; WKWebview&lt;/h5&gt;
+&lt;p&gt;iOS8 以后，苹果推出了新框架 Webkit，提供了替换 UIWebView 的组件 WKWebView。各种 UIWebView 的问题没有了，速度更快了，占用内存少了，一句话，WKWebView 是 App 内部加载网页的最佳选择！我们做开发最关系的是内存问题，基本上网上所有的资料都在说 WKWebview 的内存占用会更少，但是到底少了多少我这边做了下测试，同样是加载 163 的首页&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo6k80vn82j3087036wem.jpg&#34; alt=&#34;使用UIWebView的内存&#34; /&gt;&lt;br /&gt;
+&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo6k8agxuoj308002smx3.jpg&#34; alt=&#34;使用WKWebview的内存&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;从上图看出内存大概能优化百分之八十左右，而且从网页的滑动上也确实有所改善。这么明显的性能提升但是苹果并没有完全放弃 UIWebView 也一定有他的道理，就拿本文要讲的 NSURLProtocol 拦截请求来说，WKWebview 的兼容并不 UIWebView 好，还需要开发者做一些操作。&lt;/p&gt;
+&lt;h5 id=&#34;webkit源码分析&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#webkit源码分析&#34;&gt;#&lt;/a&gt; WebKit 源码分析&lt;/h5&gt;
+&lt;p&gt;由于 WKWebview 是基于 webkit 内核来做的，所以我们在使用的时候需要导入一个这样的东西。&lt;br /&gt;
+#import &amp;lt;WebKit/WebKit.h&amp;gt;&lt;br /&gt;
+ 通过这个我们可以猜到 WKWebview 中所有的请求以及一些逻辑肯定走的都是 webkit 里面的东西，所以他对于网页的加载之之类的操作也不会走系统本省的 URL Loading System，这么说来他的请求不能被 NSURLProtocol 拦截也是理所当然的了。不过 WKWebview 是否真的和 NSURLProtocol 一点关系都没有还需要去研究，幸好 webkit 是开源的，github 上很容易找到&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9naXRodWIuY29tL1dlYktpdC93ZWJraXQ=&#34;&gt;源码&lt;/span&gt;（大小大概是 1G 多点的 zip，花了我将近一天时间来看）。拉下代码直接搜索 NSURLProtocol，看看有没有有关的信息&lt;br /&gt;
+&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo6k8kigkxj30i80t0tg8.jpg&#34; alt=&#34;搜索结果&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;看来的确是有和 NSURLProtocol 有关系，后面通过断点的调用栈中也找到了&lt;br /&gt;
+ + [NSURLProtocol canInitWithRequest:]&lt;br /&gt;
+ 这样的字样，再通过网上查一些资料也证实了我的猜想，其实 WKWebview 在一开始时候是会调用到 NSURLProtocol 中的入口方法 canInitWithRequest 的，但是就没有然后了，也就是说 WKWebview 是和 NSURLProtocol 有一定关联，只是在 NSURLProtocol 的入口处返回 NO 所以导致 NSURLProtocol 不接管 WKWebview 的请求。我们点进 webkit 源码中的 CustomProtocol 可以看到，整体的结构我们都差不多，但是我注意到每个 CustomProtocol 的入口函数都有这样一个判断：&lt;br /&gt;
+&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo6k8wgu6tj30yg04x40p.jpg&#34; alt=&#34;入口函数1&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo6k93edfij30rw05ijsb.jpg&#34; alt=&#34;入口函数2&#34; /&gt;&lt;br /&gt;
+ (粉色的可以暂时认定为是它内部的一个 custom 字符串) 通过这个可以猜想，WKWebview 并不是不走 NSURLProtocol，而是需要满足他的一个规则，他才会在入口函数这里返回 YES 来给你放行，这个规则便是你所请求的 URL 的 Scheme 要和它内部配置的 CustomScheme 相同。不过这里有一个疑问，苹果在使用 webkit 时候为什么会把 http/https 这样大众化的 scheme 过滤掉，看来他是不建议开发者来使用 NSURLProtocol。接下来我们来看这个 CustomScheme，既然苹果内部规定好的那么一定能通过某种方式来注册一个自己的 scheme，实在不行就 hook 嘛。通过翻他的源码发现最终都指向一句代码&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[WKBrowsingContextController registerSchemeForCustomProtocol:testScheme];
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;方法实现为&lt;br /&gt;
+ + (void) registerSchemeForCustomProtocol:(NSString *) scheme&lt;br /&gt;
+{&lt;br /&gt;
+WebProcessPool::registerGlobalURLSchemeAsHavingCustomProtocolHandlers(scheme);&lt;br /&gt;
+}&lt;br /&gt;
+&lt;figure class=&#34;highlight scss&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;9&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;void WebProcessPool::&lt;span class=&#34;built_in&#34;&gt;registerGlobalURLSchemeAsHavingCustomProtocolHandlers&lt;/span&gt;(const String&amp;amp; urlScheme)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    if (!urlScheme)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        return;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;built_in&#34;&gt;globalURLSchemesWithCustomProtocolHandlers&lt;/span&gt;()&lt;span class=&#34;selector-class&#34;&gt;.add&lt;/span&gt;(urlScheme);&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    for (auto* processPool : allProcessPools())&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        processPool-&amp;gt;&lt;span class=&#34;built_in&#34;&gt;registerSchemeForCustomProtocol&lt;/span&gt;(urlScheme);&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;br /&gt;
+ 通过方法名字可以看出这个就是那个向 webkit 注册 CustomScheme 的方法，只要我们在注册完我们自己的 CustomProtocol 之后在调用该方法应该就可以了。通过他的源码也进一步印证了我的猜想 (他也是这么写的)&lt;br /&gt;
+&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo6k9nobq7j30yg04tmzt.jpg&#34; alt=&#34;webkit源码&#34; /&gt;&lt;/p&gt;
+&lt;h5 id=&#34;具体实施&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#具体实施&#34;&gt;#&lt;/a&gt; 具体实施&lt;/h5&gt;
+&lt;p&gt;找到了方法就要去实施，不过因为 registerSchemeForCustomProtocol 是 WKBrowsingContextController 的类方法，所以只能用 WKBrowsingContextController 去调用，但是在 webkit 的头文件发现 WKBrowsingContextController 并没有开放出来，所以我们采用 NSClassFromString 和 NSSelectorFromString 方法来拿到类和对应的方法，整体代码如下&lt;br /&gt;
+ &lt;figure class=&#34;highlight objectivec&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;17&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;comment&#34;&gt;//注册自己的protocol&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;[&lt;span class=&#34;built_in&#34;&gt;NSURLProtocol&lt;/span&gt; registerClass:[CustomProtocol &lt;span class=&#34;keyword&#34;&gt;class&lt;/span&gt;]];&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;comment&#34;&gt;//创建WKWebview&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;built_in&#34;&gt;WKWebViewConfiguration&lt;/span&gt; * config = [[&lt;span class=&#34;built_in&#34;&gt;WKWebViewConfiguration&lt;/span&gt; alloc] init];&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;built_in&#34;&gt;WKWebView&lt;/span&gt; * wkWebView = [[&lt;span class=&#34;built_in&#34;&gt;WKWebView&lt;/span&gt; alloc] initWithFrame:&lt;span class=&#34;built_in&#34;&gt;CGRectMake&lt;/span&gt;(&lt;span class=&#34;number&#34;&gt;0&lt;/span&gt;, &lt;span class=&#34;number&#34;&gt;0&lt;/span&gt;, [&lt;span class=&#34;built_in&#34;&gt;UIScreen&lt;/span&gt; mainScreen].bounds.size.width, [&lt;span class=&#34;built_in&#34;&gt;UIScreen&lt;/span&gt; mainScreen].bounds.size.height) configuration:config];&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;[wkWebView loadRequest:webViewReq];&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;[&lt;span class=&#34;keyword&#34;&gt;self&lt;/span&gt;.view addSubview:wkWebView];&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;comment&#34;&gt;//注册scheme&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;Class cls = &lt;span class=&#34;built_in&#34;&gt;NSClassFromString&lt;/span&gt;(&lt;span class=&#34;string&#34;&gt;@&amp;quot;WKBrowsingContextController&amp;quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;SEL sel = &lt;span class=&#34;built_in&#34;&gt;NSSelectorFromString&lt;/span&gt;(&lt;span class=&#34;string&#34;&gt;@&amp;quot;registerSchemeForCustomProtocol:&amp;quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;if&lt;/span&gt; ([cls respondsToSelector:sel]) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;comment&#34;&gt;// 通过http和https的请求，同理可通过其他的Scheme 但是要满足ULR Loading System&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    [cls performSelector:sel withObject:&lt;span class=&#34;string&#34;&gt;@&amp;quot;http&amp;quot;&lt;/span&gt;];&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    [cls performSelector:sel withObject:&lt;span class=&#34;string&#34;&gt;@&amp;quot;https&amp;quot;&lt;/span&gt;];&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;br /&gt;
+  实现效果。我将网页中所有的图片替换成了柴犬图片&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo6ka7rv18g307o0ds7wl.gif&#34; alt=&#34;效果&#34; /&gt;&lt;/p&gt;
+&lt;h5 id=&#34;值得注意&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#值得注意&#34;&gt;#&lt;/a&gt; 值得注意&lt;/h5&gt;
+&lt;ul&gt;
+&lt;li&gt;关于私有 API&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;因为 WKBrowsingContextController 和 registerSchemeForCustomProtocol 应该是私有的所以使用时候需要对字符串做下处理，用加密的方式或者其他就可以了，实测可以过审核的。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;关于 post 请求&lt;br /&gt;
+大家会发现拦截不了 post 请求 (拦截到的 post 请求 body 体为空)，这个其实和 WKWebview 没有关系，这个是苹果为了提高效率加快流畅度所以在 NSURLProtocol 拦截之后索性就不复制 body 体内的东西，因为 body 的大小没有限制，开发者可能会把很大的数据放进去那就不好办了。我们可以采取 httpbodystream 的方式拿到 body，这个在之前的&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cDovL3d3dy5qaWFuc2h1LmNvbS9wL2NkNGMxYmYxZmQ1Zg==&#34;&gt;文章&lt;/span&gt;也有提过&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;figure class=&#34;highlight objectivec&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;22&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;span class=&#34;keyword&#34;&gt;pragma&lt;/span&gt; mark -&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;span class=&#34;keyword&#34;&gt;pragma&lt;/span&gt; mark 处理POST请求相关POST  用HTTPBodyStream来处理BODY体&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;- (&lt;span class=&#34;built_in&#34;&gt;NSMutableURLRequest&lt;/span&gt; *)handlePostRequestBodyWithRequest:(&lt;span class=&#34;built_in&#34;&gt;NSMutableURLRequest&lt;/span&gt; *)request &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;built_in&#34;&gt;NSMutableURLRequest&lt;/span&gt; * req = [request mutableCopy];&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;keyword&#34;&gt;if&lt;/span&gt; ([request.HTTPMethod isEqualToString:&lt;span class=&#34;string&#34;&gt;@&amp;quot;POST&amp;quot;&lt;/span&gt;]) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        &lt;span class=&#34;keyword&#34;&gt;if&lt;/span&gt; (!request.HTTPBody) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;            uint8_t d[&lt;span class=&#34;number&#34;&gt;1024&lt;/span&gt;] = &amp;#123;&lt;span class=&#34;number&#34;&gt;0&lt;/span&gt;&amp;#125;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;            &lt;span class=&#34;built_in&#34;&gt;NSInputStream&lt;/span&gt; *stream = request.HTTPBodyStream;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;            &lt;span class=&#34;built_in&#34;&gt;NSMutableData&lt;/span&gt; *data = [[&lt;span class=&#34;built_in&#34;&gt;NSMutableData&lt;/span&gt; alloc] init];&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;            [stream open];&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;            &lt;span class=&#34;keyword&#34;&gt;while&lt;/span&gt; ([stream hasBytesAvailable]) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;                &lt;span class=&#34;built_in&#34;&gt;NSInteger&lt;/span&gt; len = [stream read:d maxLength:&lt;span class=&#34;number&#34;&gt;1024&lt;/span&gt;];&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;                &lt;span class=&#34;keyword&#34;&gt;if&lt;/span&gt; (len &amp;gt; &lt;span class=&#34;number&#34;&gt;0&lt;/span&gt; &amp;amp;&amp;amp; stream.streamError == &lt;span class=&#34;literal&#34;&gt;nil&lt;/span&gt;) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;                    [data appendBytes:(&lt;span class=&#34;type&#34;&gt;void&lt;/span&gt; *)d length:len];&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;                &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;            &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;            req.HTTPBody = [data &lt;span class=&#34;keyword&#34;&gt;copy&lt;/span&gt;];&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;            [stream close];&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;keyword&#34;&gt;return&lt;/span&gt; req;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+ ]]></description>
+        </item>
+    </channel>
+</rss>

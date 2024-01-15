@@ -1,0 +1,174 @@
+<?xml version="1.0"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://oliverqueen.cn</id>
+    <title>Molier • Posts by &#34;效率工作&#34; tag</title>
+    <link href="https://oliverqueen.cn" />
+    <updated>2018-08-23T06:20:39.000Z</updated>
+    <category term="欢迎页" />
+    <category term="网络" />
+    <category term="底层" />
+    <category term="DNS解析" />
+    <category term="LocalDNS" />
+    <category term="OpenGL" />
+    <category term="UI" />
+    <category term="动画" />
+    <category term="性能优化" />
+    <category term="xcode" />
+    <category term="cocoapods" />
+    <category term="podfile" />
+    <category term="webview" />
+    <category term="hook" />
+    <category term="runtime" />
+    <category term="翻译" />
+    <category term="优化" />
+    <category term="国外文献" />
+    <category term="httpdns" />
+    <category term="Cocoapods" />
+    <category term="架构" />
+    <category term="AlertView" />
+    <category term="Hook" />
+    <category term="杂谈" />
+    <category term="Hexo" />
+    <category term="个人博客" />
+    <category term="网站" />
+    <category term="屏幕适配" />
+    <category term="iOS 11" />
+    <category term="评论插件" />
+    <category term="总结" />
+    <category term="回味2017展望2018" />
+    <category term="热修复" />
+    <category term="JSPath" />
+    <category term="swift" />
+    <category term="网络请求" />
+    <category term="Swift" />
+    <category term="音频" />
+    <category term="唱吧" />
+    <category term="K歌" />
+    <category term="AVFoundation" />
+    <category term="git" />
+    <category term="效率工作" />
+    <category term="回首2018展望2019" />
+    <category term="代码版本控制" />
+    <category term="iOS" />
+    <category term="Crash防护" />
+    <category term="Apple登录" />
+    <category term="WWDC2022" />
+    <category term="逆向" />
+    <category term="算法" />
+    <category term="C语言" />
+    <category term="排序" />
+    <entry>
+        <id>https://oliverqueen.cn/2018-08-22-GitFlow/</id>
+        <title>GitFlow流程</title>
+        <link rel="alternate" href="https://oliverqueen.cn/2018-08-22-GitFlow/"/>
+        <content type="html">&lt;link rel=&#34;stylesheet&#34; class=&#34;aplayer-secondary-style-marker&#34; href=&#34;/assets/css/APlayer.min.css&#34;&gt;&lt;script src=&#34;/assets/js/APlayer.min.js&#34; class=&#34;aplayer-secondary-script-marker&#34;&gt;&lt;/script&gt;&lt;h1 id=&#34;关于gitflow&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#关于gitflow&#34;&gt;#&lt;/a&gt; 关于 gitflow&lt;/h1&gt;
+&lt;h2 id=&#34;概念&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#概念&#34;&gt;#&lt;/a&gt; 概念：&lt;/h2&gt;
+&lt;p&gt;Git Flow 是构建在 Git 之上的一个组织、管理软件开发活动的模型。Git Flow 是一套使用 Git 进行源代码管理时的一套行为规范和，通过利用 Git 创建和管理分支的能力，为每个分支设定具有特定的含义名称，并将软件生命周期中的各类活动归并到不同的分支上。实现了软件开发过程不同操作的相互隔离。这种软件开发的活动模型被称为 “Git Flow”。&lt;/p&gt;
+&lt;h2 id=&#34;原理&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#原理&#34;&gt;#&lt;/a&gt; 原理：&lt;/h2&gt;
+&lt;p&gt;gitflow 的核心就 branch，通过在项目的不同阶段对 branch 的不同操作包括但不限于 create、marge、rebase、等来实现一个完整的高效率的工作流程。一般而言，软件开发模型有常见的瀑布模型、迭代开发模型、以及最近出现的敏捷开发模型等不同的模型。每种模型有各自应用场景。&lt;strong&gt;Git Flow 重点解决的是由于源代码在开发过程中的各种冲突导致开发活动混乱的问题。因此，Git flow 可以很好的于各种现有开发模型相结合使用，尤其是多人合作开发时提高效率&lt;/strong&gt;。用一张图来了解 gitflow 的流程：从右向左看 从上到下看&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1ftk5pkvn7ij30vy16cwhl.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;branch&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#branch&#34;&gt;#&lt;/a&gt; Branch：&lt;/h2&gt;
+&lt;p&gt;Branch 是 gitfolw 的核心。主要分为两大类 &lt;strong&gt;Main Branchs&lt;/strong&gt; 和 &lt;strong&gt;Supporting branches&lt;/strong&gt;, 其中 &lt;strong&gt;Main Branchs&lt;/strong&gt; 中又包含了 &lt;strong&gt;Master&lt;/strong&gt; 和 &lt;strong&gt;Develop&lt;/strong&gt;，而 &lt;strong&gt;Supporting branches&lt;/strong&gt; 中包含了 **Feature **、&lt;strong&gt;Release&lt;/strong&gt;、&lt;strong&gt;Hotfix&lt;/strong&gt; &lt;strong&gt;以及其他自定义分支&lt;/strong&gt;，下面逐一讲解：&lt;/p&gt;
+&lt;h4 id=&#34;master&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#master&#34;&gt;#&lt;/a&gt; Master:&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;描述：&lt;/p&gt;
+&lt;p&gt;master 分支上存放的是最稳定的正式版的代码，并且该分支的代码应该是随时可在开发环境中使用的代码（Production Ready state）。当一个版本开发完毕后，产生了一份新的稳定的可供发布的代码时，master 分支上的代码要被更新，同时，每一次更新，都需要在 master 上打上对应的版本号 (tag)。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;生成及销毁：&lt;/p&gt;
+&lt;p&gt;任何人不允许在 master 上进行代码的直接提交，只接受合入，Master 上的代码必须是要从经过多轮测试且已经发布一段时间 (根据 DAU 以及项目实际情况来定，个人建议 K 歌国际版可以定为一周) 且线上已经稳定的 &lt;strong&gt;release&lt;/strong&gt; 分支合并进去，然后在 Master 上生成 tag (通常就是对应的版本号)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;命名：&lt;/p&gt;
+&lt;p&gt;master&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;develop&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#develop&#34;&gt;#&lt;/a&gt; Develop:&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;描述：&lt;/p&gt;
+&lt;p&gt;develop 分支是保存当前最新版本开发成果的分支。该分支上的代码允许有 BUG，但是必须保证编译通过，且该分支可以作为每天夜间测试的分支 (如果有夜间测试的话) 所以该分支也叫做 Nightly build。当 develop 分支上的代码已实现了软件需求说明书中所有的功能 (必须经过开发自测，但是不必经过 QA) 且相对稳定时候，就可以基于此分支来拉出新的 release 分支交付 QA 进行测试。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;生成及销毁：&lt;/p&gt;
+&lt;p&gt;Develop 分支是由一个人 (通常是 Team Leader) 从 Master 中拉出，任何人不得在 Develop 上进行代码提交，只接受合入。Develop 上所有代码一定都是由 &lt;strong&gt;Supporting branches&lt;/strong&gt; 中的 Branch 合并进来，且合入 Develop 的分支必须保证功能完整，可以独立运行，可允许包含一些 BUG (但是最好经过自测，不要有太大或者太明显的 BUG，比如一启动就 crash 之类的)。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;命名：&lt;/p&gt;
+&lt;p&gt;develop&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;流程：&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1ftk7aszas4j30eu0mc74p.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;h4 id=&#34;feature&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#feature&#34;&gt;#&lt;/a&gt; Feature:&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;描述：&lt;/p&gt;
+&lt;p&gt;Feature 分支通常叫做功能分支，也可以叫做个人分支，一般命名为 &lt;strong&gt;feature/XXXX&lt;/strong&gt;, 该分支就是每一个开发人员进行开发的分支，比如做一些功能、需求之类的东西，这个分支上的代码变更最终合并回 develop 分支或者干脆被抛弃掉（例如实验性且效果不好的代码变更）。一般而言，feature 分支代码可以保存在开发者自己的代码库中而不强制提交到主代码库里。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;生成及销毁：&lt;/p&gt;
+&lt;p&gt;每个开发者从通常会 Develop 分支中拉取自己的 feature，且开发者可以随意的在自己的 feature 上进行操作 包括但不限于 提交、回滚、删除。如果最终需要合并入 develop 那就要保证功能的完整性以及代码的稳定新，比如我在 feature 上做了 3 个需求但是由于时间关系我只做了两个，那也可以将 feature 合并入 develop，然后剩下的那一个需求等有时间了再去 feature 上做完之后再合入 develop。所以这里说的功能的完整性并不是值得要做完所有的功能，而是要保证你所要做的所有需求中的某一个或者某几个功能已经做完，不允许把做到一半的功合并入 develop。合并入 develop 尽量上删除远端的 feature 分支，本地的 feature 可以视情况而取舍。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;命名：&lt;/p&gt;
+&lt;p&gt;feature 通常是从 develope 上拉取 所有通常用 &lt;strong&gt;dev_功能描述_英文名&lt;/strong&gt; 来命名。比如 &lt;strong&gt;feature/dev_refresh_molierzhang&lt;/strong&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;流程：&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1ftk7br1fvqj307e0jugln.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;h4 id=&#34;release&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#release&#34;&gt;#&lt;/a&gt; Release:&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;描述：&lt;/p&gt;
+&lt;p&gt;Release 分支通常叫做发布分支，也可以叫做测试 - 发布分支，一般命名为 &lt;strong&gt;Release/1.2.3&lt;/strong&gt;（后面是版本号）, 该分支是为测试 - 发布新的产品版本而开辟的。因为包含测试流程，所以在这个分支上的代码允许做小的缺陷修正、准备发布版本所需的各项说明信息（版本号、发布时间、编译时间等等）。通过在 release 分支上进行这些工作可以让 develop 分支空闲出来以接受新的 feature 分支上的代码提交，进入新的软件开发迭代周期。&lt;strong&gt;注意：该分支上的代码一定是可编译可运行的，允许包含小 BUG&lt;/strong&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;生成及销毁：&lt;/p&gt;
+&lt;p&gt;当 develop 分支上的代码已经包含了该版本所有即将发布的功能和需求，并且已通过自测且已基本稳定，我们就可以考虑准备基于 develop 拉取 release 分支了。而所有在当前即将发布的版本之外的业务需求一定要确保不能混到 release 分支之内（避免由此引入一些不可控的系统缺陷）。成功的派生了 release 分支之后，develop 分支就可以为 “下一个版本” 服务了。所谓的 “下一个版本” 是在当前即将发布的版本之后发布的版本。开发人员可以在此分支上修改 BUG，进行提交、回滚等操作，但是与 feature 不同的是 release 分支是被多人操作的，不像 feature，所以一定要小心避免冲突。当现在 QA 测试没有问题，便从 release 上发布上线，且经过一段时间的验证没有问题后合入 master，并且删除 release 分支，其实根据 release 分支的特性我们可以使用 Git Hook 触发软件自动测试以及生产环境代码的自动更新工作。这些自动化操作将有利于减少新代码发布之后的一些事务性工作。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;命名：&lt;/p&gt;
+&lt;p&gt;release/1.2.3 后面跟对应的版本号&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;流程：&lt;/p&gt;
+&lt;p&gt;同 feature&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;hotfix&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#hotfix&#34;&gt;#&lt;/a&gt; Hotfix:&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;描述：&lt;/p&gt;
+&lt;p&gt;Hotfix 叫热修复分支，除了是计划外创建的以外，hotfix 分支与 release 分支十分相似，当已经发布的版本（Master 上代码）遇到了异常情况或者发现了严重到必须立即修复的软件缺陷的时候，就需要从 master 分支上指定的 tag 版本拉取 hotfix 分支来组织代码的紧急修复工作。这样做的显而易见的好处是不会打断正在进行的 develop 分支的开发工作，能够让团队中负责新功能开发的人与负责代码紧急修复的人并行、独立的开展工作。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;生成及销毁：&lt;/p&gt;
+&lt;p&gt;由 Master 上拉取，进行修复，负责修改 BUG 的同事可以进行提交及其它操作，后续的热修复测试也在此分支上进行。通过测试验证没问题后有一个人 (通常为 teamleader)&lt;strong&gt; 合并入 Master 分支，且同时也要合并入 Develop 分支&lt;/strong&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;命名：&lt;/p&gt;
+&lt;p&gt;Hotfix/1.2.3 后面跟对应的版本号&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;流程：&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1ftk81yr4iej308j0bqwf3.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;总结&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#总结&#34;&gt;#&lt;/a&gt; 总结&lt;/h2&gt;
+&lt;p&gt;Git Flow 开发模型从源代码管理角度对通常意义上的软件开发活动进行了约束。应该说，为我们的软件开发提供了一个可供参考的管理模型。Git Flow 开发模型让开发代码仓库保持整洁，让小组各个成员之间的开发相互隔离，能够有效避免处于开发状态中的代码相互影响而导致的效率低下和混乱。&lt;/p&gt;
+&lt;p&gt;所谓模型，在不同的开发团队，不同的文化，不同的项目背景情况下都有可能需要进行适当的裁剪或扩充。&lt;/p&gt;
+&lt;h2 id=&#34;效率工具&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#效率工具&#34;&gt;#&lt;/a&gt; 效率工具&lt;/h2&gt;
+&lt;p&gt;推荐 &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly93d3cuc291cmNldHJlZWFwcC5jb20v&#34;&gt;sourceTree&lt;/span&gt; 和 &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly93d3cuZ2l0a3Jha2VuLmNvbS8=&#34;&gt;gitkarken&lt;/span&gt; (用免费版即可，不用充钱) 前者对 gitsubmodel 的支持不太好，不过目前介于我们没有实现组件化所以暂时可以无视；后者完美支持 gitsubmodel，但是在拉取一些比较大的库的时候可能会卡死，前公司一个项目 30G+ 会有卡死情况出现，后者界面炫酷一些 iOS 的话 Xcdoe 自带 git 也可以试试。&lt;/p&gt;
+</content>
+        <category term="git" />
+        <category term="效率工作" />
+        <updated>2018-08-23T06:20:39.000Z</updated>
+    </entry>
+</feed>

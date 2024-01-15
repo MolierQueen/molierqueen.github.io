@@ -1,0 +1,137 @@
+<?xml version="1.0"?>
+<rss version="2.0">
+    <channel>
+        <title>Molier • Posts by &#34;代码版本控制&#34; tag</title>
+        <link>https://oliverqueen.cn</link>
+        <description>iOS 开发 移动App 博客 杂谈 随笔 相册</description>
+        <language>zh-CN</language>
+        <pubDate>Thu, 23 Aug 2018 20:47:19 +0800</pubDate>
+        <lastBuildDate>Thu, 23 Aug 2018 20:47:19 +0800</lastBuildDate>
+        <category>欢迎页</category>
+        <category>网络</category>
+        <category>底层</category>
+        <category>DNS解析</category>
+        <category>LocalDNS</category>
+        <category>OpenGL</category>
+        <category>UI</category>
+        <category>动画</category>
+        <category>性能优化</category>
+        <category>xcode</category>
+        <category>cocoapods</category>
+        <category>podfile</category>
+        <category>webview</category>
+        <category>hook</category>
+        <category>runtime</category>
+        <category>翻译</category>
+        <category>优化</category>
+        <category>国外文献</category>
+        <category>httpdns</category>
+        <category>Cocoapods</category>
+        <category>架构</category>
+        <category>AlertView</category>
+        <category>Hook</category>
+        <category>杂谈</category>
+        <category>Hexo</category>
+        <category>个人博客</category>
+        <category>网站</category>
+        <category>屏幕适配</category>
+        <category>iOS 11</category>
+        <category>评论插件</category>
+        <category>总结</category>
+        <category>回味2017展望2018</category>
+        <category>热修复</category>
+        <category>JSPath</category>
+        <category>swift</category>
+        <category>网络请求</category>
+        <category>Swift</category>
+        <category>音频</category>
+        <category>唱吧</category>
+        <category>K歌</category>
+        <category>AVFoundation</category>
+        <category>git</category>
+        <category>效率工作</category>
+        <category>回首2018展望2019</category>
+        <category>代码版本控制</category>
+        <category>iOS</category>
+        <category>Crash防护</category>
+        <category>Apple登录</category>
+        <category>WWDC2022</category>
+        <category>逆向</category>
+        <category>算法</category>
+        <category>C语言</category>
+        <category>排序</category>
+        <item>
+            <guid isPermalink="true">https://oliverqueen.cn/2018-08-23-ChangeSvnToGit/</guid>
+            <title>SVN切换到Git</title>
+            <link>https://oliverqueen.cn/2018-08-23-ChangeSvnToGit/</link>
+            <category>git</category>
+            <category>代码版本控制</category>
+            <pubDate>Thu, 23 Aug 2018 20:47:19 +0800</pubDate>
+            <description><![CDATA[ &lt;link rel=&#34;stylesheet&#34; class=&#34;aplayer-secondary-style-marker&#34; href=&#34;/assets/css/APlayer.min.css&#34;&gt;&lt;script src=&#34;/assets/js/APlayer.min.js&#34; class=&#34;aplayer-secondary-script-marker&#34;&gt;&lt;/script&gt;&lt;h2 id=&#34;背景&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#背景&#34;&gt;#&lt;/a&gt; 背景：&lt;/h2&gt;
+&lt;p&gt;SVN 和 Git 同样都是在特定时代下比较优秀的版本控制系统，但是随着时代的发展，SVN 越来越不能满足多人开发的需求，尤其是在多种多样，天马星空的业务场景面前，SVN 会显得力不从心。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNbRwgy1fujxnf8ilhj30zk0m8gm9.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;最近在将公司的项目从 SVN 迁移到 git，踩了不少坑，所以来记录下:&lt;/p&gt;
+&lt;p&gt;因为迁移的快慢和整个仓库的大小，电脑配置有关，所以我先说下这边的情况&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;仓库：&lt;br /&gt;
+仓库大概是 3.5G 左右，包含了 14500 + 的提交次数，其中包含了超过 500M 的单个文件&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;电脑：&lt;br /&gt;
+电脑配置就看图吧 ：&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://image-1256056152.cos.ap-nanjing.myqcloud.com/wz0geut3a8.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;在以上两种情况下，排除掉采坑的时间，总耗时在 10 小时左右，当时中途我也用过一台联系 X1 的本尝试过，配置如下：&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://image-1256056152.cos.ap-nanjing.myqcloud.com/072709.jpg&#34; alt=&#34;&#34; /&gt;&lt;br /&gt;
+后来联想这台电脑放弃了，因为总耗时已经超过 30 小时，&lt;/p&gt;
+&lt;h2 id=&#34;操作&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#操作&#34;&gt;#&lt;/a&gt; 操作：&lt;/h2&gt;
+&lt;h4 id=&#34;1生成作者文件&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#1生成作者文件&#34;&gt;#&lt;/a&gt; 1. 生成作者文件：&lt;/h4&gt;
+&lt;p&gt;因为我们知道，在 SVN 上提交和在 Git 上提交对应提交者的信息展示是不同的，SVN 只会保存一个用户名，而 Git 会保存该用户的邮箱，所以我们迁移的第一步就要生成一个映射文件，将 SVN 上的用户名和其邮箱对应起来，就比如   &lt;code&gt;molier = molier &amp;lt;123456@qq.com&amp;gt;&lt;/code&gt; , 转换的办法有很多，如果你团队里面的人不是很多的是时候，可以自己去提交记录中手动生成这样一个 TXT 文件&lt;br /&gt;
+ &lt;figure class=&#34;highlight nginx&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;attribute&#34;&gt;XXX&lt;/span&gt; = XXX &amp;lt;XXX&lt;span class=&#34;variable&#34;&gt;@XXX&lt;/span&gt;.com&amp;gt;XXX = XXX &amp;lt;XXX&lt;span class=&#34;variable&#34;&gt;@XXX&lt;/span&gt;.com&amp;gt;....&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;br /&gt;
+ 但是如果，多人开发人数很多的时候，手动转很累，我们就需要一个 Atlassian 的工具包  &lt;code&gt;svn-migration-scripts.jar&lt;/code&gt; ，通过命令拉取 SVN 仓库的用户并生成对应的开发者信息映射文件，需要 Java 运行时环境支持，大家可能还需要安装 JDK：&lt;/p&gt;
+&lt;p&gt;&lt;figure class=&#34;highlight awk&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;java -jar svn-migration-scripts.jar authors https:&lt;span class=&#34;regexp&#34;&gt;//&lt;/span&gt;svn.example.com &amp;gt; authors.txt&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;br /&gt;
+ 这样之后会在当前目录生成一个  &lt;code&gt;authors.txt&lt;/code&gt;  文件&lt;/p&gt;
+&lt;h4 id=&#34;2转换仓库&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#2转换仓库&#34;&gt;#&lt;/a&gt; 2. 转换仓库&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;整体转换:&lt;/p&gt;
+&lt;p&gt;标准的 SVN 文件布局：&lt;br /&gt;
+如果 SVN 仓库使用标准的了 /trunk, /branches 和 /tags 的目录结构，就可在运行命令时加上参数–stdlayout，使用如下命令&lt;br /&gt;
+ &lt;figure class=&#34;highlight xml&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;git svn clone --stdlayout --authors-file=authors.txt &lt;span class=&#34;tag&#34;&gt;&amp;lt;&lt;span class=&#34;name&#34;&gt;svn-repo&lt;/span&gt;&amp;gt;&lt;/span&gt;/&lt;span class=&#34;tag&#34;&gt;&amp;lt;&lt;span class=&#34;name&#34;&gt;project&lt;/span&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;tag&#34;&gt;&amp;lt;&lt;span class=&#34;name&#34;&gt;克隆到文件夹的名字&lt;/span&gt;&amp;gt;&lt;/span&gt;非标准的的SVN文件布局:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;br /&gt;
+ 如果 SVN 仓库是非标准的目录布局，那就需要分别显示指定参数–trunk, –branches, –tags。&lt;br /&gt;
+&lt;figure class=&#34;highlight routeros&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;git svn clone &lt;span class=&#34;attribute&#34;&gt;--trunk&lt;/span&gt;=/trunk &lt;span class=&#34;attribute&#34;&gt;--branches&lt;/span&gt;=/branches &lt;span class=&#34;attribute&#34;&gt;--branches&lt;/span&gt;=/bugfixes &lt;span class=&#34;attribute&#34;&gt;--tags&lt;/span&gt;=/tags &lt;span class=&#34;attribute&#34;&gt;--authors-file&lt;/span&gt;=authors.txt &amp;lt;svn-repo&amp;gt;/&amp;lt;project&amp;gt;&amp;lt;克隆到文件夹的名字&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;部分转换:&lt;/p&gt;
+&lt;p&gt;如果仓库非常庞大的话可以选择部分转换，也就只转换指定提交之后的提交，可以试用如下代码&lt;br /&gt;
+ &lt;figure class=&#34;highlight crmsh&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;git svn &lt;span class=&#34;keyword&#34;&gt;clone&lt;/span&gt; &lt;span class=&#34;title&#34;&gt;-r123456&lt;/span&gt;:HEAD --stdlayout --&lt;span class=&#34;attr&#34;&gt;authors-file=&lt;/span&gt;authors.txt &lt;span class=&#34;tag&#34;&gt;&amp;lt;svn-repo&amp;gt;&lt;/span&gt; &lt;span class=&#34;tag&#34;&gt;&amp;lt;克隆到文件夹的名字&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;br /&gt;
+ 不过这里需要注意的是如果使用这种方式来转换那么一定要指定 SVN 的代码根部，而不能指定分支，因为 SVN 的提交编号都是按照时间顺序来往下依次排列，不同的分支也可能提交编号是连续的，所以如果只关心编号的话就不能再指定分支了。&lt;/p&gt;
+&lt;p&gt;以上三步中所用到的  &lt;code&gt;authors.txt&lt;/code&gt;  即为上一步所生成的， &lt;code&gt;作者 -&amp;gt; 作者 &amp;lt;作者邮箱&amp;gt;&lt;/code&gt;  的对应关系文件.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;坑点&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#坑点&#34;&gt;#&lt;/a&gt; 坑点&lt;/h2&gt;
+&lt;p&gt;完成以上操作的话如果一切正常那么你就会获得一个新的 Git 仓库，然后就可以添加到远端，进行多人开发了，至于 git 的操作并不在本文的范围内，下面会讲一下遇到的坑以及解决办法。&lt;/p&gt;
+&lt;h4 id=&#34;坑点一时间久&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#坑点一时间久&#34;&gt;#&lt;/a&gt; 坑点一：时间久&lt;/h4&gt;
+&lt;p&gt;转换仓库是比较耗时的，因为他会一个提交一个提交的转换，转换的速度和你的仓库提交次数和电脑配置成正比，我当时转了十几个小时比较正常，而且转换完之后他还有个自己整理文件的过程也是很耗时的，不过如果你选择部分转换的话也可能很快，假如你一共 15000 个提交，然后你从 14999 来转换可能几分钟就够了。当然最好的办法就是下班前开始执行，第二天来了基本就差不多了。不过别高兴的太早，请看坑点二。&lt;/p&gt;
+&lt;h4 id=&#34;坑点二垃圾过多导致暂停&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#坑点二垃圾过多导致暂停&#34;&gt;#&lt;/a&gt; 坑点二：垃圾过多导致暂停&lt;/h4&gt;
+&lt;p&gt;因为是要遍历所有的历史提交，所以可能会有很多的无用文件 比如项目一开始代文件结构很乱，然后慢慢的经过重构，之类的优化步入正轨，这过程中必然会删掉大量的无用、冗余的文件，虽然这些文件已经不复存在了，但是提交记录会有，而且通过 git 的原理来看他还是会把这些东西一一保存下来，所以就会造成大量无用的文件越来越多，而 Git 是有一个缓冲区 (具体大小不确定) 当你无用文件把缓冲区沾满了，那么转换过程会停止会爆出如下错误&lt;br /&gt;
+ &lt;figure class=&#34;highlight livecodeserver&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;Auto packing &lt;span class=&#34;keyword&#34;&gt;the&lt;/span&gt; repository &lt;span class=&#34;keyword&#34;&gt;in&lt;/span&gt; background &lt;span class=&#34;keyword&#34;&gt;for&lt;/span&gt; optimum performance.&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;See &lt;span class=&#34;string&#34;&gt;&amp;quot;git help gc&amp;quot;&lt;/span&gt; &lt;span class=&#34;keyword&#34;&gt;for&lt;/span&gt; manual housekeeping.error: The &lt;span class=&#34;keyword&#34;&gt;last&lt;/span&gt; gc run reported &lt;span class=&#34;keyword&#34;&gt;the&lt;/span&gt; following. &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;Please correct &lt;span class=&#34;keyword&#34;&gt;the&lt;/span&gt; root cause &lt;span class=&#34;keyword&#34;&gt;and&lt;/span&gt; remove .git/gc.&lt;span class=&#34;built_in&#34;&gt;log&lt;/span&gt;.&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;Automatic cleanup will &lt;span class=&#34;keyword&#34;&gt;not&lt;/span&gt; be performed &lt;span class=&#34;keyword&#34;&gt;until&lt;/span&gt; &lt;span class=&#34;keyword&#34;&gt;the&lt;/span&gt; &lt;span class=&#34;built_in&#34;&gt;file&lt;/span&gt; is removed.&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;warning: There are too many unreachable loose objects; &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;run &lt;span class=&#34;string&#34;&gt;&amp;#x27;git prune&amp;#x27;&lt;/span&gt; &lt;span class=&#34;built_in&#34;&gt;to&lt;/span&gt; remove them.gc &lt;span class=&#34;comment&#34;&gt;--auto: command returned error: 255&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;br /&gt;
+ 大概意思是垃圾太多，转移暂停让你先清理垃圾，其实只要按照他说的 进到我们转了一半的仓库 进行  &lt;code&gt;git gc&lt;/code&gt;  就可以，但是这样一来我们就需要一直守在电脑前，随时准备输入  &lt;code&gt;git gc&lt;/code&gt;  而且假如你下班前开始跑结果第二天上班一看跑到一半就暂停了，白白浪费了一晚上的时间，真的会崩溃的。所以通过 google 找到了解决办法&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://image-1256056152.cos.ap-nanjing.myqcloud.com/073257.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;也就是开始转换的时候先进入仓库输入  &lt;code&gt;git config gc.auto 0&lt;/code&gt;  关闭 gc 功能，然后就可以一直跑到黑了，你大可以放心的运行命令然后下班回家。不过还有一点需要注意的是垃圾文件是否过多和你仓库大小没有太大关系，及时你仓库提交不多，但是每次提交都有很大改动的话也还是会出现这个问题，所以这里建议不管你仓库多大，都要先进行一下这个操作，以防万一。&lt;/p&gt;
+&lt;h4 id=&#34;坑点三大文件处理&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#坑点三大文件处理&#34;&gt;#&lt;/a&gt; 坑点三：大文件处理&lt;/h4&gt;
+&lt;p&gt;git 和 SVN 不同，在 git 上提交的单个文件是有大小限制的，超过这个大小就不允许提交到仓库中，通常我们会用 git LFS 来解决，具体的安装，添加步骤网上大把的教程，就不在这里说，不过他只会告诉你大文件的大小和限制的大小，具体的大文件是哪个他不会告诉你，这里可以用以下命令查看&lt;br /&gt;
+ &lt;figure class=&#34;highlight excel&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;git ls-tree -r -&lt;span class=&#34;built_in&#34;&gt;t&lt;/span&gt; -l --full-name HEAD | sort -&lt;span class=&#34;built_in&#34;&gt;n&lt;/span&gt; -k &lt;span class=&#34;number&#34;&gt;4&lt;/span&gt; | tail -&lt;span class=&#34;built_in&#34;&gt;n&lt;/span&gt; &lt;span class=&#34;number&#34;&gt;10&lt;/span&gt; //查找git 仓库中排名前十的大文件(升序)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;br /&gt;
+ 他会输出前十个最大的文件，然后你再按需处理。但是当你把大文件添加到 LFS 中后再次推送还是会爆出同样的错误，而且还是同样的文件，也就是说你根本没添加成功，其实并不是这样的，在添加 LFS 中只要你操作没错，就是添加成功了，他还会报错的原因是因为虽然你工程中的大文件已经添加，但是你的历史提交记录中是包含大文件的代码快照的，所以你需要将历史上所有包含大文件的提交记录重写，删掉大文件相关的东西，git 中重写 commit 的命令是：&lt;br /&gt;
+&lt;figure class=&#34;highlight vim&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;git &lt;span class=&#34;built_in&#34;&gt;filter&lt;/span&gt;-branch --force --&lt;span class=&#34;built_in&#34;&gt;index&lt;/span&gt;-&lt;span class=&#34;built_in&#34;&gt;filter&lt;/span&gt; &lt;span class=&#34;string&#34;&gt;&amp;#x27;git rm -rf --cached --ignore-unmatch 你大文件所在的目录&amp;#x27;&lt;/span&gt; --prune-&lt;span class=&#34;built_in&#34;&gt;empty&lt;/span&gt; --&lt;span class=&#34;keyword&#34;&gt;tag&lt;/span&gt;-name-&lt;span class=&#34;built_in&#34;&gt;filter&lt;/span&gt; &lt;span class=&#34;keyword&#34;&gt;cat&lt;/span&gt; -- --&lt;span class=&#34;keyword&#34;&gt;all&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;br /&gt;
+ 这个过程也比较漫长，他会便利你所有的提交记录并一一修改，不过就是漫长的等待就可以了，等到完成之后我们需要将代码 push 到远端，因为我们修改了所有的 commit 我们需要强制 push 使用如下命令&lt;br /&gt;
+ &lt;figure class=&#34;highlight crmsh&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;git push origin &lt;span class=&#34;keyword&#34;&gt;master&lt;/span&gt; &lt;span class=&#34;title&#34;&gt;--force&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;h4 id=&#34;坑点四-打包时间过长&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#坑点四-打包时间过长&#34;&gt;#&lt;/a&gt; 坑点四：打包时间过长&lt;/h4&gt;
+&lt;p&gt;再上一步我们执行完推送命令的时候，会先进行文件打包处理，这个过程也是非常漫长，而且非常消耗电脑资源的，按照我的电脑配置来说，这个过程一旦开始，电脑基本就是内存、cpu 全满的状态，鼠标也没法动，所以这个过程要有心理准备。漫长的等待之后就推送成功了。&lt;/p&gt;
+ ]]></description>
+        </item>
+    </channel>
+</rss>

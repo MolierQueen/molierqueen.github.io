@@ -1,0 +1,437 @@
+<?xml version="1.0"?>
+<rss version="2.0">
+    <channel>
+        <title>Molier • Posts by &#34;网站&#34; tag</title>
+        <link>https://oliverqueen.cn</link>
+        <description>iOS 开发 移动App 博客 杂谈 随笔 相册</description>
+        <language>zh-CN</language>
+        <pubDate>Sun, 11 Feb 2018 15:19:31 +0800</pubDate>
+        <lastBuildDate>Sun, 11 Feb 2018 15:19:31 +0800</lastBuildDate>
+        <category>欢迎页</category>
+        <category>网络</category>
+        <category>底层</category>
+        <category>DNS解析</category>
+        <category>LocalDNS</category>
+        <category>OpenGL</category>
+        <category>UI</category>
+        <category>动画</category>
+        <category>性能优化</category>
+        <category>xcode</category>
+        <category>cocoapods</category>
+        <category>podfile</category>
+        <category>webview</category>
+        <category>hook</category>
+        <category>runtime</category>
+        <category>翻译</category>
+        <category>优化</category>
+        <category>国外文献</category>
+        <category>httpdns</category>
+        <category>Cocoapods</category>
+        <category>架构</category>
+        <category>AlertView</category>
+        <category>Hook</category>
+        <category>杂谈</category>
+        <category>Hexo</category>
+        <category>个人博客</category>
+        <category>网站</category>
+        <category>屏幕适配</category>
+        <category>iOS 11</category>
+        <category>评论插件</category>
+        <category>总结</category>
+        <category>回味2017展望2018</category>
+        <category>热修复</category>
+        <category>JSPath</category>
+        <category>swift</category>
+        <category>网络请求</category>
+        <category>Swift</category>
+        <category>音频</category>
+        <category>唱吧</category>
+        <category>K歌</category>
+        <category>AVFoundation</category>
+        <category>git</category>
+        <category>效率工作</category>
+        <category>回首2018展望2019</category>
+        <category>代码版本控制</category>
+        <category>iOS</category>
+        <category>Crash防护</category>
+        <category>Apple登录</category>
+        <category>WWDC2022</category>
+        <category>逆向</category>
+        <category>算法</category>
+        <category>C语言</category>
+        <category>排序</category>
+        <item>
+            <guid isPermalink="true">https://oliverqueen.cn/2018-02-11-%E5%85%B3%E4%BA%8E%E5%8D%9A%E5%AE%A2%E8%AF%84%E8%AE%BA%E6%8F%92%E4%BB%B6%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
+            <title>关于博客评论插件的讨论</title>
+            <link>https://oliverqueen.cn/2018-02-11-%E5%85%B3%E4%BA%8E%E5%8D%9A%E5%AE%A2%E8%AF%84%E8%AE%BA%E6%8F%92%E4%BB%B6%E7%9A%84%E9%97%AE%E9%A2%98/</link>
+            <category>Hexo</category>
+            <category>个人博客</category>
+            <category>网站</category>
+            <category>评论插件</category>
+            <pubDate>Sun, 11 Feb 2018 15:19:31 +0800</pubDate>
+            <description><![CDATA[ &lt;link rel=&#34;stylesheet&#34; class=&#34;aplayer-secondary-style-marker&#34; href=&#34;/assets/css/APlayer.min.css&#34;&gt;&lt;script src=&#34;/assets/js/APlayer.min.js&#34; class=&#34;aplayer-secondary-script-marker&#34;&gt;&lt;/script&gt;&lt;h2 id=&#34;参考资料&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#参考资料&#34;&gt;#&lt;/a&gt; 参考资料&lt;/h2&gt;
+&lt;p&gt;习惯把参考资料写在文章的前面，毕竟是踩在人家的肩膀上，先有他才有我这文章，前后顺序不能乱。他的这篇&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9ibG9nLnNodWliYS5jby9jb21tZW50LXN5c3RlbXMtcmVjb21tZW5kYXRpb24=&#34;&gt;文章&lt;/span&gt;总结的很全，但是对于每一个评论还欠缺细致的描述，这篇文章下我会做些补充，&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tKfTcgy1focjch8o98j30sg0lcta8.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;之前用的livere&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#之前用的livere&#34;&gt;#&lt;/a&gt; 之前用的 livere&lt;/h2&gt;
+&lt;p&gt;关于博客的评论插件，在最开始的搭建博客之前就有过考虑和纠结，国内的评论界面浮夸流程繁琐，且服务不稳定，说倒就倒，比如多说；国外的又时刻面临着被墙的风险，自己搭建服务器虽说不难，但是也没有精力去搞这些。后来使用了 livere，韩国的产品，一开始被他简洁的界面方便的后台吸引，而且还支持各种移动 APP 登陆，微信、QQ 之类的。不过后来使用过程中缺点显现出来了。&lt;/p&gt;
+&lt;h4 id=&#34;缺点&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#缺点&#34;&gt;#&lt;/a&gt; 缺点&lt;/h4&gt;
+&lt;p&gt;1：手机端适配不好，手机端无法进行微信登陆。&amp;lt;br&amp;gt;&lt;br /&gt;
+2：评论无法导出，不过如果哪天他也要挂了说不定也会支持导出，毕竟实现不难。&amp;lt;br&amp;gt;&lt;br /&gt;
+3：经常发评论时候当前页面卡死，其实已经发送成功了，但是界面一直卡在 loading。&amp;lt;br&amp;gt;&lt;br /&gt;
+4：加载比较慢一些。&amp;lt;br&amp;gt;&lt;/p&gt;
+&lt;h2 id=&#34;其他的评论插件&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#其他的评论插件&#34;&gt;#&lt;/a&gt; 其他的评论插件&lt;/h2&gt;
+&lt;p&gt;综上所述我决定换掉它，这种东西要趁早，不然等评论多了还需要朱转移操作。下面说下其他评论插件，因为之前放了大佬的文章，他总结的也很全面，我这边就挑几个大家耳熟能详的来说，而且只说缺点。&lt;/p&gt;
+&lt;h4 id=&#34;disqus&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#disqus&#34;&gt;#&lt;/a&gt; disqus&lt;/h4&gt;
+&lt;p&gt;他唯一一个缺点就是被墙了，他要求每一个看你博客的读者都要科学上网才可以，对于我的博客来说，不仅仅是写一下技术文档，有时候会更新下照片、游记之类的，所以不想对读者有太高的要求。&lt;/p&gt;
+&lt;h4 id=&#34;搜狐畅言&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#搜狐畅言&#34;&gt;#&lt;/a&gt; 搜狐畅言&lt;/h4&gt;
+&lt;p&gt;搜狐旗下的评论系统，比较靠谱，有搜狐做后盾也不会轻易说没就没，但是对于我来说他有着太强烈的中国元素，域名、网站需要备案，而且他的界面是在是夸张，又是盖章，又是浮窗的，有种 &amp;quot;大扎好，我系渣渣辉&amp;quot; 的感觉。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tKfTcgy1foche9mncgj31hw0veb29.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tKfTcgy1focku989hmj312s06044g.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;过年了，放上了红灯了，红鞭炮，而且水印还去不掉。最最关键是你发评论要登录，如果是用微信登陆还必须要先关注他公众号.&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tKfTcgy1fochbah9doj30ho0ngwo2.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;关注成功后还需要你绑定手机号，虽然不是强制让你绑定，但是如果你不想绑那么好，你每点击一下就会弹出绑定手机号的窗口。对于我一个主打技术的博客来说确实不太适合，如果大家想写一写娱乐微博说不定适合你。&lt;/p&gt;
+&lt;h4 id=&#34;gitment&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#gitment&#34;&gt;#&lt;/a&gt; Gitment&lt;/h4&gt;
+&lt;p&gt;基于 github 的 issue 实现的，唯一一点不好的就是使用 Gitment 评论一定要用 github 账号登陆，这点对于读者来说要求有点高吧。&lt;/p&gt;
+&lt;h4 id=&#34;valine&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#valine&#34;&gt;#&lt;/a&gt; Valine&lt;/h4&gt;
+&lt;p&gt;比较优秀的一款轻量级评论插件，这个也是我最后纠结很久的，Valine 依赖于 Leancloud 的后端服务，我们需要去 leanclould 注册一个账号，里面分为免费版和商业版还有企业版。后两个价格对于我来说有点高，如果有钱的大佬可以无视。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tKfTcgy1focgkj2vntj31kw0ry44z.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;免费版有一定限制首先 API 请求每天 30000，你可以暂时理解为每天 30000 条评论吧 (实际不到这个数，你还要刷新之类的)，这个其实对于我来说已经够了，如果你是浏览量非常大的微博 那可能有点悬；10GB 的储存空间是我最担心的，永久 10G 总有一天就会满，到时候只能升级付费版，或者换一个评论平台，不过还好，因为他是支持 markdown 的，所以图片 GIf 的之类的都是通过链接形式，10G 应该够用一阵了。不过也正是因为这个 markdown 编辑也需要一定的语法基础，不会 markdown 的传图片还是麻烦事，多为读者考虑嘛。还有一个最致命的就是他没有管理员的概念，即使你是本文的作者，那你在下面评论或者和网友互动的时候也是没有任何显示的，就像普通评论一样，这个就有点不方便了。&lt;/p&gt;
+&lt;h4 id=&#34;hypercomments&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#hypercomments&#34;&gt;#&lt;/a&gt; Hypercomments&lt;/h4&gt;
+&lt;p&gt;这个也是我最后选择的评论插件，同样也提供付费和免费的服务&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tKfTcgy1focm2c591vj31kw152jyr.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;免费版完全满足我的博客使用，没有发现以上一些第三方的缺点，同时界面也不错，唯一不足的就是新评论的邮件提醒不知道怎么调出来，我在后台配置了但是并没有提醒。综上所述整体还是比较稳定的。&lt;/p&gt;
+&lt;h2 id=&#34;最后&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#最后&#34;&gt;#&lt;/a&gt; 最后&lt;/h2&gt;
+&lt;p&gt;大概就这么多，顺便祝大家新年快乐，阖家幸福！&lt;/p&gt;
+&lt;p&gt;
+        &lt;div id=&#34;aplayer-HnDZkzfJ&#34; class=&#34;aplayer aplayer-tag-marker&#34; style=&#34;margin-bottom: 20px;&#34;&gt;&lt;/div&gt;
+			  &lt;script&gt;
+				  var options = {&#34;narrow&#34;:false,&#34;autoplay&#34;:true,&#34;showlrc&#34;:3,&#34;mutex&#34;:true,&#34;music&#34;:[{&#34;title&#34;:&#34;Love Story&#34;,&#34;author&#34;:&#34;린 (LYn)&#34;,&#34;url&#34;:&#34;https://molier-1256056152.cos.ap-guangzhou.myqcloud.com/%E1%84%85%E1%85%B5%E1%86%AB-Love%20Story.mp3&#34;,&#34;pic&#34;:&#34;https://y.gtimg.cn/music/photo_new/T002R300x300M0000048KLcQ4LDbZz.jpg?max_age=2592000&#34;,&#34;lrc&#34;:&#34;https://demo.meting.api.meto.moe/action/metingapi?server=tencent&amp;type=lrc&amp;id=0028RAj0187nEg&#34;}]};
+				  options.element = document.getElementById(&#34;aplayer-HnDZkzfJ&#34;);
+				  var ap = new APlayer(options);
+			    window.aplayers || (window.aplayers = []);
+				  window.aplayers.push(ap);
+			  &lt;/script&gt;&lt;/p&gt;
+ ]]></description>
+        </item>
+        <item>
+            <guid isPermalink="true">https://oliverqueen.cn/2018-01-25-%E5%8F%AF%E8%83%BD%E6%98%AF%E6%9C%80%E5%85%A8%E7%9A%84%E4%BD%BF%E7%94%A8HEXO%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%95%99%E7%A8%8B/</guid>
+            <title>可能是最全的使用HEXO搭建个人博客教程</title>
+            <link>https://oliverqueen.cn/2018-01-25-%E5%8F%AF%E8%83%BD%E6%98%AF%E6%9C%80%E5%85%A8%E7%9A%84%E4%BD%BF%E7%94%A8HEXO%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%95%99%E7%A8%8B/</link>
+            <category>Hexo</category>
+            <category>个人博客</category>
+            <category>网站</category>
+            <pubDate>Thu, 25 Jan 2018 15:43:15 +0800</pubDate>
+            <description><![CDATA[ &lt;link rel=&#34;stylesheet&#34; class=&#34;aplayer-secondary-style-marker&#34; href=&#34;/assets/css/APlayer.min.css&#34;&gt;&lt;script src=&#34;/assets/js/APlayer.min.js&#34; class=&#34;aplayer-secondary-script-marker&#34;&gt;&lt;/script&gt;&lt;h2 id=&#34;背景&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#背景&#34;&gt;#&lt;/a&gt; 背景&lt;/h2&gt;
+&lt;p&gt;作为一个开发者不能没有博客，最近花了几天的时间搭建了这个博客，处理了很多细节，在这篇文章中我会把我从开始到现在以及后续的优化整理出来，帮助更多的人搭建、维护、更新、自己的博客。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79ly1fnsy5fhyhsj31hc0xchdt.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;一开始我所有的博客都写在新浪微博，因为微博上更容易推广自己的文章，微博用户量大，但是后来微博的弊端慢慢的显示出来了，毕竟不是开发者的天地，我的博客中经常会插入大量的代码，而微博不支持 markdown 编辑，普通的编辑器对代码块的兼容性非常差，别说高亮了，有时候排版都会错乱，最后外观很不好看，如下图：&lt;/p&gt;
+&lt;p&gt;&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79ly1fnsxwzb745j31i20tuad4.jpg&#34; alt=&#34;微博代码&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;而且微博的账号系统也存在一定的弊端，所以后来转向简书、掘金等技术平台，不得不承认相对于微博来说这些平台对开发者就要友好多了，不过后来又发现一个问题。因为我在写文章的时候使用的是本地的 markdown 编辑器，而这些平台对 markdown 语法的一些小细节并不严谨或者说统一如下图：&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79ly1fnsy0p6no4j316q0nsn2v.jpg&#34; alt=&#34;简书VS掘金&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;两个平台的编辑器无法做到统一，以至于每次写完文章都需要针对两个平台做不同的修改。&lt;/p&gt;
+&lt;p&gt;综上所述，最简单的也最一劳永逸的方法就是搭建自己的博客平台，而 HEXO 很好的帮我们解决了这个问题，其实对于一个开发者来说并不是什么难事，整个流程对于大部分有代码基础的开发者来说一上午时间就可以搞定，不过最难的也是最头痛的就是对细节的调整，对 UI 的修改、优化等，不过本文会对此逐一讲解。&lt;/p&gt;
+&lt;h2 id=&#34;环境配置&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#环境配置&#34;&gt;#&lt;/a&gt; 环境配置&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9ub2RlanMub3JnL2VuLw==&#34;&gt;Node.js&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;cURL:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;$ curl https://raw.github.com/creationix/nvm/master/install.sh | sh &lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Wget:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;$ wget -qO- https://raw.github.com/creationix/nvm/master/install.sh | sh &lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;安装完成后，重启终端并执行下列命令即可安装 Node.js。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;$ nvm install stable&lt;/code&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9naXQtc2NtLmNvbS8=&#34;&gt;Git&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;一般的开发者不会没有这个吧，我是安装 Xcode 就会有这个了，&lt;/p&gt;
+&lt;p&gt;使用 Homebrew, MacPorts ：brew install git; 或下载 &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9zb3VyY2Vmb3JnZS5uZXQvZGlyZWN0b3J5Lw==&#34;&gt;安装程序&lt;/span&gt; 安装&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9iaXRidWNrZXQub3JnLw==&#34;&gt;bitbucket&lt;/span&gt; 账号&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;一般都会使用 HEXO+GitHub page 的形式搭建自己的博客，但是这里有个问题就是 GitHub 是开源的，任何人都能在上面看到你的源代码，虽然这并没有什么太大的影响，不过对于我来说感觉怪怪的，所以我就用了 bitbucket page 来处理我的博客，所有的东西都一样只不过这个是个私有库罢了（免费五个人）&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79ly1fnt1nn8k9uj30b308amye.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;h2 id=&#34;开始建站&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#开始建站&#34;&gt;#&lt;/a&gt; 开始建站&lt;/h2&gt;
+&lt;h4 id=&#34;第一步创建仓库&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#第一步创建仓库&#34;&gt;#&lt;/a&gt; 第一步：创建仓库&lt;/h4&gt;
+&lt;p&gt;进入 github/bitbucket（后续都以 github 为例）新建 repo，这里要注意 repo 的名字一定要满足 &lt;code&gt;your Account Name&lt;/code&gt; /github.io。如果是 bitbucket 那就是 &lt;code&gt;your Account Name&lt;/code&gt; /bitbucket.io，因为只有这样的仓库名称最后才能以静态页面展示。如图：XXX 的内容一定要与红色的框里的文本一致。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79ly1fntzjgvzvyj30q006nmy0.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;h4 id=&#34;第二步创建本地文件夹&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#第二步创建本地文件夹&#34;&gt;#&lt;/a&gt; 第二步：创建本地文件夹&lt;/h4&gt;
+&lt;p&gt;创建文件夹之后 CD 到你创建的文件夹中执行 hexo 的初始化相关命令&lt;/p&gt;
+&lt;p&gt;&lt;figure class=&#34;highlight crystal&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;variable&#34;&gt;$ &lt;/span&gt;hexo init&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;variable&#34;&gt;$ &lt;/span&gt;npm install&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;执行完毕之后你的文件夹里就有内容了，标准的目录结构是这样（只列出几个必要的文件夹及其子目录）&lt;/p&gt;
+&lt;p&gt;&lt;figure class=&#34;highlight sqf&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;├── &lt;span class=&#34;variable&#34;&gt;_config&lt;/span&gt;.yml&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;├── package.json&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;├── scaffolds&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;├── source&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;|   ├── &lt;span class=&#34;variable&#34;&gt;_drafts&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;|   └── &lt;span class=&#34;variable&#34;&gt;_posts&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;└── themes&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;_config.yml：&lt;br /&gt;
+其中我们以后的大部分操作都会在 &lt;code&gt;_config.yml&lt;/code&gt;  中进行，这个文件是我们的站点的配置文件。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;scaffolds：&lt;br /&gt;
+模板文件，规定了我们创建一篇文章的时候最开始的样子，&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;source：&lt;br /&gt;
+可以暂时的理解成我们文章的存放处&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;themes：&lt;br /&gt;
+主题文件&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;第三步部署到git&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#第三步部署到git&#34;&gt;#&lt;/a&gt; 第三步：部署到 Git&lt;/h4&gt;
+&lt;p&gt;修改我们的的站点配置文件 &lt;code&gt;_config.yml&lt;/code&gt;  中如下字段&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79ly1fntzzwn8dkj30w0058wga.jpg&#34; alt=&#34;&#34; /&gt;&lt;br /&gt;
+其中：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;type&lt;/code&gt;  值对应的是你所部署的的服务器类型，我们这里填写 git 就可以。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;repo&lt;/code&gt;  是你的仓库地址，也就是仓库克隆的地址，推荐用 https 的链接。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;branch&lt;/code&gt;  不写默认是 master，通常我们写成 master 就可以。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;以上配置完成后保存 然后回到终端执行 &lt;code&gt;npm install hexo-deployer-git --save&lt;/code&gt;  安装一个插件，这样才能将你写好的文章部署到 github 服务器上并让别人浏览到。安装完成后在终端中依次执行如下代码 (为了简单后续统称为三步)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;hexo clean&lt;/code&gt;   清理缓存&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;hexo generate&lt;/code&gt;  进行渲染 简写  &lt;code&gt;hexo g&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;hexo server&lt;/code&gt;  部署到本地 (调试使用) 简写  &lt;code&gt;hexo s&lt;/code&gt; 。然后浏览器输入  &lt;code&gt;http://localhost:4000&lt;/code&gt;  就可以看到你博客的效果啦，不过这是本地调试用，其他人是看不到的。(调试完毕后记得  &lt;code&gt;control + C&lt;/code&gt;  关闭本地端口，不然下次就进不去啦)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;调试完毕后使用  &lt;code&gt;hexo deploy&lt;/code&gt;  简写为  &lt;code&gt;hexo d&lt;/code&gt;  来部署到 git 服务器。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;执行完以上操作后打开浏览器地址了输入 &lt;code&gt;http://你github名字.github.io&lt;/code&gt;  就可以看看到效果啦，这回是所有人都能看到的，用手机也可以。至此第三步已经完成，最终的结果如下图：&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79ly1fnu0jxw383j310l0gcdrk.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;h4 id=&#34;第四步写文章&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#第四步写文章&#34;&gt;#&lt;/a&gt; 第四步：写文章&lt;/h4&gt;
+&lt;p&gt;使用如下命令  &lt;code&gt;hexo new post “文章名字”&lt;/code&gt;  就可新建文章啦，建立好的文章在  &lt;code&gt;source/_posts&lt;/code&gt;  中，你可以用 markdown 语法编辑内容就可以。编辑完成后执行第三步中终端的操作就可以啦，刷新下浏览器就可看到你的新文章啦。如下图:&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79ly1fnu0ml6lp4j310n0g9tjv.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;h2 id=&#34;个性化&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#个性化&#34;&gt;#&lt;/a&gt; 个性化&lt;/h2&gt;
+&lt;h4 id=&#34;一主题&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#一主题&#34;&gt;#&lt;/a&gt; 一：主题&lt;/h4&gt;
+&lt;h6 id=&#34;获取&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#获取&#34;&gt;#&lt;/a&gt; 获取&lt;/h6&gt;
+&lt;p&gt;主题是我么个性化的基础和前提，我们想做任何个性化上的修改基本上都是在我们主题上的修改，先找到一个自己满意的主题是首要任务。关于主题网上有很多很多，&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9oZXhvLmlvL3RoZW1lcy8=&#34;&gt;HEXO 官方的主题目录&lt;/span&gt;也收录了好多来着世界各地开发者的主题。或者开发者也可以直接去网上搜索 HEXO theme 关键字来获取主题。&lt;/p&gt;
+&lt;h6 id=&#34;安装&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#安装&#34;&gt;#&lt;/a&gt; 安装&lt;/h6&gt;
+&lt;p&gt;主题一般都是 repo，只要讲起 clone 到博客目录 themes/XXXX 下就可了，XXXX 对应的就是你给主题起的名字，像这样： &lt;code&gt;git clone https://github.com/huyingjie/hexo-theme-A-RSnippet.git themes/a-rsnippet&lt;/code&gt;  这样就可以保证每次主题的作者有更新了我们就可以 pull 获取更新。不过这样有个问题后面我会在 HEXO 多终端同步一栏讲到，所以这里我们选择另一种方式去安装，就是直接把主题的 repo 下载下来&lt;br /&gt;
+然后解压放到 themes 中。其实对于已经稳定的主题作者一般不会频繁更新，不稳定的主题我们也不会用，所以用后者安装也是一样的。&lt;/p&gt;
+&lt;p&gt;然后我们回到刚才的站点配置文件中 &lt;code&gt;_config.yml&lt;/code&gt;  修改如下字段，对应的名字就是你刚才那个主题文件夹的名字：我这边是 next，&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79ly1fnu5dr697rj312006a0tp.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;然后保存，再去终端执行那三步，接着刷新网页就可以看到新的界面啦。下面是我换了 NEXT 主题刷新后的效果。因为该注意已经非常完善，所有后续用该主题做例子来讲&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79ly1fnu5ohsltng30go097e83.gif&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;h4 id=&#34;二主题菜单&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#二主题菜单&#34;&gt;#&lt;/a&gt; 二：主题菜单&lt;/h4&gt;
+&lt;h6 id=&#34;添加按钮&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#添加按钮&#34;&gt;#&lt;/a&gt; 添加按钮&lt;/h6&gt;
+&lt;p&gt;主题菜单也可以说是主题按钮。也就是上面顶部的两个，next 主题默认的两个是 Home、Archive，我们一般会加上 tag about category 等。这些都是需要在主题上进行修改，我们需要修改主题的配置文件，首先在主题的文件夹下找到 &lt;code&gt;_config.yml&lt;/code&gt;  文件，没错和之前的站点配置文件同名，只不过他们的路径不同，大家千万不要弄混，站点配置文件是配置站点通用的东西，而主题配置文件是配置一些主题的元素。在主题配置文件找到 menu 字段&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79ly1fnu69gaksbj312s0cijtz.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;可以看到主题作者注释掉了一部分按钮只保留了两个最基本的，这里需要注意前面的 Key 并不是代表的是按钮名字，因为该主题是支持多语言，所以这个 key 只是个标识，具体的按钮名字要去该路径下查找&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79ly1fnu6e4quu7j30fa0zkwgi.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;其中每一个文件对应了不同的语言，我们以汉语为例，进入 &lt;code&gt;zh-Hans.yml&lt;/code&gt;  中修改这些字段&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79ly1fnu6fypjr7j30ay054wes.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;其中 key 就是之前我们在主题配置文件中的 key，而后面的 value 则是简体中文状态下按钮的名字。修改完成后我们保存执行那三步就可以看到我们新添加的按钮了。&lt;/p&gt;
+&lt;h6 id=&#34;添加页面&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#添加页面&#34;&gt;#&lt;/a&gt; 添加页面&lt;/h6&gt;
+&lt;p&gt;添加按钮后我们需要点击按钮显示统一的页面。这时候我们需要添加页面。以 tag 页面为例，hexo 中添加页面的命令是 &lt;code&gt;hexo new page XXXXX&lt;/code&gt;  后面 XXX 则是要添加页面的名称，我们这里写 tags。为了测试新建的 tag 页面我们对之前的页面添加个 tag。去 source/_post 中找一篇文章我们在开头添加如下字段，多标签以此类推&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79ly1fnu6nmt2ywj30v00f4jsi.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;然后编辑我们刚才生成的 tag 页面 ( &lt;code&gt;source/tags/index.md&lt;/code&gt; ) 指定其 type 为 tags&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79ly1fnu6q39ak4j310y09e3zb.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;然后保存执行那三步就会有如下效果&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79ly1fnu6vtcn1og30gn07fhe0.gif&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;点击对应的 tag 即可跳转到改 tag 所对应的文章。其他页面同理。&lt;/p&gt;
+&lt;h4 id=&#34;三添加阅读更多button&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#三添加阅读更多button&#34;&gt;#&lt;/a&gt; 三：添加阅读更多 button&lt;/h4&gt;
+&lt;p&gt;我们在首页的时候其实就是我们的文章列表，但是这时候有个问题，如果我们某一篇或者某几篇文章很长，那首页是不是更长呢？其实在首页我们可以只显示文章部分内容，通过点击阅读更多按钮来进入文章详情。这个时候就需要截断文章。我们在文章的合适地方采用 &lt;code&gt;&amp;lt;!--more--&amp;gt;&lt;/code&gt;  来截断，用默认文章来看&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79ly1fnu73u6xghj313o0hujuz.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;然后执行那三步就会如下效果&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79ly1fnu75xee1rj31kw0iomzf.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;点击阅读更多。&lt;/p&gt;
+&lt;h4 id=&#34;四更改主题背景&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#四更改主题背景&#34;&gt;#&lt;/a&gt; 四：更改主题背景&lt;/h4&gt;
+&lt;p&gt;首先找到如下路径  &lt;code&gt;themes\next\source\css_custom\custom.styl&lt;/code&gt;  会发现里面是空的，这个文件是 Next 主题为我们预留的做一些自定的 css 样式的地方，我们添加如下代码。&lt;/p&gt;
+&lt;p&gt;&lt;figure class=&#34;highlight css&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;15&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;//背景图片相关&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;@media&lt;/span&gt; screen &lt;span class=&#34;keyword&#34;&gt;and&lt;/span&gt; (&lt;span class=&#34;attribute&#34;&gt;min-width&lt;/span&gt;:&lt;span class=&#34;number&#34;&gt;1200px&lt;/span&gt;) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;selector-tag&#34;&gt;body&lt;/span&gt; &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;attribute&#34;&gt;background-image&lt;/span&gt;:&lt;span class=&#34;built_in&#34;&gt;url&lt;/span&gt;(&lt;span class=&#34;string&#34;&gt;/images/bg.jpg&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;attribute&#34;&gt;background-repeat&lt;/span&gt;: no-repeat;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;attribute&#34;&gt;background-attachment&lt;/span&gt;:fixed;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;attribute&#34;&gt;background-position&lt;/span&gt;:&lt;span class=&#34;number&#34;&gt;50%&lt;/span&gt; &lt;span class=&#34;number&#34;&gt;50%&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;attribute&#34;&gt;background-size&lt;/span&gt;: cover&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;selector-id&#34;&gt;#footer&lt;/span&gt; &lt;span class=&#34;selector-tag&#34;&gt;a&lt;/span&gt; &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        &lt;span class=&#34;attribute&#34;&gt;color&lt;/span&gt;:&lt;span class=&#34;number&#34;&gt;#eee&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;br /&gt;
+ 这里大家应该就可以看出括号里面的图片路径就是我们的背景图片，我们只需把图片放入  &lt;code&gt;themes\next\source\images&lt;/code&gt;  中即可，记住图片名字要写对，要有后缀。同理括号里面我们可以直接放一个图片的链接比如  &lt;code&gt;https://tpc.googlesyndication.com/simgad/6893153702744595670&lt;/code&gt;  做完这些操作保存，然后执行那三步即可看到效果，不过可能浏览器有缓存，可以清理下缓存再刷新看看。&lt;/p&gt;
+&lt;h4 id=&#34;五修改博客背景透明度&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#五修改博客背景透明度&#34;&gt;#&lt;/a&gt; 五：修改博客背景透明度&lt;/h4&gt;
+&lt;p&gt;既然再上一步中修改了背景图片，如果被 NExt 本身的白色挡住确实不好看，我们可以尝试把本身的白色背景变成透明的，这样会美观很多，同样还是修改刚才的文件  &lt;code&gt;themes\next\source\css_custom\custom.styl&lt;/code&gt;  在上一步的基础上我们可以添加如下代码&lt;br /&gt;
+ &lt;figure class=&#34;highlight css&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;//改变背景色和透明度&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;selector-class&#34;&gt;.main-inner&lt;/span&gt; &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;attribute&#34;&gt;background&lt;/span&gt;: &lt;span class=&#34;number&#34;&gt;#fff&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;attribute&#34;&gt;opacity&lt;/span&gt;: &lt;span class=&#34;number&#34;&gt;0.9&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;br /&gt;
+ 其中第一个属性为颜色值，第二个属性就是我们的透明度啦。适当修改，不然会适得其反连字都看不清啦。做完上两步就是我的这个博客的效果。&lt;/p&gt;
+&lt;h4 id=&#34;六修改作者头像为圆形&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#六修改作者头像为圆形&#34;&gt;#&lt;/a&gt; 六：修改作者头像为圆形，&lt;/h4&gt;
+&lt;p&gt;我们默认是方形的头像，想修改为圆形的话同样是上两步的那个路径下添加如下代码&lt;br /&gt;
+ &lt;figure class=&#34;highlight css&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;selector-class&#34;&gt;.site-author-image&lt;/span&gt; &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &lt;span class=&#34;attribute&#34;&gt;border-radius&lt;/span&gt;: &lt;span class=&#34;number&#34;&gt;100%&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &lt;span class=&#34;attribute&#34;&gt;padding&lt;/span&gt;: &lt;span class=&#34;number&#34;&gt;2px&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &lt;span class=&#34;attribute&#34;&gt;border&lt;/span&gt;: &lt;span class=&#34;number&#34;&gt;2px&lt;/span&gt; dashed &lt;span class=&#34;number&#34;&gt;#fff&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &lt;span class=&#34;attribute&#34;&gt;animation&lt;/span&gt;: cycle &lt;span class=&#34;number&#34;&gt;2s&lt;/span&gt; &lt;span class=&#34;number&#34;&gt;0.5s&lt;/span&gt; forwards;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &lt;span class=&#34;attribute&#34;&gt;transition&lt;/span&gt;: border-radius &lt;span class=&#34;number&#34;&gt;2s&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;br /&gt;
+ 保存 -&amp;gt; 三步 即可看到效果&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tKfTcly1fnxgsh0p7bj308e06jq3t.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;h4 id=&#34;七添加背景动画&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#七添加背景动画&#34;&gt;#&lt;/a&gt; 七：添加背景动画&lt;/h4&gt;
+&lt;p&gt;背景动画使用 Js 来处理，会 JS 的同学可以自己写喜欢的动画，我这边就用了网上比较通用的动画。找到以下路径  &lt;code&gt;themes\next\layout\_layout.swig&lt;/code&gt;  在文章  &lt;code&gt;&amp;lt;/body&amp;gt;&lt;/code&gt;  的上面添加如下代码&lt;br /&gt;
+ &lt;figure class=&#34;highlight routeros&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&amp;lt;script &lt;span class=&#34;attribute&#34;&gt;type&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;text/javascript&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;attribute&#34;&gt;color&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;255,255,255&amp;quot;&lt;/span&gt; &lt;span class=&#34;attribute&#34;&gt;opacity&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;#x27;1&amp;#x27;&lt;/span&gt; &lt;span class=&#34;attribute&#34;&gt;zIndex&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;-2&amp;quot;&lt;/span&gt; &lt;span class=&#34;attribute&#34;&gt;count&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;100&amp;quot;&lt;/span&gt; &lt;span class=&#34;attribute&#34;&gt;src&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js&amp;quot;&lt;/span&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#123;% endif %&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;br /&gt;
+ 然后 保存 -&amp;gt; 三步即可看到效果 其中 src 为 JS 的路径，有兴趣的可以自定义效果。&lt;/p&gt;
+&lt;h4 id=&#34;八添加评论页面&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#八添加评论页面&#34;&gt;#&lt;/a&gt; 八：添加评论页面&lt;/h4&gt;
+&lt;p&gt;HEXO 的评论页面官方推荐了 disqus，无奈已经被墙，即使开发时候自己有克服的方法但是也不能保证所有看你博客的人都有克服的方法。所有我们打算采用其他的的一些第三方来实现，首先先对市面上的几个产品做下对比：&lt;/p&gt;
+&lt;h6 id=&#34;比较&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#比较&#34;&gt;#&lt;/a&gt; 比较：&lt;/h6&gt;
+&lt;ul&gt;
+&lt;li&gt;disqus&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;比较大牌的评论系统，服务稳定，唯一的缺点是国内无法使用。暂不考虑&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;多说&lt;br /&gt;
+国内比较出名的评论系统，已经关闭服务暂不考虑。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;gitment&lt;br /&gt;
+ 一款基于 github issue 的评论系统，风格很像 github，只是目前还不是太稳定，且界面无法自定，可能会于博客有些不协调。而且评论需要 github 账号&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;livere&lt;br /&gt;
+ 中文名字叫来必力，是一款韩国的评论系统，在不带有任何民族情感的前提下来看确实棒子的东西还是不错的，也是我目前在使用的一款，我主要用它的原因有几点&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;支持很多种格式的评论导入，你可以很方便的吧之前在其他平台上的评论数据导入进来，支持多种 json 格式。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;简介的 UI 提供多种主题。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;国外的东西不受国内的限制。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h6 id=&#34;集成&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#集成&#34;&gt;#&lt;/a&gt; 集成：&lt;/h6&gt;
+&lt;p&gt;先去&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9saXZlcmUuY29t&#34;&gt; livere 的官网&lt;/span&gt;注册 m，具体过程我就不讲了，一步一步安她的来就行，之后他会给你一个安装代码，像这样：&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tKfTcly1fnxhkvhulnj30pt0ikq5e.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;里面主要的信息就是 data-uid。&lt;br /&gt;
+NEXT 主题本身是已经集成了 livere 评论的，只不过被注释掉了。找到主题配置文件  &lt;code&gt;_config.yml&lt;/code&gt;  找到如下代码&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tKfTcly1fnxhhj8slmj312o06kmyi.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;打开注释填入你在 livere 中注册后它给你的 UID 即可。然后 保存 -&amp;gt; 三步即可。&lt;/p&gt;
+&lt;h2 id=&#34;九多终端操作&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#九多终端操作&#34;&gt;#&lt;/a&gt; 九：多终端操作&lt;/h2&gt;
+&lt;h4 id=&#34;背景-2&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#背景-2&#34;&gt;#&lt;/a&gt; 背景&lt;/h4&gt;
+&lt;p&gt;大家都知道 HEXO 是静态博客，所有的页面都是静态的通过本地文件渲染然后再部署上去，这就带来一个多终端部署的问题，比如公司电脑配置好了，想回家在进行写作，发现家里什么都没有还需要重新配置环境，不过这倒是次要，关键是如果不能保证两个终端的内容完全一样就会造成服务器上的数据会被最后一次部署覆盖，导致前几次的都被覆盖掉。&lt;/p&gt;
+&lt;h4 id=&#34;解决&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#解决&#34;&gt;#&lt;/a&gt; 解决&lt;/h4&gt;
+&lt;p&gt;其实大家应该也看出 HEXO 整体的一套流程下来就是 git 的工作流程，不管你用 github 还是 bitbucket 都是遵循 gitflow 的，而 gitflow 就是一种多终端多人协同工作的解决方案。所以我们可以用它来解决多终端同步的问题。&lt;/p&gt;
+&lt;h4 id=&#34;流程&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#流程&#34;&gt;#&lt;/a&gt; 流程&lt;/h4&gt;
+&lt;p&gt;我们先来了解下 hexo 的整体流程。我们正常的为文件夹结构如图：&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79ly1fnyf572x8nj30bu0fqgn0.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;h6 id=&#34;第一步hexo-g&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#第一步hexo-g&#34;&gt;#&lt;/a&gt; 第一步：hexo g&lt;/h6&gt;
+&lt;p&gt;source 文件夹下存放着我们的文章，tag、归档之类的信息，也就是我们的博客的内容。当我们在终端执行  &lt;code&gt;hexo g&lt;/code&gt;  的时候会被 source 中的文件按照某种规则方式渲染成静态的页面文件放到 public 中：&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79ly1fnyf8eyhjdj30mw0e876h.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;h6 id=&#34;第二步hexo-d&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#第二步hexo-d&#34;&gt;#&lt;/a&gt; 第二步：hexo d&lt;/h6&gt;
+&lt;p&gt;然后我们执行  &lt;code&gt;hexo d&lt;/code&gt;  这一步暂时我们可以认为就是对 public 中的文件进行 push 到我们的 git 仓库的过程。所以在我们的仓库中  &lt;code&gt;XXXXXX.bitbucket.io&lt;/code&gt;  大家看到的文件只有 public 中的文件。&lt;/p&gt;
+&lt;h6 id=&#34;附加hexo-clean&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#附加hexo-clean&#34;&gt;#&lt;/a&gt; 附加：hexo clean&lt;/h6&gt;
+&lt;p&gt;其实这一步是和 gitflow 没有关系的，但是既然讲到流程我这边也在说下，之前说过这步是用来清理缓存的，其实他的作用是运行在第一步之前，将整个 public 文件删除，然后我们再执行  &lt;code&gt;hexo g&lt;/code&gt;  重新渲染进 public，之后再  &lt;code&gt;hexo d&lt;/code&gt;  进行部署，这样就避免之前的内容对我们造成影响。&lt;/p&gt;
+&lt;h4 id=&#34;具体操作&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#具体操作&#34;&gt;#&lt;/a&gt; 具体操作&lt;/h4&gt;
+&lt;p&gt;通过上一步流程我们知道如果 git 服务器上只有 public 是不够的，我们需要有我们整个博客文件夹下的所有文件才能进行多终端操作。所有这边有两个方法：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;新建另一个仓库我们暂时命名为 MyProject，把我们所有的文件传到这个 Git 仓库上，当我们换另一台电脑时候我们直接拉这个新仓库的代码然后进行写作 -&amp;gt; 三步走最后在将所有文件推到 MyProject 以后所有的 git 操作都在这个仓库中进行。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;git 给我们提供了多分支操作，我们可以做 xxxx.github.io 这个仓库中创建一个新的分支暂时命名为 hexo 分支，这个分支的作用和上一个方法里 MyProject 的作用以及里面的文件一模一样，只不过我们这个方法就省的我们再创建一个仓库了。以后所有的 git 操作都去这个分支进行，本地的文件一直保持在这个分支就行，不过有一点需要注意的就是，即使所有的操作都在 hexo 分支下进行也必须保证 master 分支为主分支 (default branch)，不然你就打不开你的博客了。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;以上两种都是属于基本的 git 操作，本文不再赘述。不过有一点这里要强调下，还记一开始我跟大家说的主题的是推荐大家直接去主题所在的 repo 下载 zip 然后解压拖进博客目录里面吗？如果你不是拖拽进来的而是 clone 下来的话在这一步你会涉及到 git 的 add submodule 操作。其实操作不难，具体的命令网上也是大把。不过如果你像我一样使用 bitbucket 的话可能发现无法进行 submodule 操作，不知道这个是 bitbucket 的 BUG 还是什么其他原因，同样的命令使用 github 托管博客的时候是没有问题的，而 bitbucket 就不行，当你使用另一台电脑的进行拉去的时候执行  &lt;code&gt;git submodule init&lt;/code&gt;  操作的时候他会提示找不到。至今未解决，如果哪位大神有什么方法及时联系我。&lt;/p&gt;
+&lt;h2 id=&#34;十绑定个人域名&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#十绑定个人域名&#34;&gt;#&lt;/a&gt; 十：绑定个人域名&lt;/h2&gt;
+&lt;h4 id=&#34;font-colorred注意bitbucket-从2015年开始关闭了个人博客自定义域名的功能也就是说如果你是按照上面操作把个人博客部署在bitbucket中的话就无法使用自己的域名关于这一点bitbucket文档已经有明显的说明font&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#font-colorred注意bitbucket-从2015年开始关闭了个人博客自定义域名的功能也就是说如果你是按照上面操作把个人博客部署在bitbucket中的话就无法使用自己的域名关于这一点bitbucket文档已经有明显的说明font&#34;&gt;#&lt;/a&gt; &amp;lt;font color=red&amp;gt; 注意：bitbucket 从 2015 年开始关闭了个人博客自定义域名的功能，也就是说如果你是按照上面操作把个人博客部署在 bitbucket 中的话就无法使用自己的域名，关于这一点 bitbucket 文档已经有明显的说明 &amp;lt;/font&amp;gt;&lt;/h4&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo7pq9gdqzj31a20psaf0.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;h4 id=&#34;准备工作&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#准备工作&#34;&gt;#&lt;/a&gt; 准备工作&lt;/h4&gt;
+&lt;p&gt;在 github 上创建仓库，仓库的名字为 &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cDovL3VzZXJuYW1lLmdpdGh1Yi5pbw==&#34;&gt;username.github.io&lt;/span&gt;。然后修改站点配置文件中部署地址（repo 对应的字段），将原本的 bitbucket 的仓库地址改为 github 的地址&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo7pve5iwgj312u0a0401.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;之后进行保存然后三步走，部署成功后你的博客就从 bitbucket 上迁移到 github 中了，这样一来，你整体的博客仓库还是在 bitbucket 中的私有库中，但是 public 文件夹中的公开文件已经被你部署到 github 的仓库中。该保密的信息仍然保密，同时也不影响你绑定自己的域名，一举两得。正常情况下按照上面步骤完成后的博客地址是 &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cDovL3h4eC5naXRodWIuaW8=&#34;&gt;xxx.github.io&lt;/span&gt;，下面就开始绑定自己的域名。&lt;/p&gt;
+&lt;h4 id=&#34;域名购买&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#域名购买&#34;&gt;#&lt;/a&gt; 域名购买&lt;/h4&gt;
+&lt;p&gt;这个渠道有很多，我就不再一一赘述，我这边以&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly93YW53YW5nLmFsaXl1bi5jb20vZG9tYWluL3NlYXJjaHJlc3VsdC8/a2V5d29yZD1uaWh5YW8mYW1wO3N1ZmZpeD0uY24mYW1wO2RvbWFpbnR5cGU9emglMkNlbiMvP2tleXdvcmQ9dGVzdCZhbXA7c3VmZml4PWNu&#34;&gt;阿里云的万网域名购买&lt;/span&gt;为例，找到合适自己的域名&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo7pjuuq4mj313u0hkqdt.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;h4 id=&#34;域名解析&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#域名解析&#34;&gt;#&lt;/a&gt; 域名解析&lt;/h4&gt;
+&lt;p&gt;购买域名并且按照他的步骤实名认证之后，需要把域名解析到我们的博客中，在阿里云的控制台找到域名右侧对应的解析按钮。点击然后添加解析&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo7q32hh49j31800h5ae1.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo7q3yyhfij31780anq46.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;然后按照如下填写添加解析，记得把记录值替换成你自己的博客地址&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo7q5sss5oj30kr0bkq3n.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;之后记得启用该记录，不过如果你像我一样是阿里云购买并且配置的话是不需要启用的，默认帮你启用。&lt;/p&gt;
+&lt;h4 id=&#34;仓库配置&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#仓库配置&#34;&gt;#&lt;/a&gt; 仓库配置&lt;/h4&gt;
+&lt;p&gt;然后回到你的 github 仓库，进入你的仓库设置页面，找到如下字段，在红框处添加你的域名，然后保存即可&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo7qbo2111j30t10i7goa.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;h4 id=&#34;博客配置&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#博客配置&#34;&gt;#&lt;/a&gt; 博客配置&lt;/h4&gt;
+&lt;p&gt;回到你的博客目录，在 source 目录下创建一个 &amp;lt;font color=red&amp;gt; 不带任何后缀的 &amp;lt;/font &amp;gt; 文件，命名为 CNAME，里面填写你的域名，我是这样，只添加你的域名不要添加其他东西。然后保存 执行三步之后就可以通过你的域名访问你的博客啦，如果不能访问可能是因为运营商 DNS 缓存问题。等几分钟就可以了。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo7qe2vzuzj30s202ydfw.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;h2 id=&#34;十一实现https协议&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#十一实现https协议&#34;&gt;#&lt;/a&gt; 十一：实现 https 协议&lt;/h2&gt;
+&lt;p&gt;按照以上步骤完成后可以通过域名访问，但是有个问题就是如果你用谷歌浏览器或者 Safari，他就会提示你网站不被信任，只有你点击仍要继续才会展示你的博客，并且地址栏里面还是有个红色的 ×，虽说不影响使用和阅读，但是还是感觉别扭，这次我们来讲如何将自己的博客协议改为 Https。这里有几种方法：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;购买证书&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;使用免费 CA 证书。腾讯云阿里云都有提供。不过有时间限制&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;使用 CDN 进行反向代理&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如果使用上两步的话基本上证书的服务商都会告诉你如何配置，他们的文档讲的一定比我的详细，不过主要原因是我们使用的 github Page 是不支持上传证书的，所以这里主要说下第三步，通过 CDN 配置反向代理，这里就需要用到一个国外的 CDN 服务提供商&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly93d3cuY2xvdWRmbGFyZS5jb20v&#34;&gt; Cloudflare&lt;/span&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo7utpfih2j30wz07mju7.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;h4 id=&#34;原理&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#原理&#34;&gt;#&lt;/a&gt; 原理&lt;/h4&gt;
+&lt;p&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly93d3cuY2xvdWRmbGFyZS5jb20v&#34;&gt;Cloudflare&lt;/span&gt; 提供 DNS 解析服务，而且速度很快，在阿里云半个小时才能生效的解析在它这里瞬间就生效，它提供了免费的 https 服务 (但不是应用 SSL 证书)。实现模式就是，用户到 CDN 服务器的连接为 https，而 CDN 服务器到 GithubPage 服务器的连接为 http，就是在 CDN 服务器那里加上反向代理。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo7v9apbogj30t004ydg6.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;用户看到的小锁其实是用户连接到 Cloudflare 的证书，而由 Cloudflare 到 github 是没有 https 的，不过对于我们静态博客已经够了。&lt;/p&gt;
+&lt;h4 id=&#34;配置&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#配置&#34;&gt;#&lt;/a&gt; 配置&lt;/h4&gt;
+&lt;h6 id=&#34;第一步&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#第一步&#34;&gt;#&lt;/a&gt; 第一步：&lt;/h6&gt;
+&lt;p&gt;还是先去官网注册，然后添加你的域名，注意添加的是你购买的域名。&lt;/p&gt;
+&lt;h6 id=&#34;第二步&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#第二步&#34;&gt;#&lt;/a&gt; 第二步：&lt;/h6&gt;
+&lt;p&gt;进入 DNS 解析界面填入如下解析，因为我们使用 clouldflare 做 DNS 解析所以一会我们需要把我们购买域名的那个地方的解析删掉。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo7vibz0a6j30rv0kagns.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;其中前两个是使你的域名指向 github 的服务器地址，github 文档中给的就是这个两个地址，&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cDovL3huLS1DTkFNRWdpdGh1YnVzZXJuYW1lLWZ2ODNhejlncDJkMjA0YmphNWZ5MDJsMGw1YjZvZTNwNmF2dXYyeWYzNThsY2E3ODM1cDJnbWIuZ2l0aHViLmlv&#34;&gt;最后那个 CNAME 记录指向的是你的 github 仓库域名 username.github.io&lt;/span&gt;。一定要严格按照这个来配置。&lt;/p&gt;
+&lt;h6 id=&#34;第三步&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#第三步&#34;&gt;#&lt;/a&gt; 第三步：&lt;/h6&gt;
+&lt;p&gt;记录下 cloudflare 给你的 DNS 解析服务器，就在上一步那个页面下边，用这个记录去把你域名购买处（我的是阿里云）的 DNS 解析服务器替换掉，同时删掉阿里云里面的 DNS 解析记录，因为我们以后就靠 clouleflare 来解析 DNS 啦。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo7vnm5itzj30qy03c74a.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo7vqjin22j316i0ib77n.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo7vse0wewj316u09tmys.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;h6 id=&#34;第四步&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#第四步&#34;&gt;#&lt;/a&gt; 第四步：&lt;/h6&gt;
+&lt;p&gt;回到 clouldflare 上面选择 crypto 选项然后下面选择 full 或者是 Flexible&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo7vwnoasij30wx0f8myk.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;选项中几个的区别如下图&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo7vxck29zj30k00cv0sp.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;最后那个是需要证书支持的。然后滚动到下面打开 always use HTTPS 开关&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo7vy66223j30rn06dwet.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;h6 id=&#34;第五步&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#第五步&#34;&gt;#&lt;/a&gt; 第五步：&lt;/h6&gt;
+&lt;p&gt;以上步骤配置好之后基本就完成了，但是如果直接有人在地址栏里面输入 http://XXXXX 进入你的博客的话你这边还是会出现非 Https 的效果，所以我们这里要做一个强制跳转。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo7w1ksr94j30uu0ir76a.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;这样就万无一失了。&lt;/p&gt;
+&lt;h6 id=&#34;坑点&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#坑点&#34;&gt;#&lt;/a&gt; 坑点：&lt;/h6&gt;
+&lt;p&gt;我之前按照以上步骤操作完成后发现首页虽然是 https 了也不显示红叉了，但是也没有显示绿色的小锁，而是一个叹号，但是有些博文页面可以正常显示 https 绿锁。后来发现是因为当前页面中有非 https 的链接导致，比如图片图床不是 https 的，或者评论插件不支持 https，不过我博客中使用的来必力评论是支持 https，只是我当时的图床无都是 http 所以只能是显示叹号了，后来把所有图片图床换成 https 的就好啦。&lt;/p&gt;
+&lt;h2 id=&#34;十二为博客添加音乐&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#十二为博客添加音乐&#34;&gt;#&lt;/a&gt; 十二：为博客添加音乐&lt;/h2&gt;
+&lt;p&gt;HEXO 博客添加的音乐的地方有两个。一个个首页侧边栏，另一个是每个页面里面。但是个人觉得添加侧边栏里面并不好，因为添加侧边栏的话用户只有在浏览你首页的时候才能听到音乐，而且期间不能点击任何站内链接，否则音乐就会中断，试想下，一般首页都是文章列表，点击文章里面之后才是正文，所以用户在首页停留的时间很短，基本上找到自己想看的文章就会马上点进去看，所以这里放音乐没有太大意义；而页面内插入音乐会更好点，读者可以一边浏览文章一边听音乐，这也正是我们想要的。不过解决前者问题的办法也不是没有，比如点击链接的话直接开另一个浏览器标签来打开新页面也可以做到不中断音乐，但是总觉得有点小题大做了。总不能读者看个你的博客而占用了一堆标签。&lt;/p&gt;
+&lt;h4 id=&#34;网易云音乐外链&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#网易云音乐外链&#34;&gt;#&lt;/a&gt; 网易云音乐外链&lt;/h4&gt;
+&lt;p&gt;这个是最简单的方法，通过网易云音乐官网生成播放器外链。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tKfTcgy1fordugrc80j315s0swthy.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;可以自己配置一些属性，然后自动生成配置代码，放到你的博客里面就行啦，粘贴到你文章中想要的地方&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tKfTcgy1forduyu7laj31hm0zkaft.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;优点缺点截图上也有，不过网上也说这样的方式会影响 SEO，具体什么原理也不太清楚。总之简单便捷，不过网易的 logo 去不掉。&lt;/p&gt;
+&lt;h4 id=&#34;aplayer&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#aplayer&#34;&gt;#&lt;/a&gt; &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9hcGxheWVyLmpzLm9yZy9kb2NzLyMvP2lkPW9wdGlvbnM=&#34;&gt;aplayer&lt;/span&gt; 添加音乐&lt;/h4&gt;
+&lt;p&gt;这个算是 HEXO 最常用也是最出名名的播放器了，还有 Dpleyer 是用来视屏播放的，暂时我们不说。首先需要安装 aplayer 依赖，终端中切换到你的博客根目录执行  &lt;code&gt;npm install aplayer --save&lt;/code&gt;  安装成功后就可以了。参数就不给大家一一讲解了，官方文档都有，我这里只提供一个例子。&lt;/p&gt;
+&lt;h6 id=&#34;页面中添加音乐&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#页面中添加音乐&#34;&gt;#&lt;/a&gt; 页面中添加音乐&lt;/h6&gt;
+&lt;p&gt;&lt;figure class=&#34;highlight perl&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;17&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&amp;#123;% aplayerlist %&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;string&#34;&gt;&amp;quot;autoplay&amp;quot;&lt;/span&gt;: true,&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;string&#34;&gt;&amp;quot;showlrc&amp;quot;&lt;/span&gt;: &lt;span class=&#34;number&#34;&gt;0&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;string&#34;&gt;&amp;quot;mutex&amp;quot;&lt;/span&gt;: true,&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;string&#34;&gt;&amp;quot;music&amp;quot;&lt;/span&gt;: [&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;            &lt;span class=&#34;string&#34;&gt;&amp;quot;title&amp;quot;&lt;/span&gt;: &lt;span class=&#34;string&#34;&gt;&amp;quot;에필로그 (Epilogue)&amp;quot;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;            &lt;span class=&#34;string&#34;&gt;&amp;quot;author&amp;quot;&lt;/span&gt;: &lt;span class=&#34;string&#34;&gt;&amp;quot;이동준&amp;quot;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;            &lt;span class=&#34;string&#34;&gt;&amp;quot;url&amp;quot;&lt;/span&gt;: &lt;span class=&#34;string&#34;&gt;&amp;quot;https://molier-1256056152.cos.ap-guangzhou.myqcloud.com/%E1%84%8B%E1%85%A6%E1%84%91%E1%85%B5%E1%86%AF%E1%84%85%E1%85%A9%E1%84%80%E1%85%B3.mp3&amp;quot;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;            &lt;span class=&#34;string&#34;&gt;&amp;quot;pic&amp;quot;&lt;/span&gt;: &lt;span class=&#34;string&#34;&gt;&amp;quot;https://y.gtimg.cn/music/photo_new/T002R300x300M000000RmZHf3qhLUL.jpg?max_age=2592000&amp;quot;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;            &lt;span class=&#34;string&#34;&gt;&amp;quot;lrc&amp;quot;&lt;/span&gt;: &lt;span class=&#34;string&#34;&gt;&amp;quot;https://歌词.lrc&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    ]&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#123;% endaplayerlist %&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;br /&gt;
+ 以上代码插到文章中任意一个你想的地方就可以&lt;/p&gt;
+&lt;p&gt;pic 就是歌曲显示图片的链接。大家可以看到 music 是个数组，所以想添加列表的话就在数组中再添加个歌曲字典就好了。建议歌词 lrc 要用 URL 形式，不然 txt 格式可能要编辑死。。好多人问歌曲的 MP3 外链从哪里来。这个其实很简单，首先把歌曲下载下来然后上传到七牛云就可以在七牛云生成外链啦，七牛云有免费的存储空间，只存歌曲的话足够啦。歌词 URL&lt;/p&gt;
+&lt;h6 id=&#34;侧边栏中添加音乐&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#侧边栏中添加音乐&#34;&gt;#&lt;/a&gt; 侧边栏中添加音乐&lt;/h6&gt;
+&lt;p&gt;其实之前讲过，不建议在侧边栏中添加，但是这里还是简单介绍下。首先要做的是在 &lt;code&gt;node_modules&lt;/code&gt;  目录下找到  &lt;code&gt;APlayer.min.js&lt;/code&gt;  文件，将其复制到  &lt;code&gt;theme/next/source/js/src/&lt;/code&gt;  目录下。然后打开  &lt;code&gt;theme/next/layout/_custom/&lt;/code&gt;  文件夹下的  &lt;code&gt;sidebar.swig&lt;/code&gt;  文件，向其中添加以下代码：&lt;/p&gt;
+&lt;p&gt;&lt;figure class=&#34;highlight awk&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;30&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;31&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;32&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&amp;lt;div id=&lt;span class=&#34;string&#34;&gt;&amp;quot;player1&amp;quot;&lt;/span&gt; class=&lt;span class=&#34;string&#34;&gt;&amp;quot;aplayer&amp;quot;&lt;/span&gt;&amp;gt;&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;lt;script src=&lt;span class=&#34;string&#34;&gt;&amp;quot;/js/src/APlayer.min.js&amp;quot;&lt;/span&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;lt;script type=&lt;span class=&#34;string&#34;&gt;&amp;quot;text/javascript&amp;quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;var ap = new APlayer(&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    element: document.getElementById(&lt;span class=&#34;string&#34;&gt;&amp;#x27;player1&amp;#x27;&lt;/span&gt;),                       &lt;span class=&#34;regexp&#34;&gt;//&lt;/span&gt; Optional, player element&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    narrow: false,                                                     &lt;span class=&#34;regexp&#34;&gt;//&lt;/span&gt; Optional, narrow style&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    autoplay: false,                                                    &lt;span class=&#34;regexp&#34;&gt;//&lt;/span&gt; Optional, autoplay song(s), not supported by mobile browsers&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    showlrc: &lt;span class=&#34;number&#34;&gt;0&lt;/span&gt;,                                                        &lt;span class=&#34;regexp&#34;&gt;//&lt;/span&gt; Optional, show lrc, can be &lt;span class=&#34;number&#34;&gt;0&lt;/span&gt;, &lt;span class=&#34;number&#34;&gt;1&lt;/span&gt;, &lt;span class=&#34;number&#34;&gt;2&lt;/span&gt;, see: &lt;span class=&#34;comment&#34;&gt;###With lrc&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    mutex: true,                                                       &lt;span class=&#34;regexp&#34;&gt;//&lt;/span&gt; Optional, pause other players when this player playing&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    theme: &lt;span class=&#34;string&#34;&gt;&amp;#x27;#e6d0b2&amp;#x27;&lt;/span&gt;,                                                  &lt;span class=&#34;regexp&#34;&gt;//&lt;/span&gt; Optional, theme color, default: &lt;span class=&#34;comment&#34;&gt;#b7daff&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    mode: &lt;span class=&#34;string&#34;&gt;&amp;#x27;random&amp;#x27;&lt;/span&gt;,                                                    &lt;span class=&#34;regexp&#34;&gt;//&lt;/span&gt; Optional, play mode, can be `random` `single` `circulation`(loop) `order`(no loop), default: `circulation`&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    preload: &lt;span class=&#34;string&#34;&gt;&amp;#x27;metadata&amp;#x27;&lt;/span&gt;,                                               &lt;span class=&#34;regexp&#34;&gt;//&lt;/span&gt; Optional, the way to load music, can be &lt;span class=&#34;string&#34;&gt;&amp;#x27;none&amp;#x27;&lt;/span&gt; &lt;span class=&#34;string&#34;&gt;&amp;#x27;metadata&amp;#x27;&lt;/span&gt; &lt;span class=&#34;string&#34;&gt;&amp;#x27;auto&amp;#x27;&lt;/span&gt;, default: &lt;span class=&#34;string&#34;&gt;&amp;#x27;auto&amp;#x27;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    listmaxheight: &lt;span class=&#34;string&#34;&gt;&amp;#x27;513px&amp;#x27;&lt;/span&gt;,                                             &lt;span class=&#34;regexp&#34;&gt;//&lt;/span&gt; Optional, max height of play list&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    music: [&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#123;                                                           &lt;span class=&#34;regexp&#34;&gt;//&lt;/span&gt; Required, music info, see: &lt;span class=&#34;comment&#34;&gt;###With playlist&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        title: &lt;span class=&#34;string&#34;&gt;&amp;#x27;Sometimes When We Touch&amp;#x27;&lt;/span&gt;,                                          &lt;span class=&#34;regexp&#34;&gt;//&lt;/span&gt; Required, music title&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        author: &lt;span class=&#34;string&#34;&gt;&amp;#x27;Oliveia&amp;#x27;&lt;/span&gt;,                                              &lt;span class=&#34;regexp&#34;&gt;//&lt;/span&gt; Required, music author&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        url: &lt;span class=&#34;string&#34;&gt;&amp;#x27;https://molier-1256056152.cos.ap-guangzhou.myqcloud.com/SometimesWhenWeTouch.mp3&amp;#x27;&lt;/span&gt;,  &lt;span class=&#34;regexp&#34;&gt;//&lt;/span&gt; Required, music url&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        pic: &lt;span class=&#34;string&#34;&gt;&amp;#x27;https://y.gtimg.cn/music/photo_new/T002R300x300M000003LIDEL0NQInJ.jpg?max_age=2592000&amp;#x27;&lt;/span&gt;,  &lt;span class=&#34;regexp&#34;&gt;//&lt;/span&gt; Optional, music picture&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        lrc: &lt;span class=&#34;string&#34;&gt;&amp;#x27;https://歌词.lrc&amp;#x27;&lt;/span&gt;                   &lt;span class=&#34;regexp&#34;&gt;//&lt;/span&gt; Optional, lrc, see: &lt;span class=&#34;comment&#34;&gt;###With lrc&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#125;,&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        &lt;span class=&#34;string&#34;&gt;&amp;quot;title&amp;quot;&lt;/span&gt;: &lt;span class=&#34;string&#34;&gt;&amp;quot;大鱼&amp;quot;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        &lt;span class=&#34;string&#34;&gt;&amp;quot;author&amp;quot;&lt;/span&gt;: &lt;span class=&#34;string&#34;&gt;&amp;quot;周深&amp;quot;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        &lt;span class=&#34;string&#34;&gt;&amp;quot;url&amp;quot;&lt;/span&gt;: &lt;span class=&#34;string&#34;&gt;&amp;quot;https://molier-1256056152.cos.ap-guangzhou.myqcloud.com/bigfish.mp3&amp;quot;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        &lt;span class=&#34;string&#34;&gt;&amp;quot;pic&amp;quot;&lt;/span&gt;: &lt;span class=&#34;string&#34;&gt;&amp;quot;https://y.gtimg.cn/music/photo_new/T002R300x300M000004Y7V4s3ug4cC.jpg?max_age=2592000&amp;quot;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        &lt;span class=&#34;string&#34;&gt;&amp;quot;lrc&amp;quot;&lt;/span&gt;: &lt;span class=&#34;string&#34;&gt;&amp;quot;https://歌词.lrc&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    ]&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;br /&gt;
+ 只是换成了 JS 的语法，其实原理，参数都一样。然后执行三步走就可以看到啦，注意有浏览器缓存，所以多刷新几次就会有了。&lt;/p&gt;
+&lt;h6 id=&#34;歌词-音乐外链相关&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#歌词-音乐外链相关&#34;&gt;#&lt;/a&gt; 歌词、音乐外链相关&lt;/h6&gt;
+&lt;p&gt;歌曲说过大家可以用七牛的免费存储功能，但是会发现一个问题七牛的歌曲外链不支持 https，这会导致配置有 ssl 证书的人掉绿锁，其实如果有这个需求的大家可以放弃七牛，改用腾讯云，这样就 OK 啦，一样的操作。&lt;/p&gt;
+&lt;p&gt;好多人问歌词的 URL 好难找啊，去哪里找呢，大家可以看下这个 &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9naXRodWIuY29tL21ldG93b2xmL01ldGluZ0pT&#34;&gt;MeetingJS&lt;/span&gt; 这个其实是基于 Aplayer 的一个小封装，目的是简化 Aplayer 的接入成本，但是因为之前我介绍了接入步骤所以这里我们只用它的歌词 API 就可以。 &lt;code&gt;ttps://demo.meting.api.meto.moe/action/metingapi?server=tencent&amp;amp;type=lrc&amp;amp;id=004OQ5Mt0EmEzv&lt;/code&gt;  其中要改的只有两个参数 seaver 是音乐平台包含百度、网易、QQ 音乐等平台&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tKfTcgy1forkjr7da0j31be0ns43n.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;id 字段对应的是歌曲的 ID 这个你只要打开个歌曲网页链接里面应该都包含 id。文章结尾的播放就是这么加入的&lt;/p&gt;
+&lt;h2 id=&#34;最后&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#最后&#34;&gt;#&lt;/a&gt; 最后&lt;/h2&gt;
+&lt;p&gt;整篇文章只有开始一小部分在讲解如何搭建博客，后续的基本都是交给大家如何优化，调整一些细节问题如 UI、用户体验之类的，当然我们能做的远远不止这些，如果有什么问题欢迎与我探讨。下面的留言我都会看的。此外当本人对 HEXO 有新的看法或者玩法的话该文章会不断的更新，希望大家关注我的&lt;a href=&#34;https://oliverqueen.cn/&#34;&gt;小站&lt;/a&gt;，感谢。&lt;/p&gt;
+&lt;p&gt;
+        &lt;div id=&#34;aplayer-xocJHJbr&#34; class=&#34;aplayer aplayer-tag-marker&#34; style=&#34;margin-bottom: 20px;&#34;&gt;&lt;/div&gt;
+			  &lt;script&gt;
+				  var options = {&#34;narrow&#34;:false,&#34;autoplay&#34;:true,&#34;showlrc&#34;:3,&#34;mutex&#34;:true,&#34;music&#34;:[{&#34;title&#34;:&#34;凉城&#34;,&#34;author&#34;:&#34;任然&#34;,&#34;url&#34;:&#34;https://molier-1256056152.cos.ap-guangzhou.myqcloud.com/liangcheng.mp3&#34;,&#34;pic&#34;:&#34;https://y.gtimg.cn/music/photo_new/T002R300x300M0000008nl2Y1HlxUm.jpg?max_age=2592000&#34;,&#34;lrc&#34;:&#34;https://demo.meting.api.meto.moe/action/metingapi?server=tencent&amp;type=lrc&amp;id=002SKEeh1VzObP&#34;},{&#34;title&#34;:&#34;Love Story&#34;,&#34;author&#34;:&#34;린 (LYn)&#34;,&#34;url&#34;:&#34;https://molier-1256056152.cos.ap-guangzhou.myqcloud.com/%E1%84%85%E1%85%B5%E1%86%AB-Love%20Story.mp3&#34;,&#34;pic&#34;:&#34;https://y.gtimg.cn/music/photo_new/T002R300x300M0000048KLcQ4LDbZz.jpg?max_age=2592000&#34;,&#34;lrc&#34;:&#34;https://demo.meting.api.meto.moe/action/metingapi?server=tencent&amp;type=lrc&amp;id=0028RAj0187nEg&#34;},{&#34;title&#34;:&#34;大鱼&#34;,&#34;author&#34;:&#34;周深&#34;,&#34;url&#34;:&#34;https://molier-1256056152.cos.ap-guangzhou.myqcloud.com/bigfish.mp3&#34;,&#34;pic&#34;:&#34;https://y.gtimg.cn/music/photo_new/T002R300x300M000004Y7V4s3ug4cC.jpg?max_age=2592000&#34;,&#34;lrc&#34;:&#34;https://demo.meting.api.meto.moe/action/metingapi?server=tencent&amp;type=lrc&amp;id=004OQ5Mt0EmEzv&#34;}]};
+				  options.element = document.getElementById(&#34;aplayer-xocJHJbr&#34;);
+				  var ap = new APlayer(options);
+			    window.aplayers || (window.aplayers = []);
+				  window.aplayers.push(ap);
+			  &lt;/script&gt;&lt;/p&gt;
+ ]]></description>
+        </item>
+    </channel>
+</rss>

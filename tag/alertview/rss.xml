@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<rss version="2.0">
+    <channel>
+        <title>Molier • Posts by &#34;alertview&#34; tag</title>
+        <link>https://oliverqueen.cn</link>
+        <description>iOS 开发 移动App 博客 杂谈 随笔 相册</description>
+        <language>zh-CN</language>
+        <pubDate>Wed, 24 Jan 2018 12:37:20 +0800</pubDate>
+        <lastBuildDate>Wed, 24 Jan 2018 12:37:20 +0800</lastBuildDate>
+        <category>欢迎页</category>
+        <category>网络</category>
+        <category>底层</category>
+        <category>DNS解析</category>
+        <category>LocalDNS</category>
+        <category>OpenGL</category>
+        <category>UI</category>
+        <category>动画</category>
+        <category>性能优化</category>
+        <category>xcode</category>
+        <category>cocoapods</category>
+        <category>podfile</category>
+        <category>webview</category>
+        <category>hook</category>
+        <category>runtime</category>
+        <category>翻译</category>
+        <category>优化</category>
+        <category>国外文献</category>
+        <category>httpdns</category>
+        <category>Cocoapods</category>
+        <category>架构</category>
+        <category>AlertView</category>
+        <category>Hook</category>
+        <category>杂谈</category>
+        <category>Hexo</category>
+        <category>个人博客</category>
+        <category>网站</category>
+        <category>屏幕适配</category>
+        <category>iOS 11</category>
+        <category>评论插件</category>
+        <category>总结</category>
+        <category>回味2017展望2018</category>
+        <category>热修复</category>
+        <category>JSPath</category>
+        <category>swift</category>
+        <category>网络请求</category>
+        <category>Swift</category>
+        <category>音频</category>
+        <category>唱吧</category>
+        <category>K歌</category>
+        <category>AVFoundation</category>
+        <category>git</category>
+        <category>效率工作</category>
+        <category>回首2018展望2019</category>
+        <category>代码版本控制</category>
+        <category>iOS</category>
+        <category>Crash防护</category>
+        <category>Apple登录</category>
+        <category>WWDC2022</category>
+        <category>逆向</category>
+        <category>算法</category>
+        <category>C语言</category>
+        <category>排序</category>
+        <item>
+            <guid isPermalink="true">https://oliverqueen.cn/2018-01-24-%E8%87%AA%E5%AE%9A%E4%B9%89AlertView/</guid>
+            <title>自定义AlertView</title>
+            <link>https://oliverqueen.cn/2018-01-24-%E8%87%AA%E5%AE%9A%E4%B9%89AlertView/</link>
+            <category>UI</category>
+            <category>AlertView</category>
+            <pubDate>Wed, 24 Jan 2018 12:37:20 +0800</pubDate>
+            <description><![CDATA[ &lt;link rel=&#34;stylesheet&#34; class=&#34;aplayer-secondary-style-marker&#34; href=&#34;/assets/css/APlayer.min.css&#34;&gt;&lt;script src=&#34;/assets/js/APlayer.min.js&#34; class=&#34;aplayer-secondary-script-marker&#34;&gt;&lt;/script&gt;&lt;h1 id=&#34;customalertview&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#customalertview&#34;&gt;#&lt;/a&gt; CustomAlertView&lt;/h1&gt;
+&lt;p&gt;一个自定义的 AlertView，用户可以根据自己的需求来设置。&lt;/p&gt;
+&lt;h2 id=&#34;使用方法&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#使用方法&#34;&gt;#&lt;/a&gt; 使用方法&lt;/h2&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo6k50sh34j30hy084abf.jpg&#34; alt=&#34;初始化方法&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;类似于系统的初始化方法，如果没有值的话就传 nil 就好，不要传空字符串。最后一个参数传 title 数组就好了。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo6k5axspej30r702rmy0.jpg&#34; alt=&#34;使用&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;然后调用 showInViewWithAction 方法显示出来&lt;br /&gt;
+&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo6k5idk8ij30mp041aai.jpg&#34; alt=&#34;显示&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;最后一个参数是 button 的点击事件，根据 tag 值来区分不同的 button 点击，只有取消 button 的 tag 是 0，其他的是 1.2.3... 依次往下排列就好&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo6k5q4o6nj30kr0ox78u.jpg&#34; alt=&#34;可自定义的一些属性&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;这些属性可以自定义，这里就不细说了，大家可以使试试。&lt;/p&gt;
+&lt;h2 id=&#34;样式截图&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#样式截图&#34;&gt;#&lt;/a&gt; 样式截图&lt;/h2&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo6k5zfyi2j30dc0notac.jpg&#34; alt=&#34;样式截图&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo6k66fmogg308o0figvd.gif&#34; alt=&#34;使用截图&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;大概就这么多，很简单的有问题随时联系我吧。&lt;/p&gt;
+ ]]></description>
+        </item>
+    </channel>
+</rss>

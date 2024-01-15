@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<rss version="2.0">
+    <channel>
+        <title>Molier • Posts by &#34;xcode&#34; tag</title>
+        <link>https://oliverqueen.cn</link>
+        <description>iOS 开发 移动App 博客 杂谈 随笔 相册</description>
+        <language>zh-CN</language>
+        <pubDate>Tue, 23 Jan 2018 18:07:50 +0800</pubDate>
+        <lastBuildDate>Tue, 23 Jan 2018 18:07:50 +0800</lastBuildDate>
+        <category>欢迎页</category>
+        <category>网络</category>
+        <category>底层</category>
+        <category>DNS解析</category>
+        <category>LocalDNS</category>
+        <category>OpenGL</category>
+        <category>UI</category>
+        <category>动画</category>
+        <category>性能优化</category>
+        <category>xcode</category>
+        <category>cocoapods</category>
+        <category>podfile</category>
+        <category>webview</category>
+        <category>hook</category>
+        <category>runtime</category>
+        <category>翻译</category>
+        <category>优化</category>
+        <category>国外文献</category>
+        <category>httpdns</category>
+        <category>Cocoapods</category>
+        <category>架构</category>
+        <category>AlertView</category>
+        <category>Hook</category>
+        <category>杂谈</category>
+        <category>Hexo</category>
+        <category>个人博客</category>
+        <category>网站</category>
+        <category>屏幕适配</category>
+        <category>iOS 11</category>
+        <category>评论插件</category>
+        <category>总结</category>
+        <category>回味2017展望2018</category>
+        <category>热修复</category>
+        <category>JSPath</category>
+        <category>swift</category>
+        <category>网络请求</category>
+        <category>Swift</category>
+        <category>音频</category>
+        <category>唱吧</category>
+        <category>K歌</category>
+        <category>AVFoundation</category>
+        <category>git</category>
+        <category>效率工作</category>
+        <category>回首2018展望2019</category>
+        <category>代码版本控制</category>
+        <category>iOS</category>
+        <category>Crash防护</category>
+        <category>Apple登录</category>
+        <category>WWDC2022</category>
+        <category>逆向</category>
+        <category>算法</category>
+        <category>C语言</category>
+        <category>排序</category>
+        <item>
+            <guid isPermalink="true">https://oliverqueen.cn/2018-01-23-%E5%9C%A8iOS11%E4%B8%8Bapp%E5%9B%BE%E6%A0%87%E5%8F%98%E7%A9%BA%E7%99%BD%E7%9A%84%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/</guid>
+            <title>在iOS11下app图标变空白的问题解决</title>
+            <link>https://oliverqueen.cn/2018-01-23-%E5%9C%A8iOS11%E4%B8%8Bapp%E5%9B%BE%E6%A0%87%E5%8F%98%E7%A9%BA%E7%99%BD%E7%9A%84%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/</link>
+            <category>xcode</category>
+            <category>cocoapods</category>
+            <category>podfile</category>
+            <pubDate>Tue, 23 Jan 2018 18:07:50 +0800</pubDate>
+            <description><![CDATA[ &lt;link rel=&#34;stylesheet&#34; class=&#34;aplayer-secondary-style-marker&#34; href=&#34;/assets/css/APlayer.min.css&#34;&gt;&lt;script src=&#34;/assets/js/APlayer.min.js&#34; class=&#34;aplayer-secondary-script-marker&#34;&gt;&lt;/script&gt;&lt;h2 id=&#34;背景&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#背景&#34;&gt;#&lt;/a&gt; 背景：&lt;/h2&gt;
+&lt;p&gt;最近在做项目的时候发现运行在模拟器上图标丢失，变成了苹果默认的白板图标。因为一开始只在模拟器上出现，而且也确认没有人动过图标文件，所以没有在意，后来慢慢的该问题出现在真机上，一开始是只有 iPhone X，然后就是 iPhone 8，慢慢的变成不管是模拟器还是真机，所有 iOS11 系统的图标都没有了。接下来影响到的机型和系统越来越多。&lt;br /&gt;
+&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;尝试&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#尝试&#34;&gt;#&lt;/a&gt; 尝试：&lt;/h2&gt;
+&lt;p&gt;1：一开始想到的是可能有人误改了图标文件，于是删除了 images.xcassest 中的 AppIcon 文件，从新生成→添加图标，但是依然未解决。（✘）&lt;/p&gt;
+&lt;p&gt;2：想到是图片格式 / 尺寸的问题，于是所有图片按照规定重新生成，但是仍然无济于事。（✘）&lt;/p&gt;
+&lt;p&gt;3：因为设置图标的方法除了在 images.xcassest 中的 AppIcon 文件中设置还可以在 info.plist 设置、或者直接在工程里面放一个 icon.png 的图片来设&lt;/p&gt;
+&lt;p&gt;置，所以都检查了一便发现也不是这个原因（✘）&lt;/p&gt;
+&lt;p&gt;3：重置手机。(✘)&lt;/p&gt;
+&lt;h2 id=&#34;解决&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#解决&#34;&gt;#&lt;/a&gt; 解决：&lt;/h2&gt;
+&lt;p&gt;google 了下发现好多国外的开发遇到这个问题，并且都是使用 xcode9.X.X 版本，所以怀疑是苹果的 BUG&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo6mw7fbitj30yg0b0dip.jpg&#34; alt=&#34;image.png&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;不过这个问题并不是谁都会出现也不是所有使用 xcode9 + iOS11 的设备都会出现&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo6mwjg45nj30yg09kq41.jpg&#34; alt=&#34;image.png&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;后来经过大家的讨论终于有人说这个其实是 cocoapods 的 BUG，暂时并不能通过更新 cocoapods 更新来解决，因为最新版的 cocoapods&lt;/p&gt;
+&lt;p&gt;也存在这个问题，解决方法如下：&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo6mwrgqg2j30yg0bqdl4.jpg&#34; alt=&#34;image.png&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;在你的 podfile 中加入以下代码就可以了&lt;/p&gt;
+&lt;p&gt;&lt;figure class=&#34;highlight haxe&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;post_install &lt;span class=&#34;keyword&#34;&gt;do&lt;/span&gt; |installer|&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    copy_pods_resources_path = &lt;span class=&#34;string&#34;&gt;&amp;quot;Pods/Target Support Files/Pods-工程名/Pods-工程名-resources.sh&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    string_to_replace = &lt;span class=&#34;string&#34;&gt;&amp;#x27;--compile &amp;quot;&lt;span class=&#34;subst&#34;&gt;$&amp;#123;BUILT_PRODUCTS_DIR&amp;#125;&lt;/span&gt;/&lt;span class=&#34;subst&#34;&gt;$&amp;#123;UNLOCALIZED_RESOURCES_FOLDER_PATH&amp;#125;&lt;/span&gt;&amp;quot;&amp;#x27;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    assets_compile_with_app_icon_arguments = &lt;span class=&#34;string&#34;&gt;&amp;#x27;--compile &amp;quot;&lt;span class=&#34;subst&#34;&gt;$&amp;#123;BUILT_PRODUCTS_DIR&amp;#125;&lt;/span&gt;/&lt;span class=&#34;subst&#34;&gt;$&amp;#123;UNLOCALIZED_RESOURCES_FOLDER_PATH&amp;#125;&lt;/span&gt;&amp;quot; --app-icon &amp;quot;&lt;span class=&#34;subst&#34;&gt;$&amp;#123;ASSETCATALOG_COMPILER_APPICON_NAME&amp;#125;&lt;/span&gt;&amp;quot; --output-partial-info-plist &amp;quot;&lt;span class=&#34;subst&#34;&gt;$&amp;#123;BUILD_DIR&amp;#125;&lt;/span&gt;/assetcatalog_generated_info.plist&amp;quot;&amp;#x27;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    text = File.read(copy_pods_resources_path)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;keyword&#34;&gt;new&lt;/span&gt;&lt;span class=&#34;type&#34;&gt;_contents&lt;/span&gt; = text.gsub(string_to_replace, assets_compile_with_app_icon_arguments)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    File.open(copy_pods_resources_path, &lt;span class=&#34;string&#34;&gt;&amp;quot;w&amp;quot;&lt;/span&gt;) &amp;#123;|file| file.puts &lt;span class=&#34;keyword&#34;&gt;new&lt;/span&gt;&lt;span class=&#34;type&#34;&gt;_contents&lt;/span&gt; &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;end&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;像这样：&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo6mx84vaxj30yg07f42t.jpg&#34; alt=&#34;image.png&#34; /&gt;&lt;/p&gt;
+ ]]></description>
+        </item>
+    </channel>
+</rss>

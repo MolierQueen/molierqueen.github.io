@@ -1,0 +1,19 @@
+{
+    "version": "https://jsonfeed.org/version/1",
+    "title": "Molier • All posts by \"alertview\" tag",
+    "description": "iOS 开发 移动App 博客 杂谈 随笔 相册",
+    "home_page_url": "https://oliverqueen.cn",
+    "items": [
+        {
+            "id": "https://oliverqueen.cn/2018-01-24-%E8%87%AA%E5%AE%9A%E4%B9%89AlertView/",
+            "url": "https://oliverqueen.cn/2018-01-24-%E8%87%AA%E5%AE%9A%E4%B9%89AlertView/",
+            "title": "自定义AlertView",
+            "date_published": "2018-01-24T04:37:20.000Z",
+            "content_html": "<link rel=\"stylesheet\" class=\"aplayer-secondary-style-marker\" href=\"/assets/css/APlayer.min.css\"><script src=\"/assets/js/APlayer.min.js\" class=\"aplayer-secondary-script-marker\"></script><h1 id=\"customalertview\"><a class=\"anchor\" href=\"#customalertview\">#</a> CustomAlertView</h1>\n<p>一个自定义的 AlertView，用户可以根据自己的需求来设置。</p>\n<h2 id=\"使用方法\"><a class=\"anchor\" href=\"#使用方法\">#</a> 使用方法</h2>\n<p><img data-src=\"https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo6k50sh34j30hy084abf.jpg\" alt=\"初始化方法\" /></p>\n<p>类似于系统的初始化方法，如果没有值的话就传 nil 就好，不要传空字符串。最后一个参数传 title 数组就好了。</p>\n<p><img data-src=\"https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo6k5axspej30r702rmy0.jpg\" alt=\"使用\" /></p>\n<p>然后调用 showInViewWithAction 方法显示出来<br />\n<span id=\"more\"></span></p>\n<p><img data-src=\"https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo6k5idk8ij30mp041aai.jpg\" alt=\"显示\" /></p>\n<p>最后一个参数是 button 的点击事件，根据 tag 值来区分不同的 button 点击，只有取消 button 的 tag 是 0，其他的是 1.2.3... 依次往下排列就好</p>\n<p><img data-src=\"https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo6k5q4o6nj30kr0ox78u.jpg\" alt=\"可自定义的一些属性\" /></p>\n<p>这些属性可以自定义，这里就不细说了，大家可以使试试。</p>\n<h2 id=\"样式截图\"><a class=\"anchor\" href=\"#样式截图\">#</a> 样式截图</h2>\n<p><img data-src=\"https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo6k5zfyi2j30dc0notac.jpg\" alt=\"样式截图\" /></p>\n<p><img data-src=\"https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo6k66fmogg308o0figvd.gif\" alt=\"使用截图\" /></p>\n<p>大概就这么多，很简单的有问题随时联系我吧。</p>\n",
+            "tags": [
+                "UI",
+                "AlertView"
+            ]
+        }
+    ]
+}

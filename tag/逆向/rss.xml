@@ -1,0 +1,330 @@
+<?xml version="1.0"?>
+<rss version="2.0">
+    <channel>
+        <title>Molier • Posts by &#34;逆向&#34; tag</title>
+        <link>https://oliverqueen.cn</link>
+        <description>iOS 开发 移动App 博客 杂谈 随笔 相册</description>
+        <language>zh-CN</language>
+        <pubDate>Tue, 15 Nov 2022 19:40:49 +0800</pubDate>
+        <lastBuildDate>Tue, 15 Nov 2022 19:40:49 +0800</lastBuildDate>
+        <category>欢迎页</category>
+        <category>网络</category>
+        <category>底层</category>
+        <category>DNS解析</category>
+        <category>LocalDNS</category>
+        <category>OpenGL</category>
+        <category>UI</category>
+        <category>动画</category>
+        <category>性能优化</category>
+        <category>xcode</category>
+        <category>cocoapods</category>
+        <category>podfile</category>
+        <category>webview</category>
+        <category>hook</category>
+        <category>runtime</category>
+        <category>翻译</category>
+        <category>优化</category>
+        <category>国外文献</category>
+        <category>httpdns</category>
+        <category>Cocoapods</category>
+        <category>架构</category>
+        <category>AlertView</category>
+        <category>Hook</category>
+        <category>杂谈</category>
+        <category>Hexo</category>
+        <category>个人博客</category>
+        <category>网站</category>
+        <category>屏幕适配</category>
+        <category>iOS 11</category>
+        <category>评论插件</category>
+        <category>总结</category>
+        <category>回味2017展望2018</category>
+        <category>热修复</category>
+        <category>JSPath</category>
+        <category>swift</category>
+        <category>网络请求</category>
+        <category>Swift</category>
+        <category>音频</category>
+        <category>唱吧</category>
+        <category>K歌</category>
+        <category>AVFoundation</category>
+        <category>git</category>
+        <category>效率工作</category>
+        <category>回首2018展望2019</category>
+        <category>代码版本控制</category>
+        <category>iOS</category>
+        <category>Crash防护</category>
+        <category>Apple登录</category>
+        <category>WWDC2022</category>
+        <category>逆向</category>
+        <category>算法</category>
+        <category>C语言</category>
+        <category>排序</category>
+        <item>
+            <guid isPermalink="true">https://oliverqueen.cn/iPa%E9%80%86%E5%90%91%E4%B9%8B%E8%B7%AF/</guid>
+            <title>iPa逆向之路</title>
+            <link>https://oliverqueen.cn/iPa%E9%80%86%E5%90%91%E4%B9%8B%E8%B7%AF/</link>
+            <category>iOS</category>
+            <category>逆向</category>
+            <pubDate>Tue, 15 Nov 2022 19:40:49 +0800</pubDate>
+            <description><![CDATA[ &lt;link rel=&#34;stylesheet&#34; class=&#34;aplayer-secondary-style-marker&#34; href=&#34;/assets/css/APlayer.min.css&#34;&gt;&lt;script src=&#34;/assets/js/APlayer.min.js&#34; class=&#34;aplayer-secondary-script-marker&#34;&gt;&lt;/script&gt;&lt;h2 id=&#34;背景&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#背景&#34;&gt;#&lt;/a&gt; 背景&lt;/h2&gt;
+&lt;p&gt;逆向工程相对于正向的开发，可能关注的没有那么高，尤其是相比于安卓或者其他平台，苹果的安全机制更严格，逆向的流程也会更繁琐，除了有 ASLR（地址空间布局随机化），还有 FairPlay DRM 的 iPA 加密方式，也就是我们俗称的壳。这个给逆向工作带来了更多的挑战。但是 &lt;code&gt;更好更安全的加密方式也只是增加破解的成本，并不是绝对的安全&lt;/code&gt; ，这也是逆向的前提。&lt;/p&gt;
+&lt;p&gt;最近也正在做一些调研的工作，需要从技术层面去分析其他 App 的一些底层逻辑，要用到 iOS 的逆向相关的技术，但是由于笔者做这些工作的时候正处于 MacOS、iOS、Xcode 三个系统的大版本更新期间，一些系统的运行方式和逻辑发生变化，所以导致网上能找到的资料基本都失效了，所以写文档记录下。&lt;/p&gt;
+&lt;h2 id=&#34;前置工作&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#前置工作&#34;&gt;#&lt;/a&gt; 前置工作&lt;/h2&gt;
+&lt;h3 id=&#34;环境&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#环境&#34;&gt;#&lt;/a&gt; 环境&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Mac 架构： Intel 架构&lt;/li&gt;
+&lt;li&gt;MacOS： 13.0.1 (22A400)&lt;/li&gt;
+&lt;li&gt;Xcode 版本：Version 14.1 (14B47b)&lt;/li&gt;
+&lt;li&gt;iOS 系统版本：iOS 16.0&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;相关工具&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#相关工具&#34;&gt;#&lt;/a&gt; 相关工具&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9zb3VyY2Vmb3JnZS5uZXQvcHJvamVjdHMvbWFjaG92aWV3Lw==&#34;&gt;MachOView&lt;/span&gt;
+&lt;ul&gt;
+&lt;li&gt;用来查看 Mach-o 的文件结构，以及各个部分的信息&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cDovL3N0ZXZlbnlnYXJkLmNvbS9wcm9qZWN0cy9jbGFzcy1kdW1wLw==&#34;&gt;class-dump&lt;/span&gt;
+&lt;ul&gt;
+&lt;li&gt;class-dump，顾名思义，就是用来 dump 目标对象 的 class 信息的工具。它利用 Objective-C 语言的 runtime 特性，将存储在 Mach-O 文件中的头文件信息提取出 来，并生成对应的.h 文件。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9naXRodWIuY29tL0Fsb25lTW9ua2V5L01vbmtleURldg==&#34;&gt;MonkeyDev&lt;/span&gt;
+&lt;ul&gt;
+&lt;li&gt;非越狱开发插件，可以进行动态库注入，hook 相关操作&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly93d3cuaG9wcGVyYXBwLmNvbS8=&#34;&gt;Hopper Disassembler&lt;/span&gt;
+&lt;ul&gt;
+&lt;li&gt;Hopper Disassembler 是 Mac 上的一款二进制反汇编器，基本上满足了工作上的反汇编的需要，包括伪代码以及控制流图 (Control Flow Graph)，支持 ARM 指令集并针对 Objective-C 的做了优化。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;ipa下载&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#ipa下载&#34;&gt;#&lt;/a&gt; iPa 下载&lt;/h2&gt;
+&lt;p&gt;iOS App 的逆向的所有操作都是基于 iPa 的操作，所以大前提是要有目标 iPa，这里提供三种方式来进行 iPa 下载，大家可以选择适合自己的方式下载。&lt;/p&gt;
+&lt;h3 id=&#34;方式1三方应用市场&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#方式1三方应用市场&#34;&gt;#&lt;/a&gt; 方式 1：三方应用市场&lt;/h3&gt;
+&lt;p&gt;现在这样的应用市场比较多，多是平替 iTunes 的一些软件&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly93d3cuaTQuY24v&#34;&gt;爱思助手&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly93d3cuaXRvb2xzLmNuLw==&#34;&gt;iTools&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;使用如上的三方软件可以很快的下载对应的 ipa 包，但是由于上述市场都是镜像自 AppStore 的内容，并且自己重签名，所以更新的及时性可能没有那么快，也没有那么全，而且因为是被第三方进行了修改重签，所以内容也不一定保证和官方的一致。如果不在乎这些的话还是可以采取这类的方式下载。&lt;/p&gt;
+&lt;h3 id=&#34;方式2apple-configuration&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#方式2apple-configuration&#34;&gt;#&lt;/a&gt; 方式 2：&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9zdXBwb3J0LmFwcGxlLmNvbS9hcHBsZS1jb25maWd1cmF0b3I=&#34;&gt;Apple Configuration&lt;/span&gt;&lt;/h3&gt;
+&lt;p&gt;可以直接从 Mac 上的 Apple Store 上下载，官方出品，原本是给手机上安装 app 的。用此方式其实是利用了该 App 的 App 下载机制来进行 ipa 导出的&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tva1.sinaimg.cn/large/008vxvgGgy1h84np4us32j310y0io75z.jpg&#34; alt=&#34;image-20221114144926709&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;选择添加 App，然后在弹出的弹窗中选择 App 并且下载&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tva1.sinaimg.cn/large/008vxvgGgy1h84nq4zkpwj30ys0na0vm.jpg&#34; alt=&#34;image-20221114145027227&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;这个时候如果你手机上没有安装该 App，则直接会安装成功，此时我们再点击安装下载，然后就会收到 &lt;code&gt;设备上已经存在相同的App，是否覆盖安装的提示&lt;/code&gt; 的弹窗，此时我们 &amp;lt;font color=&#39;red&#39;&amp;gt; 不要理会 &amp;lt;/font &amp;gt; 这个弹窗。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tva1.sinaimg.cn/large/008vxvgGgy1h84nvzsytmj30u00y6mz0.jpg&#34; alt=&#34;image-20221114145604307&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;然后到如下路径就可以取到对应的 ipa&lt;/p&gt;
+&lt;p&gt;&lt;figure class=&#34;highlight awk&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;~&lt;span class=&#34;regexp&#34;&gt;/Library/&lt;/span&gt;Group Containers&lt;span class=&#34;regexp&#34;&gt;/K36BKF7T3D.group.com.apple.configurator/&lt;/span&gt;Library&lt;span class=&#34;regexp&#34;&gt;/Caches/&lt;/span&gt;Assets&lt;span class=&#34;regexp&#34;&gt;/TemporaryItems/&lt;/span&gt;MobileApps/&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;h3 id=&#34;方式3-dumpapp&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#方式3-dumpapp&#34;&gt;#&lt;/a&gt; 方式 3 &lt;a href=&#34;%5Bhttps://dumpapp.com%5D(https://dumpapp.com/)&#34;&gt;DumpApp&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;是一个第三的网站，同在线砸壳 + ipa 下载的服务，因为我们最终想要的就是一个砸壳之后的 ipa，所以这个网站直接帮我们做好了，只不过是收费的，每个 app 是 9 元，但是有多个境外的 App 市场，比较全面。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tva1.sinaimg.cn/large/008vxvgGgy1h84par73tqj30be07saa1.jpg&#34; alt=&#34;image-20221114154450405&#34; /&gt;&lt;/p&gt;
+&lt;h2 id=&#34;ipa砸壳&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#ipa砸壳&#34;&gt;#&lt;/a&gt; iPa 砸壳&lt;/h2&gt;
+&lt;p&gt;如果 iPa 的获取方式选择方式 3，则可以略过砸壳步骤&lt;/p&gt;
+&lt;p&gt;app 上传到 AppStore 后   苹果使用 fairplay DRM 来加密，就是我们所说的壳 DRM 全称 Digital Rights Management，即数字版权保护。苹果为了保护 App Store 分发的音乐 / 视频 / 书籍 / App 免于盗版，开发了 Fairplay DRM 技术。&lt;/p&gt;
+&lt;p&gt;所有逆向都是建立在砸壳的前提下，砸壳的方式有两种：&lt;/p&gt;
+&lt;h3 id=&#34;静态砸壳&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#静态砸壳&#34;&gt;#&lt;/a&gt; 静态砸壳&lt;/h3&gt;
+&lt;p&gt;就是不依赖程序运行，直接用 ipa 包就可以进行砸壳解密，比如说我已经知道了他的加密算法，或者我通过暴力破解了他的加密算法，然后对 ipa 进行解密，但是这样的方法难度较大，而且如果人家一旦换了加密方式或者有其他的改动，那解密方式就不生效了，常见的静态砸壳工具有以下&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;[fouldecrypt](&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9naXRodWIuY29tL055YU1pc3R5L2ZvdWxkZWNyeXB0&#34;&gt;NyaMisty/fouldecrypt: A lightweight and simpling iOS binary decryptor (github.com)&lt;/span&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9naXRodWIuY29tL0xha3IyMzMvSXJpZGl1bQ==&#34;&gt;Iridium&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;动态砸壳&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#动态砸壳&#34;&gt;#&lt;/a&gt; 动态砸壳&lt;/h3&gt;
+&lt;p&gt;与静态相反，动态砸壳就是依赖运行时的原理来进行解密，不过与其说是解密，倒不如说是内存提取，因为无论 ipa 包用什么加密方式，最终都是解密后运行到内存里面的，所以我们可以认为 &lt;code&gt;一个ipa在内存上的数据是未加密的&lt;/code&gt; ，所以此时我们只要把内存上的数据提取出来即可，整个过程也不涉及到解密操作，及时后面 Apple 更换加密方式，也不影响动态砸壳的过程。&lt;/p&gt;
+&lt;p&gt;动态砸壳的方式和工具有很多，现在基本已经流水线化了，可以使用以下方式和工具来进行处理，前提是要有一个越狱的手机。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC82ODQ0OTAzODkzNDk5OTA0MDA4&#34;&gt;dumpdecrypted&lt;/span&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9qdWVqaW4uY24vcG9zdC82ODQ0OTAzODkzNDk5OTA0MDE0&#34;&gt;Clutch&lt;/span&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;成果检验&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#成果检验&#34;&gt;#&lt;/a&gt; 成果检验&lt;/h3&gt;
+&lt;p&gt;砸壳后需要检查是否砸壳成功，找到对应砸壳后的的 ipa，点进去找到 mach-o 文件，执行如下命令，然后在输出查看 &lt;code&gt;cryptid&lt;/code&gt;  字段如果为 &lt;code&gt;0&lt;/code&gt;  就说明砸壳成功。XXX = mach-o 名字&lt;/p&gt;
+&lt;p&gt;&lt;figure class=&#34;highlight 1c&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;otool -l XXXXX &lt;span class=&#34;string&#34;&gt;|grep cry&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tva1.sinaimg.cn/large/008vxvgGgy1h84ripqxklj30tx02imxg.jpg&#34; alt=&#34;image-20221114170141723&#34; /&gt;&lt;/p&gt;
+&lt;h2 id=&#34;头文件导出&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#头文件导出&#34;&gt;#&lt;/a&gt; 头文件导出&lt;/h2&gt;
+&lt;p&gt;砸壳后的的第一步就是将 ipa 文件的头.h 文件导出，然后根据 头文件的方法和属性进行逆向分析，在找到对应的 hook 点。通常我们使用 class-dump，可以去他的官网下载对应的文件，然后将文件拷贝到对应的目录下。&lt;/p&gt;
+&lt;p&gt;&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;sudo cp class-dump /usr/local/bin   &lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;这一步没什么问题，拷贝完成重启终端就可以调用 class-dump 的方法了.&lt;/p&gt;
+&lt;h3 id=&#34;导出&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#导出&#34;&gt;#&lt;/a&gt; 导出&lt;/h3&gt;
+&lt;p&gt;执行下面的命令，导出头文件，需要注意的是：导出后会有上万个个文件，所以目标目录最好不要选 Desktop 或者其他的根目录&lt;/p&gt;
+&lt;p&gt;&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;class-dump -S -s -H XXXXX -o /path/to/headers/&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;有的时候会收到这样的错误&lt;/p&gt;
+&lt;p&gt;&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;Error:Cannot find offset for address 0xd80000000101534a in stringAtAddress:&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;这是因为项目使用了 Oc 和 Swift 的混编，需要赋予 class-dump 文件权限即可&lt;/p&gt;
+&lt;p&gt;&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;sudo chmod 777 /usr/local/bin/class-dump&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;之后就可以导出成功了。&lt;/p&gt;
+&lt;h2 id=&#34;monkeydev&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#monkeydev&#34;&gt;#&lt;/a&gt; MonkeyDev&lt;/h2&gt;
+&lt;p&gt;这是一个为越狱和非越狱开发人员准备的工具，主要包括四个模块:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Logos Tweak&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;使用&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9naXRodWIuY29tL3RoZW9zL3RoZW9zL3dpa2kvSW5zdGFsbGF0aW9u&#34;&gt; theos&lt;/span&gt; 提供的 &lt;code&gt;logify.pl&lt;/code&gt;  工具将 &lt;code&gt;*.xm&lt;/code&gt;  文件转成 &lt;code&gt;*.mm&lt;/code&gt;  文件进行编译，集成了 &lt;code&gt;CydiaSubstrate&lt;/code&gt; ，可以使用 &lt;code&gt;MSHookMessageEx&lt;/code&gt;  和 &lt;code&gt;MSHookFunction&lt;/code&gt;  来 &lt;code&gt;Hook&lt;/code&gt;  OC 函数和指定地址。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;CaptainHook Tweak&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;使用&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9naXRodWIuY29tL3JwZXRyaWNoL0NhcHRhaW5Ib29rLw==&#34;&gt; CaptainHook&lt;/span&gt; 提供的头文件进行 OC 函数的 Hook 以及属性的获取。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Command-line Tool&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;可以直接创建运行于越狱设备的命令行工具&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;MonkeyApp&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;这是自动给第三方应用集成 Reveal、Cycript 和注入 dylib 的模块，支持调试 dylib 和第三方应用，支持 Pod 给第三放应用集成 SDK，只需要准备一个砸壳后的 ipa 或者 app 文件即可。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;安装&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#安装&#34;&gt;#&lt;/a&gt; 安装&lt;/h3&gt;
+&lt;p&gt;Monkeydev 依赖&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly90aGVvcy5kZXYvZG9jcy9pbnN0YWxsYXRpb24=&#34;&gt; Theos&lt;/span&gt;.Theos 是一个越狱开发工具包，由 iOS 越狱界知名人士 Dustin Howett 开发并分享到 GitHub 上。Theos 与其他越狱开发工具相比，最大特点就是简单：下载安装简单、Logos 语法简单、编译发布简单，可以让使用者将精力都放在开发工作上去。&lt;/p&gt;
+&lt;h4 id=&#34;安装thoes&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#安装thoes&#34;&gt;#&lt;/a&gt; 安装 Thoes&lt;/h4&gt;
+&lt;p&gt;&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;sudo git clone --recursive https://github.com/theos/theos.git /opt/theos&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;h4 id=&#34;安装monkeydev&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#安装monkeydev&#34;&gt;#&lt;/a&gt; 安装 Monkeydev&lt;/h4&gt;
+&lt;p&gt;&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;sudo /bin/sh -c &amp;quot;$(curl -fsSL https://raw.githubusercontent.com/AloneMonkey/MonkeyDev/master/bin/md-install)&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;h4 id=&#34;卸载monkeydev&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#卸载monkeydev&#34;&gt;#&lt;/a&gt; 卸载 Monkeydev&lt;/h4&gt;
+&lt;p&gt;&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;sudo /bin/sh -c &amp;quot;$(curl -fsSL https://raw.githubusercontent.com/AloneMonkey/MonkeyDev/master/bin/md-uninstall)&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;h4 id=&#34;更新monkeydev&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#更新monkeydev&#34;&gt;#&lt;/a&gt; 更新 Monkeydev&lt;/h4&gt;
+&lt;p&gt;&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;sudo /bin/sh -c &amp;quot;$(curl -fsSL https://raw.githubusercontent.com/AloneMonkey/MonkeyDev/master/bin/md-update)&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;h4 id=&#34;安装问题&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#安装问题&#34;&gt;#&lt;/a&gt; 安装问题&lt;/h4&gt;
+&lt;p&gt;在安装过程中，修改用户  &lt;code&gt;profile&lt;/code&gt;  文件时，找不到  &lt;code&gt;MacOSX Package Types.xcspec&lt;/code&gt;  和  &lt;code&gt;MacOSX Product Types.xcspec&lt;/code&gt;  文件&lt;/p&gt;
+&lt;p&gt;&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;File /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Xcode/Specifications/MacOSX Package Types.xcspec not found&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;这个是因为最新的 Xcode14 中 这个路径已经改变，所以原路径无法找到，不过如果大家需要逆向的事 iOS 的 App 到这一步可以不用关心，这个是 MacOS 相关的模板文件。此时打开 Xcode 如果有以下模版文件，并能成功创建工程即可。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tva1.sinaimg.cn/large/008vxvgGgy1h84skm4dlej30li0fbjsb.jpg&#34; alt=&#34;image-20221114173807449&#34; /&gt;&lt;/p&gt;
+&lt;h4 id=&#34;编译报错&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#编译报错&#34;&gt;#&lt;/a&gt; 编译报错&lt;/h4&gt;
+&lt;p&gt;通过上一步的模板文件创建好工程后，直接真机编译运行，这个时候会提示编译错误&lt;/p&gt;
+&lt;p&gt;&lt;figure class=&#34;highlight gradle&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;iOS &lt;span class=&#34;keyword&#34;&gt;file&lt;/span&gt; not found: &lt;span class=&#34;regexp&#34;&gt;/usr/&lt;/span&gt;lib/libstdc++.dylib&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;这是因为 &lt;code&gt;Xcode 10&lt;/code&gt;  之后删除的 &lt;code&gt;libstdc++&lt;/code&gt;  库。可以参考此&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9naXRodWIuY29tL2RibXo1MDIvTW9ua2V5RGV2X1hjb2RlMTQ=&#34;&gt;解决方案&lt;/span&gt;。之后就可以编译成功了，并且手机上可以跑起来。&lt;/p&gt;
+&lt;p&gt;第二个错误是 Fishhook 中的错误，这个是是由于 Fishhook 用的是比较老的版本，本身存在 bug，只要去 github 官网找到 fishhook 最新代码 copy 过来即可。&lt;/p&gt;
+&lt;h3 id=&#34;文件结构&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#文件结构&#34;&gt;#&lt;/a&gt; 文件结构&lt;/h3&gt;
+&lt;p&gt;文件结构如下如图&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://upload-images.jianshu.io/upload_images/1609369-0a4b973075bc5df2.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/854/format/webp&#34; alt=&#34;image-20221114174320781&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;这是一个标准的 MonkeyDemo 的结构&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;TargetApp&lt;/code&gt; ：放目标 &lt;code&gt;ipa&lt;/code&gt;  的文件，将需要逆向的破壳 &lt;code&gt;ipa&lt;/code&gt;  放在此处&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Logos&lt;/code&gt; ：编写相关 &lt;code&gt;hook&lt;/code&gt;  的文件，所有 &lt;code&gt;hook&lt;/code&gt;  操作在此处，但是因为该文件下要用了 logos 语句，有一定的学习成本，所以后面的 hook 函数可以直接写在上面的 MonkeyDeomDyLib.m 中&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;fishhook&lt;/code&gt; ：用来 &lt;code&gt;hook&lt;/code&gt;  系统函数的库&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;上方的 MonkeyDeomDyLib 就是我们即将注入进去的动态库。&lt;/p&gt;
+&lt;h3 id=&#34;动态库注入&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#动态库注入&#34;&gt;#&lt;/a&gt; 动态库注入&lt;/h3&gt;
+&lt;p&gt;运行 demo 后动态库注入成功，控制台会有如下输出&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tva1.sinaimg.cn/large/008vxvgGgy1h84swti61vj31le0qn43z.jpg&#34; alt=&#34;image-20221114174950556&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure class=&#34;highlight erlang-repl&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;🎉!!！congratulations!!！🎉\n👍----------------insert dylib success----------------👍&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;但是如果是和我一样的运行环境，你是大概率看不到的，因为会注入失败。这里尝试了两种方式&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;insert_dylib 同样注入失败，&lt;/li&gt;
+&lt;li&gt;optool 注入成功&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;下面说下 optool 使用&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;下载编译 optool&lt;/p&gt;
+&lt;p&gt;&lt;figure class=&#34;highlight awk&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;git clone https:&lt;span class=&#34;regexp&#34;&gt;//gi&lt;/span&gt;thub.com&lt;span class=&#34;regexp&#34;&gt;/alexzielenski/&lt;/span&gt;optool.git&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;cd optool&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;git submodule update --init --recursive&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;找到编译产物&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tva1.sinaimg.cn/large/008vxvgGgy1h84t2mlrmaj30aa0b7wer.jpg&#34; alt=&#34;image-20221114175525945&#34; /&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;把编译产物拷贝到 &lt;code&gt;/opt/MonkeyDev/bin&lt;/code&gt;  下&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;修改 &lt;code&gt;/opt/MonkeyDev/Tools/pack.sh&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;顶部插入&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;OPTOOL=&amp;quot;$&amp;#123;MONKEYDEV_PATH&amp;#125;/bin/optool&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;同上面一样&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;修改插入动态库工具代码&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;quot;$OPTOOL&amp;quot; install -c load -p &amp;quot;@executable_path/Frameworks/lib&amp;quot;&amp;quot;$&amp;#123;TARGET_NAME&amp;#125;&amp;quot;&amp;quot;Dylib.dylib&amp;quot; -t &amp;quot;$&amp;#123;BUILD_APP_PATH&amp;#125;/$&amp;#123;APP_BINARY&amp;#125;&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;然后保存重新运行即可注入成功&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;pod使用&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#pod使用&#34;&gt;#&lt;/a&gt; pod 使用&lt;/h3&gt;
+&lt;p&gt;在调试 App 时候我们会用到类似 lookIn 或者 FLEX 的等工具来看 App 的层级结构和 沙盒文件，同样需要 pod 来接入。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;像平时创建 podfile 文件一样 进入到工程目录 &lt;code&gt;pod init&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;在生成的 podfile 中添加 pod，但是要注意是在 &amp;lt;font color=&#39;red&#39;&amp;gt; DemoLib &amp;lt;/font &amp;gt; 的 trarget 中添加，因为我们的 pod 是打入动态库的，然后由动态库带入 App&lt;/p&gt;
+&lt;p&gt;&lt;figure class=&#34;highlight elixir&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;19&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;comment&#34;&gt;# Uncomment the next line to define a global platform for your project&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;comment&#34;&gt;# platform :ios, &amp;#x27;9.0&amp;#x27;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;target &lt;span class=&#34;string&#34;&gt;&amp;#x27;Demo&amp;#x27;&lt;/span&gt; &lt;span class=&#34;keyword&#34;&gt;do&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &lt;span class=&#34;comment&#34;&gt;# Comment the next line if you don&amp;#x27;t want to use dynamic frameworks&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  use_frameworks!&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;end&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;target &lt;span class=&#34;string&#34;&gt;&amp;#x27;DemoDylib&amp;#x27;&lt;/span&gt; &lt;span class=&#34;keyword&#34;&gt;do&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &lt;span class=&#34;comment&#34;&gt;# Comment the next line if you don&amp;#x27;t want to use dynamic frameworks&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  use_frameworks!&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    pod &lt;span class=&#34;string&#34;&gt;&amp;#x27;FLEX&amp;#x27;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    pod &lt;span class=&#34;string&#34;&gt;&amp;#x27;LookinServer&amp;#x27;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;end&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;然后 &lt;code&gt;pod install&lt;/code&gt;  即可看到效果&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tva1.sinaimg.cn/large/008vxvgGgy1h85lo8xilij31b90u0ada.jpg&#34; alt=&#34;image-20221115102451908&#34; /&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;代码hook&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#代码hook&#34;&gt;#&lt;/a&gt; 代码 Hook&lt;/h3&gt;
+&lt;p&gt;通过 Lookin 我们可以找到入手点和对应的类名，然后通过之前导出的头文件可以查看类名对应的函数，接下来就是要看下函数里面做了哪些事情，就要用到 Hook 手段，MonkeyDev 给我们封装好了 Hook 相关的方法，包括 OC 和 C 的 Hook 函数&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;CHDeclareClass&lt;/p&gt;
+&lt;p&gt;注册类名。也就是注册要被 hook 的函数所在的类，比如&lt;/p&gt;
+&lt;p&gt;&lt;figure class=&#34;highlight plaintext&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;CHDeclareClass(MYViewController)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;CHOptimizedMethod1&lt;/p&gt;
+&lt;p&gt;hook 实例方法，你会发现后面跟了数字 1~10，代表被 hook 的函数的参数的个数，比如我将要 hook 的函数只有一个参数 那么就使用 CHOptimizedMethod1 参数含义为&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;第一个参数，一般传 self&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;第二个参数，传返回值类型，没有返回值就是 void&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;第三个参数，函数所在的类名&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;第四个参数，方法名&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;第五个参数，函数参数的类型&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;第六个参数，函数参数的变量&lt;/p&gt;
+&lt;p&gt;其中第五第六个参数在 CHOptimizedMethod1 ~10 中会重复 1~10 次&lt;/p&gt;
+&lt;p&gt;&lt;figure class=&#34;highlight plaintext&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;CHOptimizedMethod1(self, void, MYViewController, appMethod, id, para) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    NSLog(@&amp;quot;appMethod被Hook = %@&amp;quot;, para);&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;CHOptimizedClassMethod3&lt;/p&gt;
+&lt;p&gt;hook 类方法，所有函数定义同上&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;CHConstructor 结构&lt;/p&gt;
+&lt;p&gt;用来注册刚才的 hook 操作&lt;/p&gt;
+&lt;p&gt;&lt;figure class=&#34;highlight plaintext&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;CHConstructor&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  // 注册将要hook的类&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    CHLoadLateClass(MYViewController);&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;	// 注册将要hook 的方法&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    CHHook1(MYViewController, appMethod);&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;上面流程执行完成后就可以看到函数被 Hook 了&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;hopper-disassembler&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#hopper-disassembler&#34;&gt;#&lt;/a&gt; Hopper Disassembler&lt;/h2&gt;
+&lt;p&gt;上面的步骤讲了如何通过 lookin 或者 reveal 等工具来定位类名，然后通过类名在头文件中找到函数名，然后通过 hook 手段来改变函数的一些表现，但是在如何没有拿到.m 文件的前提下看到某个函数的实现呢？比如一个函数中都做了哪些操作，调用了哪些其他函数，以及调用链是怎样的？&lt;/p&gt;
+&lt;p&gt;这个时候就需要用到 &lt;code&gt;Hopper Disassembler&lt;/code&gt;  或者 &lt;code&gt;IDA Pro&lt;/code&gt;  这样的工具了，不过目前遇到的困难是在笔者的系统环境下，这两个软件的破解版无法安装，而且 &lt;code&gt;IDA Pro&lt;/code&gt;  的官方试用版还不支持 Arm 的汇编，所以只能使用 Hopper Disassembler 来举例子。打开软件，将 &lt;code&gt;对应App 的Mach-o&lt;/code&gt;  文件拖入 Hopper 中等待它分析完成&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tva1.sinaimg.cn/large/008vxvgGgy1h85mc4b62oj31ec0u075n.jpg&#34; alt=&#34;image-20221115104755241&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;处理完后的界面左边会显示方法名，支持搜索查询，中间区域显示的是汇编代码，我们搜索一个在之前 dump 出的头文件中的一个函数名试下。&lt;/p&gt;
+&lt;p&gt;&lt;figure class=&#34;highlight plaintext&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;[XXXXXXXX listenerDownloadLyricWithSongId:resultBlock:]&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;可以看到中间的部分显示出来函数所对应的汇编代码&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tva1.sinaimg.cn/large/008vxvgGgy1h861n7q3isj317b0u0dlg.jpg&#34; alt=&#34;image-20221115193733635&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;然后按快捷键 &lt;code&gt;Option+enter&lt;/code&gt;  即可转为伪 OC 代码，虽然包含一些的寄存器信息，但是也足以分析了。同时双击可以跳转到对应的函数内部。&lt;/p&gt;
+&lt;h2 id=&#34;最后&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#最后&#34;&gt;#&lt;/a&gt; 最后&lt;/h2&gt;
+&lt;p&gt;以上就是目前的逆向调研过程，这里先记录下，后面还会深入研究，有新的发现会同步更新此文章。&lt;/p&gt;
+ ]]></description>
+        </item>
+    </channel>
+</rss>

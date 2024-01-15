@@ -1,0 +1,373 @@
+<?xml version="1.0"?>
+<rss version="2.0">
+    <channel>
+        <title>Molier • Posts by &#34;crash防护&#34; tag</title>
+        <link>https://oliverqueen.cn</link>
+        <description>iOS 开发 移动App 博客 杂谈 随笔 相册</description>
+        <language>zh-CN</language>
+        <pubDate>Sat, 30 Dec 2023 22:16:08 +0800</pubDate>
+        <lastBuildDate>Sat, 30 Dec 2023 22:16:08 +0800</lastBuildDate>
+        <category>欢迎页</category>
+        <category>网络</category>
+        <category>底层</category>
+        <category>DNS解析</category>
+        <category>LocalDNS</category>
+        <category>OpenGL</category>
+        <category>UI</category>
+        <category>动画</category>
+        <category>性能优化</category>
+        <category>xcode</category>
+        <category>cocoapods</category>
+        <category>podfile</category>
+        <category>webview</category>
+        <category>hook</category>
+        <category>runtime</category>
+        <category>翻译</category>
+        <category>优化</category>
+        <category>国外文献</category>
+        <category>httpdns</category>
+        <category>Cocoapods</category>
+        <category>架构</category>
+        <category>AlertView</category>
+        <category>Hook</category>
+        <category>杂谈</category>
+        <category>Hexo</category>
+        <category>个人博客</category>
+        <category>网站</category>
+        <category>屏幕适配</category>
+        <category>iOS 11</category>
+        <category>评论插件</category>
+        <category>总结</category>
+        <category>回味2017展望2018</category>
+        <category>热修复</category>
+        <category>JSPath</category>
+        <category>swift</category>
+        <category>网络请求</category>
+        <category>Swift</category>
+        <category>音频</category>
+        <category>唱吧</category>
+        <category>K歌</category>
+        <category>AVFoundation</category>
+        <category>git</category>
+        <category>效率工作</category>
+        <category>回首2018展望2019</category>
+        <category>代码版本控制</category>
+        <category>iOS</category>
+        <category>Crash防护</category>
+        <category>Apple登录</category>
+        <category>WWDC2022</category>
+        <category>逆向</category>
+        <category>算法</category>
+        <category>C语言</category>
+        <category>排序</category>
+        <item>
+            <guid isPermalink="true">https://oliverqueen.cn/2021-05-03-iOS%20Crash%E9%98%B2%E6%8A%A4%E4%BD%A0%E7%9C%8B%E8%BF%99%E4%B8%AA%E5%B0%B1%E5%A4%9F%E4%BA%86-%E4%B8%8A%E7%AF%87/</guid>
+            <title>iOS Crash防护你看这个就够了 - 上篇</title>
+            <link>https://oliverqueen.cn/2021-05-03-iOS%20Crash%E9%98%B2%E6%8A%A4%E4%BD%A0%E7%9C%8B%E8%BF%99%E4%B8%AA%E5%B0%B1%E5%A4%9F%E4%BA%86-%E4%B8%8A%E7%AF%87/</link>
+            <category>iOS</category>
+            <category>Crash防护</category>
+            <pubDate>Sat, 30 Dec 2023 22:16:08 +0800</pubDate>
+            <description><![CDATA[ &lt;link rel=&#34;stylesheet&#34; class=&#34;aplayer-secondary-style-marker&#34; href=&#34;/assets/css/APlayer.min.css&#34;&gt;&lt;script src=&#34;/assets/js/APlayer.min.js&#34; class=&#34;aplayer-secondary-script-marker&#34;&gt;&lt;/script&gt;&lt;h1 id=&#34;0x1-为什么要做crash防护&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#0x1-为什么要做crash防护&#34;&gt;#&lt;/a&gt; 0x1 为什么要做 Crash 防护&lt;/h1&gt;
+&lt;p&gt;在产品开发过程中 Crash 率是一个很重要的指标，也是一个团队中几乎所有的部门都应该关注或者去参与提升的一个指标，他不仅代表着整个产品的质量，也是一个团队整体技术能力的体现。更低的 Crash 率不但能让产品获得更好的用户口碑，在整个流程中也能让团队成员获得更多的成长，加深对 iOS 系统底层的理解，为今后的开发带了更大的帮助。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://image-1256056152.cos.ap-nanjing.myqcloud.com/1111111111.jpeg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;h1 id=&#34;0x2-为什么要写这篇文章&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#0x2-为什么要写这篇文章&#34;&gt;#&lt;/a&gt; 0x2 为什么要写这篇文章&lt;/h1&gt;
+&lt;p&gt;起因也是因为自己的项目踩了 FB 的 SDK 的坑：2020.7.10，FB 后台下发数据错误，导致大量使用 FB SDK 的 App 发生启动 Crash，影响用户之多，范围之大，再加上当时包括我们的大部分 App 也缺乏相关的防护或者是容错处理，Crash 率瞬间飙升，重新发版又要走发布流程，只能依赖 FB 后台的修复，当时束手无策十分被动，所以决定自己做一套较为完整的 Crash 防护体系，来避免这样的场景再次发生。第二个目的就是，发生问题后我也第一之间查阅了网上的一些资料和其他团队的做法，发现大家的方式各有千秋，方法不同，效果不同，所以我也决定把市面上能找到的好的思路和方法再结合自己的一些想法和经验记录下来。最后也是因为知识是要沉淀、积累和分享的，也算是巩固和加深自己的理解吧。&lt;/p&gt;
+&lt;h1 id=&#34;0x3-怎么做&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#0x3-怎么做&#34;&gt;#&lt;/a&gt; 0x3 怎么做&lt;/h1&gt;
+&lt;p&gt;其实当时 Crash 的场景很简单，本来一个 Dictionary 参数 FB 后台却下发了个 String 类型的数据，这样一来解析时候必然会 Crash，解决的话其实只要做一层参数安全校验即可。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tva1.sinaimg.cn/large/008i3skNly1gq58dki0g7j31ai0u01fd.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tva1.sinaimg.cn/large/008i3skNly1gq58c923pfj31020t8k5g.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;但是这么简单的问题，大部分 App 都没处理好，证明在流程上一定有大家注意不到的地方，暴露出来的只是冰山一角，我们机制一定存在着某种问题，或者存在可以优化的地方。&lt;/p&gt;
+&lt;p&gt;要想避免这种情况，就要先梳理出处理 Crash 的流程：&lt;/p&gt;
+&lt;h2 id=&#34;icrash处理流程&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#icrash处理流程&#34;&gt;#&lt;/a&gt; I：Crash 处理流程&lt;/h2&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tva1.sinaimg.cn/large/008i3skNly1gq6lcsxy6jj31bw0u0n1w.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;在 iOS 系统中基本可以总结出这四个步骤，&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Crash 防护 - 通过 Hook 等手段，对一些类似容器类进行入参校验等措施，来进来避免 Crash 的发生&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Crash 拦截 - 如果第一步防护失败，那么在 Crash 走到这一步就要进行拦截，要让我们发现异常&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Crash 上报 - 对防护的、捕获的 Crash 进行防护，生成有效的日志进行上报，尽可能的还原堆栈。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Crash 后续流程 - Crash 发生后如何做才能最大限度的保护用户体验，如何优雅的 Crash&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;iicrash防护&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#iicrash防护&#34;&gt;#&lt;/a&gt; II：Crash 防护&lt;/h2&gt;
+&lt;p&gt;Crash 防护方式主要分两种：针对非内存问题通常采用 AOP 方式，内存问题采用 zombie 对象的方式，&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tva1.sinaimg.cn/large/008i3skNly1gq6lrlbl0vj30qi07mdg5.jpg&#34; alt=&#34;&#34; /&gt;&lt;br /&gt;
+&lt;img data-src=&#34;https://cdn.cdnjson.com/tva1.sinaimg.cn/large/008i3skNly1gq6ls764zyj30qm06cjrq.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;h3 id=&#34;aopbr&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#aopbr&#34;&gt;#&lt;/a&gt; AOP：&amp;lt;br&amp;gt;&lt;/h3&gt;
+&lt;p&gt;iOS 中 AOP 的相关知识网上线程的代码也很多，这里就不在赘述，但是在 AOP 这种频繁调用的场景中就需要注意的地方和坑点比较多。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;AOP 的影响范围问题：当时用了普通的方式对数组相关的方法进行了 Hook，结果上线后发现大量的类似 Crash。 &lt;code&gt;[UIKeyboardLayoutStar release]: message sent to deallocated instance UIKeyboardLayoutStar&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tva1.sinaimg.cn/large/008i3skNly1gq6m6njbm8j30o40d0q8q.jpg&#34; alt=&#34;&#34; /&gt;&lt;br /&gt;
+在通过一些其他场景可以判断出是因为 HookNSMutableArr 的相关方法，导致系统类的调用受到了影响。&lt;/p&gt;
+&lt;p&gt;通过 Xcode 调试发现，因为 Hook 的本质就是在原有的系统调用前插入一个用户自定义的函数进行方法交换，那么在某种极端情况下（比如多线程），传入该函数的变量被释放，这样一来再走到原本系统调用的时候正常释放时就会出现重复释放的情况。大概的流程为&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tva1.sinaimg.cn/large/008i3skNly1gq6mhmeprhj31hm0fu75v.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;该场景在测试过程中很难复现，但是一旦到了线上，用户量覆盖够大后该问题就会显现出来。解决方式很简单，Hook 尽量在 MRC 下进行，使用 autorelease pool 进行包装。保证内部变量在当前的 runloop 结束时候进行释放。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;AOP 的性能问题：上面说了 AOP 的原理是会多一层方法调用，那么再结合 iOS 的方法转发流程可想而知，AOP 必定会造成性能的损耗，而且在 Crash 防护场景下频繁调用，性能问题一定不能忽略。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tva1.sinaimg.cn/large/008i3skNly1gq6mswloauj310o0u0jx8.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;通过上图看出，方法调用流程最终会返回出对应的 IMP 指针供外部调用，作为动态语言，OC 无法确定开发者会再什么时候插入或者交换哪个函数，所以必须通过这一套流程进行类似校验的逻辑。&lt;/p&gt;
+&lt;p&gt;使用过 AOP 的同学一定知道在 AOP 前会先做一层校验&lt;/p&gt;
+&lt;p&gt;&lt;figure class=&#34;highlight reasonml&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;17&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;+(void)hookClass:(Class)classObject isClassMetohd:(BOOL)classMethod fromSelector:(SEL)fromSelector toSelector:(SEL)toSelector &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    Class &lt;span class=&#34;keyword&#34;&gt;class&lt;/span&gt; = classObject;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    Method fromMethod = &lt;span class=&#34;keyword&#34;&gt;class&lt;/span&gt;&lt;span class=&#34;constructor&#34;&gt;_getInstanceMethod(&lt;span class=&#34;params&#34;&gt;class&lt;/span&gt;, &lt;span class=&#34;params&#34;&gt;fromSelector&lt;/span&gt;)&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    Method toMethod = &lt;span class=&#34;keyword&#34;&gt;class&lt;/span&gt;&lt;span class=&#34;constructor&#34;&gt;_getInstanceMethod(&lt;span class=&#34;params&#34;&gt;class&lt;/span&gt;, &lt;span class=&#34;params&#34;&gt;toSelector&lt;/span&gt;)&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;comment&#34;&gt;//  添加前进行检测&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;keyword&#34;&gt;if&lt;/span&gt; (classMethod) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        &lt;span class=&#34;keyword&#34;&gt;class&lt;/span&gt; = &lt;span class=&#34;keyword&#34;&gt;object&lt;/span&gt;&lt;span class=&#34;constructor&#34;&gt;_getClass(&lt;span class=&#34;params&#34;&gt;classObject&lt;/span&gt;)&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        fromMethod = &lt;span class=&#34;keyword&#34;&gt;class&lt;/span&gt;&lt;span class=&#34;constructor&#34;&gt;_getClassMethod(&lt;span class=&#34;params&#34;&gt;class&lt;/span&gt;, &lt;span class=&#34;params&#34;&gt;fromSelector&lt;/span&gt;)&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        toMethod = &lt;span class=&#34;keyword&#34;&gt;class&lt;/span&gt;&lt;span class=&#34;constructor&#34;&gt;_getClassMethod(&lt;span class=&#34;params&#34;&gt;class&lt;/span&gt;, &lt;span class=&#34;params&#34;&gt;toSelector&lt;/span&gt;)&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;keyword&#34;&gt;if&lt;/span&gt;(&lt;span class=&#34;keyword&#34;&gt;class&lt;/span&gt;&lt;span class=&#34;constructor&#34;&gt;_addMethod(&lt;span class=&#34;params&#34;&gt;class&lt;/span&gt;, &lt;span class=&#34;params&#34;&gt;fromSelector&lt;/span&gt;, &lt;span class=&#34;params&#34;&gt;method_getImplementation&lt;/span&gt;(&lt;span class=&#34;params&#34;&gt;toMethod&lt;/span&gt;)&lt;/span&gt;, &lt;span class=&#34;keyword&#34;&gt;method&lt;/span&gt;&lt;span class=&#34;constructor&#34;&gt;_getTypeEncoding(&lt;span class=&#34;params&#34;&gt;toMethod&lt;/span&gt;)&lt;/span&gt;)) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        &lt;span class=&#34;keyword&#34;&gt;class&lt;/span&gt;&lt;span class=&#34;constructor&#34;&gt;_replaceMethod(&lt;span class=&#34;params&#34;&gt;class&lt;/span&gt;, &lt;span class=&#34;params&#34;&gt;toSelector&lt;/span&gt;, &lt;span class=&#34;params&#34;&gt;method_getImplementation&lt;/span&gt;(&lt;span class=&#34;params&#34;&gt;fromMethod&lt;/span&gt;)&lt;/span&gt;, &lt;span class=&#34;keyword&#34;&gt;method&lt;/span&gt;&lt;span class=&#34;constructor&#34;&gt;_getTypeEncoding(&lt;span class=&#34;params&#34;&gt;fromMethod&lt;/span&gt;)&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#125; &lt;span class=&#34;keyword&#34;&gt;else&lt;/span&gt; &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        &lt;span class=&#34;keyword&#34;&gt;method&lt;/span&gt;&lt;span class=&#34;constructor&#34;&gt;_exchangeImplementations(&lt;span class=&#34;params&#34;&gt;fromMethod&lt;/span&gt;, &lt;span class=&#34;params&#34;&gt;toMethod&lt;/span&gt;)&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;br /&gt;
+ 所以在方法我们在上面代码中的 toSelector 中 当我们需要调用回原方法时直接调用对应的函数指针即可&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tva1.sinaimg.cn/large/008i3skNly1gq6rm11f7dj30nm05a74e.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;最终我对直接调用 IMP 的方法做了测试，分别是 Demo 中和 App 中的某一个场景，测试数据如下，对比结果还是较为明显。这也就是为什么 Swift 或者一些其他静态语言比 OC 快的原因。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tva1.sinaimg.cn/large/008i3skNly1gq6rw5k68mj313c0r6n13.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;zombiebr&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#zombiebr&#34;&gt;#&lt;/a&gt; Zombie：&amp;lt;br&amp;gt;&lt;/h3&gt;
+&lt;p&gt;使用僵尸对象来解决内存问题一直是苹果主推的方式，Xcode 也有相关设置，在 Debug 下打开相应开关，但是一旦把该功能放到线上做防护或监控就要考虑很多的问题。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;zombie 入口问题：换句话说就是在哪个地方生成 zombie 对象，看了一些相关的 SDK 都是采用 Dealloc 作为入口函数，不是不行，只是不是最优。原因有两点:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;1: 苹果已经不建议在 ARC 下主动调用 dealloc，目前只能采用 performSelector 或者其他动态调用的方式。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;2: 容易漏掉  &lt;code&gt;Objc_destructInstance&lt;/code&gt; ，所有的成员变量、属性都会在这个函数中释放，如果漏掉这个函数就会生成一个并不干净的僵尸对象，内存占用过高，白白浪费内存空间。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;综上两点我最终选择在 Free 函数中生成僵尸对象&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tva1.sinaimg.cn/large/008i3skNly1gq6sr4ebj5j30vx0u0dhq.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;zombie 内存阈值问题：僵尸对象会占用内存空间，然而在线上环境操作内存一定要小心且一定要有一套完整的逻辑，当超过某一个内存阈值后需要及时清空僵尸对象。内存阈值的确定便成了关键，这里会遇到两个问题：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&amp;lt;font color=&#39;red&#39;&amp;gt; 1：内存问题一定会和机型强相关，如何根据不同的机型调整不同的阈值？ &amp;lt;/font&amp;gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&amp;lt;font color=&#39;red&#39;&amp;gt; 2：如何做到根据线上情况灵活动态调整？&amp;lt;/font&amp;gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;我们的底线是在加入 zombie 后不能触发 memorywarning，所以我先对大部分机型做了 memorywarning 阈值测试：&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tva1.sinaimg.cn/large/008i3skNly1gq6t2xweqcj312g0sg0xq.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;从上图可以看出当 App 占用内存达到总内存的 57%~69% 时候会触发内存警告，而且由于 iphone 中有一部分内存是系统保留内存并不会给到开发者，所以我们可用的也就 50% 左右，我总结出如下公式：&lt;/p&gt;
+&lt;p&gt;公式 1：不能触发内存警告  &lt;code&gt;Y = 0.5 * deviceMem – currentAppMem&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;公式 2: 僵尸对象的内存占用再大也不会超过 App 本身的内存  &lt;code&gt;Y = min ( ( 0.5 * deviceMem – currentAppMem ) , currentAppMem)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;上面两个公式看似完美，但是还是有优化的地方，因为并不是 APP 中所有的变量都有可能成为僵尸对象，可能只是其中的某一部分需要被监控，所以得到最终的内存阈值计算公式：&lt;/p&gt;
+&lt;p&gt;&amp;lt;font color=red size=5 face=&amp;quot;黑体&amp;quot;&amp;gt;Y = min ( ( 0.5 * deviceMem – currentAppMem ) , currentAppMem / N )&amp;lt;/font&amp;gt;&lt;/p&gt;
+&lt;p&gt;因为 app 占用内存随时在变，所以可以加一个定时器每隔一定时间去更新该值。&lt;/p&gt;
+&lt;p&gt;上面公式的 N 还有一个好处就是我们可以后台动态下发，根据线上内存引起 Crash 量，如果 Crash 量大，那可能就需要更大的内存阈值去保存僵尸对象，就可以把 N 调小，反正调大，这样就可以无视机型的差异根据 Crash 的情况进行远程配置。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tva1.sinaimg.cn/large/008i3skNly1gq6tozx4odj316l0u079c.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;通过如图的线上数据可以看出 随着 N 的减小，zombie 的内存阈值在增加，但是并不会超过内存警告阈值，确保了内存健康。&lt;/p&gt;
+&lt;p&gt;下图表示了不同的 N 值对应不同的捕获野指针问题的数量，各自 App 可以根据自己的业务情况进行调整。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tva1.sinaimg.cn/large/008i3skNly1gq6tse6e79j31zo0kkk0x.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;zombie 更新策略问题：目前大家的做法都是在加入新的 zombie 对象时候检查是否超过阈值，达到阈值后删掉之前的 zombie 对象再加入新的对象，这样的清理逻辑是依赖于新 zombie 对象的加入，如果没有新对象的加入那么缓存空间也不会有变化，zombie 空间一旦生成就无法删掉，无法做到缓存的自清理，等于 App 无故增大了内存占用。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tva1.sinaimg.cn/large/008i3skNly1gq6u18gh6cj30wa0saad2.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;同样借鉴 LRU 最近最久未使用的逻辑，每隔 30s 会检测下缓存情况，超过 30s 还未被使用的 zombie 对象将被删除，30s 是一个经验值，通过大量测试发现，内存问题一般会发生在对象被销毁的 30s 内，超过 30s 再出现的概率及小。这样可以做到缓存自清理的逻辑。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tva1.sinaimg.cn/large/008i3skNly1gq6u92wzy3j30n00si41c.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;通过 Instrument 测试发现该 zombie 逻辑并不会对 App 本身的内存造成太大的影响。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tva1.sinaimg.cn/large/008i3skNly1gq6ucxjfn5j31c60u078q.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;
+			&lt;script&gt;
+				console.error(&#34;Error: [hexo-tag-aplayer] Specified asset file not found ( https://molier-1256056152.cos.ap-guangzhou.myqcloud.com/%E5%B0%B9%E6%98%94%E7%9C%A0%20-%20%E5%A5%94%E8%B5%B4%E6%98%9F%E7%A9%BA.mp3)&#34;);
+			&lt;/script&gt;&lt;/p&gt;
+ ]]></description>
+        </item>
+        <item>
+            <guid isPermalink="true">https://oliverqueen.cn/2021-05-05-iOS-Crash%E9%98%B2%E6%8A%A4%E4%BD%A0%E7%9C%8B%E8%BF%99%E4%B8%AA%E5%B0%B1%E5%A4%9F%E4%BA%86-%E4%B8%8B%E7%AF%87/</guid>
+            <title>iOS Crash防护你看这个就够了-下篇</title>
+            <link>https://oliverqueen.cn/2021-05-05-iOS-Crash%E9%98%B2%E6%8A%A4%E4%BD%A0%E7%9C%8B%E8%BF%99%E4%B8%AA%E5%B0%B1%E5%A4%9F%E4%BA%86-%E4%B8%8B%E7%AF%87/</link>
+            <category>iOS</category>
+            <category>Crash防护</category>
+            <pubDate>Wed, 05 May 2021 10:23:42 +0800</pubDate>
+            <description><![CDATA[ &lt;link rel=&#34;stylesheet&#34; class=&#34;aplayer-secondary-style-marker&#34; href=&#34;/assets/css/APlayer.min.css&#34;&gt;&lt;script src=&#34;/assets/js/APlayer.min.js&#34; class=&#34;aplayer-secondary-script-marker&#34;&gt;&lt;/script&gt;&lt;h1 id=&#34;0x1-previously&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#0x1-previously&#34;&gt;#&lt;/a&gt; 0x1: Previously&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&#34;https://oliverqueen.cn/2021/05/03/iOS%20Crash%E9%98%B2%E6%8A%A4%E4%BD%A0%E7%9C%8B%E8%BF%99%E4%B8%AA%E5%B0%B1%E5%A4%9F%E4%BA%86-%E4%B8%8A%E7%AF%87/&#34;&gt;上篇&lt;/a&gt; 中讲到了 Crash 处理流程分为四个环节，也分析了 Crash 防护的方法，本章来讲下其余三个环节。&lt;/p&gt;
+&lt;h1 id=&#34;0x2-crash的拦截&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#0x2-crash的拦截&#34;&gt;#&lt;/a&gt; 0x2: Crash 的拦截&lt;/h1&gt;
+&lt;p&gt;所有的未被防护住的 Crash 最终会走到这里，在这里我们必须要保证拦截的  &lt;code&gt;全面性&lt;/code&gt; 、 &lt;code&gt;稳定性&lt;/code&gt; 尽可能多的拦截到所有类型的异常，同时拦截逻辑本身不能产生异常。那么我们需要通过以下几个方面去考虑。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fdingyue.ws.126.net%2F2020%2F0504%2Fa0ef0444j00q9saus002gc000xc00irm.jpg&amp;amp;refer=http%3A%2F%2Fdingyue.ws.126.net&amp;amp;app=2002&amp;amp;size=f9999,10000&amp;amp;q=a80&amp;amp;n=0&amp;amp;g=0n&amp;amp;fmt=jpeg?sec=1622826899&amp;amp;t=2b1dd016c1ac10c52097431b7fa9af7d&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;i-crash类型&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#i-crash类型&#34;&gt;#&lt;/a&gt; I: Crash 类型&lt;/h2&gt;
+&lt;p&gt;和多数操作系统一样，iOS 的异常也基本分为  &lt;code&gt;用户层&lt;/code&gt;   &lt;code&gt;系统底层&lt;/code&gt;   &lt;code&gt;信号&lt;/code&gt;  这三个类别，接下来我们看下每种异常都做了哪些事情&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tva1.sinaimg.cn/large/008i3skNly1gq7dqhr2e2j31860qg79l.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Mach Exception &amp;lt;br&amp;gt;&lt;br /&gt;
+Mach 异常，分为两种情况，第一种是本身就是硬件层面或者系统层面的异常，这个大家比较好理解，因为 mach 是微内核，所以底层的内核级别的包括硬件的异常都是 mach 异常。另一种是 iOS 系统独有的逻辑或者说是苹果独有的。就是用户层面的异常也都首先下沉到 mach 层再发出来，也等于是另一种意义上的 mach 异常。苹果官方文档上写的是为了统一机制才做了这样的处理，但是没有说具体原因。他的触发流程大概为下图&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tva1.sinaimg.cn/large/008i3skNly1gq7yp0q2aaj30f60uqtaf.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;然后我去看 Runtime 的源码进一步证明了这个说法，runloop 中大量使用这种方式监听 mach 异常消息，一旦 Crash 随时准备打破循环，因为系统也需要监听 crash，统一出口将对监听来说对系统将变得非常方便。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tva1.sinaimg.cn/large/008i3skNly1gq7yvd5gpvj30pc02mt9o.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;根据代码上下文可以判断出，苹果会监听统一的异常端口，在出现异常后进行相应的操作，也印证了我当时的推断。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Exception &amp;lt;br&amp;gt;&lt;br /&gt;
+ 很常见的异常，触发流程大概为&lt;br /&gt;
+&lt;img data-src=&#34;https://cdn.cdnjson.com/tva1.sinaimg.cn/large/008i3skNly1gq7z1qkeksj30g60lkaax.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;signal &amp;lt;br&amp;gt;&lt;/p&gt;
+&lt;p&gt;signal 的产生流程大概分为几种情况&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;由于  &lt;code&gt;MachExcption&lt;/code&gt;  转换而成的 signal&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;由于 Exception 而发出的 abort 信号&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;用户自定义的信号&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;但是需要注意一点：&amp;lt;font color=red size=3 face=&amp;quot;黑体&amp;quot;&amp;gt; 收到 signal 不一定会 Crash，但是 Crash 一定会有 Signal 发出 &amp;lt;/font&amp;gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;ii-crash传递流程&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#ii-crash传递流程&#34;&gt;#&lt;/a&gt; II: Crash 传递流程&lt;/h2&gt;
+&lt;p&gt;上面分析了每种 Crash 的类型，那么这三种类型的 Crash 是如何在 App 生命周期中传递的呢？他们又是如何相互转化以及相互之间有什么关系呢？&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tva1.sinaimg.cn/large/008i3skNly1gq7z8sxdxoj313o0n07hs.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;帮大家提取下上图中的几个关键信息&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;1：Exception 最终会转化为 Mach Exception&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;2：通过 Mach 端口拦截的较为全面&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;3：如果发生了 exception 那么就不会抛出对应的 signal 只能抛出 abort ();&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;4：通过捕获 signal 是无法拦截到 exception。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;iii-拦截的选择&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#iii-拦截的选择&#34;&gt;#&lt;/a&gt; III: 拦截的选择&lt;/h2&gt;
+&lt;p&gt;通过上面的分析大家一定会说通过 Mach 端口的拦截更加全面，毕竟苹果自己也在用。但是在实际使用中有一个问题，mach 会拦截所有的异常以及信号量，也就是随便一个操作（比如发一个自定义 signal 等）可能都被 mach 捕获，那么如果在其捕获回调中再进行捕获就会很容易发生死锁，而且容易和系统的处理产生冲突。当时看了 PLCrash 的文档，也看到了开发者写的一句话：&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tva1.sinaimg.cn/large/008i3skNly1gq7znanxjrj315y03odjv.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;这样说明了大家确实被坑过。&lt;/p&gt;
+&lt;p&gt;那接下来只剩 signal 和 exception，其实细心的同学早已发现这两个的优缺点是一个互补的状态&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;singal 能捕获除 Exception 之外的所有异常。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;exception 只能获取应用层的异常而对信号量无法处理&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;那么最终的方式采用 singnal + exception 的方式进行捕获，最终的流程为：&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tva1.sinaimg.cn/large/008i3skNly1gq7zrbfy5xj30c40okdgu.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;h2 id=&#34;iv-坑点&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#iv-坑点&#34;&gt;#&lt;/a&gt; IV: 坑点&lt;/h2&gt;
+&lt;p&gt;上面的流程图可以看出在每一个 CustomHandle 之前都会有一个 PreviousHandle，其实是因为在 iOS 系统中只能存在一个 customHandel，如果你的项目中接入了或者准备接入多个 Crash 防护相关的 SDK（虽然不建议这么做），那么多个 Handle 之间一定会产生冲突，导致堆栈不明确，或者丢失。所以在注册我们的 handle 前先将之前的 handle 指针保存下来，等我们的 handle 处理完后在通过函数指针调用回去，这样就能保证每一个 handle 都能被正常调用。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;exception：通过 &lt;code&gt;NSGetUncaughtExceptionHandler&lt;/code&gt;  获得之前 handle 指针，之后再通过 &lt;code&gt;NSSetUncaughtExceptionHandler(oldHandler);&lt;/code&gt;  调用回去。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;signal: 使用 &lt;code&gt;sigaction&lt;/code&gt;  函数获得之前的 handle 指针。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;0x3-堆栈获取&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#0x3-堆栈获取&#34;&gt;#&lt;/a&gt; 0x3: 堆栈获取&lt;/h1&gt;
+&lt;p&gt;因为苹果使用了 (Address Space Layout Randomization) 地址空间配置随机加载技术，所以线上堆栈必须要通过符号表堆栈还原进行解读，不然的话就是内存地址。所以当我们使用 NSThread 的相关函数在 Debug 下虽然能看到可读性行的堆栈，但是在线上包上并不可取，那我们要怎么获取堆栈呢？先来看下符号表的构造：&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tva1.sinaimg.cn/large/008i3skNly1gq80i60uhsj30ya0eih1g.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;之前拿到这样的符号表，我们通常手动还原，找一个相同系统的真机，找到对应库的基地址按照符号表上函数的偏移量进行计算（通过 LLDB 的相关函数）&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tva1.sinaimg.cn/large/008i3skNly1gq80lfgy0hj30q208i0te.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;通过看 Mach-o 相关接口可以找到相关函数进行端内符号表还原，大致流程为：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;获取函数地址：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;遍历 Mach-o 中的所有 image&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;获取每个 image 的基地址&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;通过堆栈偏移地址获取栈帧函数地址&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;将函数地址翻译成函数名&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;找到对应 Image 的 symple table 段的 nlist_64 结构体&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;通过 nlist_64.n_un.n_strx 获取函数对应的字符串&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;最终的效果:&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tva1.sinaimg.cn/large/008i3skNly1gq80unfse1j31fc0cin8n.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;h1 id=&#34;0x4-crash后续&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#0x4-crash后续&#34;&gt;#&lt;/a&gt; 0x4: Crash 后续&lt;/h1&gt;
+&lt;p&gt;通常在 AppCrash 后会在 handle 中做些上报操作.&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tva1.sinaimg.cn/large/008i3skNly1gq80xn75voj31cc04ydg7.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;但是这样做有两个问题：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;苹果不推荐在 Handle 中做太多操作，而且数据上报等网络请求属于耗时操作，有可能没有完成 App 就被杀死。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;App 直接闪退，体验不好&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;通过查看 runloop 源码可以看出，在 Crash 发生后当前 runloop 中断&lt;/p&gt;
+&lt;p&gt;&amp;lt;font color=&#39;red&#39;&amp;gt; 注意：runloop 本次循环还在继续，但是循环已经被打破，本次循环结束后 app 才退出 &amp;lt;/font&amp;gt; 既下图的 retVal 被置为 NO&lt;br /&gt;
+&lt;img data-src=&#34;https://cdn.cdnjson.com/tva1.sinaimg.cn/large/008i3skNly1gq810qv4osj317e0nawla.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;iOS Crash 发生后   runloop 中的 do-while 循环的条件会被置为 NO，然后 Handler 函数走完之后当前循环后直接结束，不会在进行下一次循环了，此时我们只需要再 handler 中再重启 runloop，便可以继续执行代码，通过观察 runloop 源码可以看出 这样的操作是在之前已经中断但是还没结束的 runloop 中开启一个新的 runloop，他依然可以接受各种事件，比如交互事件等，前提是每个 model 都要开启，因为不同操作是发生在不同阶段的。  但是之前 runloop 中的内容处于不可控状态，且之前的东西被永远的留在内存中，不可恢复，所以在做完相关操作后要立即结束 App，避免其他异常情况，这种做法类似于一种安全模式，在安全模式中处理相关的东西。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tva1.sinaimg.cn/large/008i3skNly1gq814a1gryj31f00ac3zo.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;函数调用：&lt;/p&gt;
+&lt;p&gt;&lt;figure class=&#34;highlight objectivec&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;type&#34;&gt;void&lt;/span&gt; continueAfterCrash()&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;built_in&#34;&gt;CFRunLoopRef&lt;/span&gt; runLoop = &lt;span class=&#34;built_in&#34;&gt;CFRunLoopGetCurrent&lt;/span&gt;();&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;built_in&#34;&gt;CFArrayRef&lt;/span&gt; allModes = &lt;span class=&#34;built_in&#34;&gt;CFRunLoopCopyAllModes&lt;/span&gt;(runLoop);&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;keyword&#34;&gt;for&lt;/span&gt; (&lt;span class=&#34;built_in&#34;&gt;NSString&lt;/span&gt; *mode &lt;span class=&#34;keyword&#34;&gt;in&lt;/span&gt; (__bridge &lt;span class=&#34;built_in&#34;&gt;NSArray&lt;/span&gt; *)allModes)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        &lt;span class=&#34;built_in&#34;&gt;CFRunLoopRunInMode&lt;/span&gt;((&lt;span class=&#34;built_in&#34;&gt;CFStringRef&lt;/span&gt;)mode, &lt;span class=&#34;number&#34;&gt;1.0e10&lt;/span&gt;, &lt;span class=&#34;literal&#34;&gt;false&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;br /&gt;
+&lt;img data-src=&#34;https://cdn.cdnjson.com/tva1.sinaimg.cn/large/008i3skNly1gq81k7k7xcj30cq0um0wg.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;在新的 runloop 中我们做一些操作后再调用 abort 退出 App，比如弹出友好提示之类的操作，告知用户 app 即将退出，但是该操作存在风险，需要注意以下情况&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;新开 runloop 后之前的 runloop 内容便会永远的留在内存中变成不可控的状态如果一旦被访问可能会有异常，所以在做完我们必要的操作后要及时结束 App。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;安全模式必须保证稳定，在新 runloop 中执行的上报、弹窗或者其他逻辑必须要使用系统原生的 API，不能依赖任何第三方。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;尽量不要做太多的操作，及时结束。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;0x5-参考资料&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#0x5-参考资料&#34;&gt;#&lt;/a&gt; 0x5: 参考资料&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9kZXZlbG9wZXIuYXBwbGUuY29tL2RvY3VtZW50YXRpb24=&#34;&gt;Apple iOS Api&lt;/span&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9vcGVuc291cmNlLmFwcGxlLmNvbS8=&#34;&gt;iOS Open Sourcre&lt;/span&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9vcGVuc291cmNlLmFwcGxlLmNvbS9zb3VyY2UvQ0YvQ0YtMTE1MS4xNi8=&#34;&gt;CFRunloop&lt;/span&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cDovL29wZW5zb3VyY2UuYXBwbGUuY29tL3RhcmJhbGxzL3hudS94bnUtMzI0OC42MC4xMC50YXIuZ3o=&#34;&gt;XNU 3248.60.10 源码&lt;/span&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9kZXZlbG9wZXIuYXBwbGUuY29tL2RvY3VtZW50YXRpb24veGNvZGUvZGlhZ25vc2luZ19pc3N1ZXNfdXNpbmdfY3Jhc2hfcmVwb3J0c19hbmRfZGV2aWNlX2xvZ3MvYW5hbHl6aW5nX2FfY3Jhc2hfcmVwb3J0&#34;&gt;Understanding Crash Reports on iPhone OS&lt;/span&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;《深入解析 MAC OS X &amp;amp; IOS 操作系统》&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;0x6-最后&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#0x6-最后&#34;&gt;#&lt;/a&gt; 0x6: 最后&lt;/h1&gt;
+&lt;p&gt;大概这就是所有 Crash 防护的流程，通过两篇文章讲解，希望大家对 iOS 系统的 Crash 流程能有些许的了解，并没有贴太多的源码，其实还是解耦度不够，思路有了代码就很简单了。&lt;/p&gt;
+&lt;p&gt;
+        &lt;div id=&#34;aplayer-yREUnHKW&#34; class=&#34;aplayer aplayer-tag-marker&#34; style=&#34;margin-bottom: 20px;&#34;&gt;&lt;/div&gt;
+			  &lt;script&gt;
+				  var options = {&#34;narrow&#34;:false,&#34;autoplay&#34;:true,&#34;showlrc&#34;:0,&#34;mutex&#34;:true,&#34;music&#34;:[{&#34;title&#34;:&#34;错位时空&#34;,&#34;author&#34;:&#34;艾辰&#34;,&#34;url&#34;:&#34;https://molier-1256056152.cos.ap-guangzhou.myqcloud.com/%E8%89%BE%E8%BE%B0%20-%20%E9%94%99%E4%BD%8D%E6%97%B6%E7%A9%BA.mp3&#34;,&#34;pic&#34;:&#34;https://bkimg.cdn.bcebos.com/pic/a8ec8a13632762d0f7037ac288a71ffa513d26976830?x-bce-process=image/watermark,image_d2F0ZXIvYmFpa2UxMTY=,g_7,xp_5,yp_5/format,f_auto&#34;,&#34;lrc&#34;:&#34;https://歌词.lrc&#34;}]};
+				  options.element = document.getElementById(&#34;aplayer-yREUnHKW&#34;);
+				  var ap = new APlayer(options);
+			    window.aplayers || (window.aplayers = []);
+				  window.aplayers.push(ap);
+			  &lt;/script&gt;&lt;/p&gt;
+ ]]></description>
+        </item>
+    </channel>
+</rss>

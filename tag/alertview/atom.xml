@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://oliverqueen.cn</id>
+    <title>Molier • Posts by &#34;alertview&#34; tag</title>
+    <link href="https://oliverqueen.cn" />
+    <updated>2018-01-24T04:37:20.000Z</updated>
+    <category term="欢迎页" />
+    <category term="网络" />
+    <category term="底层" />
+    <category term="DNS解析" />
+    <category term="LocalDNS" />
+    <category term="OpenGL" />
+    <category term="UI" />
+    <category term="动画" />
+    <category term="性能优化" />
+    <category term="xcode" />
+    <category term="cocoapods" />
+    <category term="podfile" />
+    <category term="webview" />
+    <category term="hook" />
+    <category term="runtime" />
+    <category term="翻译" />
+    <category term="优化" />
+    <category term="国外文献" />
+    <category term="httpdns" />
+    <category term="Cocoapods" />
+    <category term="架构" />
+    <category term="AlertView" />
+    <category term="Hook" />
+    <category term="杂谈" />
+    <category term="Hexo" />
+    <category term="个人博客" />
+    <category term="网站" />
+    <category term="屏幕适配" />
+    <category term="iOS 11" />
+    <category term="评论插件" />
+    <category term="总结" />
+    <category term="回味2017展望2018" />
+    <category term="热修复" />
+    <category term="JSPath" />
+    <category term="swift" />
+    <category term="网络请求" />
+    <category term="Swift" />
+    <category term="音频" />
+    <category term="唱吧" />
+    <category term="K歌" />
+    <category term="AVFoundation" />
+    <category term="git" />
+    <category term="效率工作" />
+    <category term="回首2018展望2019" />
+    <category term="代码版本控制" />
+    <category term="iOS" />
+    <category term="Crash防护" />
+    <category term="Apple登录" />
+    <category term="WWDC2022" />
+    <category term="逆向" />
+    <category term="算法" />
+    <category term="C语言" />
+    <category term="排序" />
+    <entry>
+        <id>https://oliverqueen.cn/2018-01-24-%E8%87%AA%E5%AE%9A%E4%B9%89AlertView/</id>
+        <title>自定义AlertView</title>
+        <link rel="alternate" href="https://oliverqueen.cn/2018-01-24-%E8%87%AA%E5%AE%9A%E4%B9%89AlertView/"/>
+        <content type="html">&lt;link rel=&#34;stylesheet&#34; class=&#34;aplayer-secondary-style-marker&#34; href=&#34;/assets/css/APlayer.min.css&#34;&gt;&lt;script src=&#34;/assets/js/APlayer.min.js&#34; class=&#34;aplayer-secondary-script-marker&#34;&gt;&lt;/script&gt;&lt;h1 id=&#34;customalertview&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#customalertview&#34;&gt;#&lt;/a&gt; CustomAlertView&lt;/h1&gt;
+&lt;p&gt;一个自定义的 AlertView，用户可以根据自己的需求来设置。&lt;/p&gt;
+&lt;h2 id=&#34;使用方法&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#使用方法&#34;&gt;#&lt;/a&gt; 使用方法&lt;/h2&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo6k50sh34j30hy084abf.jpg&#34; alt=&#34;初始化方法&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;类似于系统的初始化方法，如果没有值的话就传 nil 就好，不要传空字符串。最后一个参数传 title 数组就好了。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo6k5axspej30r702rmy0.jpg&#34; alt=&#34;使用&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;然后调用 showInViewWithAction 方法显示出来&lt;br /&gt;
+&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo6k5idk8ij30mp041aai.jpg&#34; alt=&#34;显示&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;最后一个参数是 button 的点击事件，根据 tag 值来区分不同的 button 点击，只有取消 button 的 tag 是 0，其他的是 1.2.3... 依次往下排列就好&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo6k5q4o6nj30kr0ox78u.jpg&#34; alt=&#34;可自定义的一些属性&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;这些属性可以自定义，这里就不细说了，大家可以使试试。&lt;/p&gt;
+&lt;h2 id=&#34;样式截图&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#样式截图&#34;&gt;#&lt;/a&gt; 样式截图&lt;/h2&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo6k5zfyi2j30dc0notac.jpg&#34; alt=&#34;样式截图&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1fo6k66fmogg308o0figvd.gif&#34; alt=&#34;使用截图&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;大概就这么多，很简单的有问题随时联系我吧。&lt;/p&gt;
+</content>
+        <category term="UI" />
+        <category term="AlertView" />
+        <updated>2018-01-24T04:37:20.000Z</updated>
+    </entry>
+</feed>

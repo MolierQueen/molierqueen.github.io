@@ -1,0 +1,251 @@
+<?xml version="1.0"?>
+<rss version="2.0">
+    <channel>
+        <title>Molier • Posts by &#34;git&#34; tag</title>
+        <link>https://oliverqueen.cn</link>
+        <description>iOS 开发 移动App 博客 杂谈 随笔 相册</description>
+        <language>zh-CN</language>
+        <pubDate>Thu, 23 Aug 2018 20:47:19 +0800</pubDate>
+        <lastBuildDate>Thu, 23 Aug 2018 20:47:19 +0800</lastBuildDate>
+        <category>欢迎页</category>
+        <category>网络</category>
+        <category>底层</category>
+        <category>DNS解析</category>
+        <category>LocalDNS</category>
+        <category>OpenGL</category>
+        <category>UI</category>
+        <category>动画</category>
+        <category>性能优化</category>
+        <category>xcode</category>
+        <category>cocoapods</category>
+        <category>podfile</category>
+        <category>webview</category>
+        <category>hook</category>
+        <category>runtime</category>
+        <category>翻译</category>
+        <category>优化</category>
+        <category>国外文献</category>
+        <category>httpdns</category>
+        <category>Cocoapods</category>
+        <category>架构</category>
+        <category>AlertView</category>
+        <category>Hook</category>
+        <category>杂谈</category>
+        <category>Hexo</category>
+        <category>个人博客</category>
+        <category>网站</category>
+        <category>屏幕适配</category>
+        <category>iOS 11</category>
+        <category>评论插件</category>
+        <category>总结</category>
+        <category>回味2017展望2018</category>
+        <category>热修复</category>
+        <category>JSPath</category>
+        <category>swift</category>
+        <category>网络请求</category>
+        <category>Swift</category>
+        <category>音频</category>
+        <category>唱吧</category>
+        <category>K歌</category>
+        <category>AVFoundation</category>
+        <category>git</category>
+        <category>效率工作</category>
+        <category>回首2018展望2019</category>
+        <category>代码版本控制</category>
+        <category>iOS</category>
+        <category>Crash防护</category>
+        <category>Apple登录</category>
+        <category>WWDC2022</category>
+        <category>逆向</category>
+        <category>算法</category>
+        <category>C语言</category>
+        <category>排序</category>
+        <item>
+            <guid isPermalink="true">https://oliverqueen.cn/2018-08-23-ChangeSvnToGit/</guid>
+            <title>SVN切换到Git</title>
+            <link>https://oliverqueen.cn/2018-08-23-ChangeSvnToGit/</link>
+            <category>git</category>
+            <category>代码版本控制</category>
+            <pubDate>Thu, 23 Aug 2018 20:47:19 +0800</pubDate>
+            <description><![CDATA[ &lt;link rel=&#34;stylesheet&#34; class=&#34;aplayer-secondary-style-marker&#34; href=&#34;/assets/css/APlayer.min.css&#34;&gt;&lt;script src=&#34;/assets/js/APlayer.min.js&#34; class=&#34;aplayer-secondary-script-marker&#34;&gt;&lt;/script&gt;&lt;h2 id=&#34;背景&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#背景&#34;&gt;#&lt;/a&gt; 背景：&lt;/h2&gt;
+&lt;p&gt;SVN 和 Git 同样都是在特定时代下比较优秀的版本控制系统，但是随着时代的发展，SVN 越来越不能满足多人开发的需求，尤其是在多种多样，天马星空的业务场景面前，SVN 会显得力不从心。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNbRwgy1fujxnf8ilhj30zk0m8gm9.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;最近在将公司的项目从 SVN 迁移到 git，踩了不少坑，所以来记录下:&lt;/p&gt;
+&lt;p&gt;因为迁移的快慢和整个仓库的大小，电脑配置有关，所以我先说下这边的情况&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;仓库：&lt;br /&gt;
+仓库大概是 3.5G 左右，包含了 14500 + 的提交次数，其中包含了超过 500M 的单个文件&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;电脑：&lt;br /&gt;
+电脑配置就看图吧 ：&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://image-1256056152.cos.ap-nanjing.myqcloud.com/wz0geut3a8.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;在以上两种情况下，排除掉采坑的时间，总耗时在 10 小时左右，当时中途我也用过一台联系 X1 的本尝试过，配置如下：&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://image-1256056152.cos.ap-nanjing.myqcloud.com/072709.jpg&#34; alt=&#34;&#34; /&gt;&lt;br /&gt;
+后来联想这台电脑放弃了，因为总耗时已经超过 30 小时，&lt;/p&gt;
+&lt;h2 id=&#34;操作&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#操作&#34;&gt;#&lt;/a&gt; 操作：&lt;/h2&gt;
+&lt;h4 id=&#34;1生成作者文件&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#1生成作者文件&#34;&gt;#&lt;/a&gt; 1. 生成作者文件：&lt;/h4&gt;
+&lt;p&gt;因为我们知道，在 SVN 上提交和在 Git 上提交对应提交者的信息展示是不同的，SVN 只会保存一个用户名，而 Git 会保存该用户的邮箱，所以我们迁移的第一步就要生成一个映射文件，将 SVN 上的用户名和其邮箱对应起来，就比如   &lt;code&gt;molier = molier &amp;lt;123456@qq.com&amp;gt;&lt;/code&gt; , 转换的办法有很多，如果你团队里面的人不是很多的是时候，可以自己去提交记录中手动生成这样一个 TXT 文件&lt;br /&gt;
+ &lt;figure class=&#34;highlight nginx&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;attribute&#34;&gt;XXX&lt;/span&gt; = XXX &amp;lt;XXX&lt;span class=&#34;variable&#34;&gt;@XXX&lt;/span&gt;.com&amp;gt;XXX = XXX &amp;lt;XXX&lt;span class=&#34;variable&#34;&gt;@XXX&lt;/span&gt;.com&amp;gt;....&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;br /&gt;
+ 但是如果，多人开发人数很多的时候，手动转很累，我们就需要一个 Atlassian 的工具包  &lt;code&gt;svn-migration-scripts.jar&lt;/code&gt; ，通过命令拉取 SVN 仓库的用户并生成对应的开发者信息映射文件，需要 Java 运行时环境支持，大家可能还需要安装 JDK：&lt;/p&gt;
+&lt;p&gt;&lt;figure class=&#34;highlight awk&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;java -jar svn-migration-scripts.jar authors https:&lt;span class=&#34;regexp&#34;&gt;//&lt;/span&gt;svn.example.com &amp;gt; authors.txt&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;br /&gt;
+ 这样之后会在当前目录生成一个  &lt;code&gt;authors.txt&lt;/code&gt;  文件&lt;/p&gt;
+&lt;h4 id=&#34;2转换仓库&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#2转换仓库&#34;&gt;#&lt;/a&gt; 2. 转换仓库&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;整体转换:&lt;/p&gt;
+&lt;p&gt;标准的 SVN 文件布局：&lt;br /&gt;
+如果 SVN 仓库使用标准的了 /trunk, /branches 和 /tags 的目录结构，就可在运行命令时加上参数–stdlayout，使用如下命令&lt;br /&gt;
+ &lt;figure class=&#34;highlight xml&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;git svn clone --stdlayout --authors-file=authors.txt &lt;span class=&#34;tag&#34;&gt;&amp;lt;&lt;span class=&#34;name&#34;&gt;svn-repo&lt;/span&gt;&amp;gt;&lt;/span&gt;/&lt;span class=&#34;tag&#34;&gt;&amp;lt;&lt;span class=&#34;name&#34;&gt;project&lt;/span&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;tag&#34;&gt;&amp;lt;&lt;span class=&#34;name&#34;&gt;克隆到文件夹的名字&lt;/span&gt;&amp;gt;&lt;/span&gt;非标准的的SVN文件布局:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;br /&gt;
+ 如果 SVN 仓库是非标准的目录布局，那就需要分别显示指定参数–trunk, –branches, –tags。&lt;br /&gt;
+&lt;figure class=&#34;highlight routeros&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;git svn clone &lt;span class=&#34;attribute&#34;&gt;--trunk&lt;/span&gt;=/trunk &lt;span class=&#34;attribute&#34;&gt;--branches&lt;/span&gt;=/branches &lt;span class=&#34;attribute&#34;&gt;--branches&lt;/span&gt;=/bugfixes &lt;span class=&#34;attribute&#34;&gt;--tags&lt;/span&gt;=/tags &lt;span class=&#34;attribute&#34;&gt;--authors-file&lt;/span&gt;=authors.txt &amp;lt;svn-repo&amp;gt;/&amp;lt;project&amp;gt;&amp;lt;克隆到文件夹的名字&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;部分转换:&lt;/p&gt;
+&lt;p&gt;如果仓库非常庞大的话可以选择部分转换，也就只转换指定提交之后的提交，可以试用如下代码&lt;br /&gt;
+ &lt;figure class=&#34;highlight crmsh&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;git svn &lt;span class=&#34;keyword&#34;&gt;clone&lt;/span&gt; &lt;span class=&#34;title&#34;&gt;-r123456&lt;/span&gt;:HEAD --stdlayout --&lt;span class=&#34;attr&#34;&gt;authors-file=&lt;/span&gt;authors.txt &lt;span class=&#34;tag&#34;&gt;&amp;lt;svn-repo&amp;gt;&lt;/span&gt; &lt;span class=&#34;tag&#34;&gt;&amp;lt;克隆到文件夹的名字&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;br /&gt;
+ 不过这里需要注意的是如果使用这种方式来转换那么一定要指定 SVN 的代码根部，而不能指定分支，因为 SVN 的提交编号都是按照时间顺序来往下依次排列，不同的分支也可能提交编号是连续的，所以如果只关心编号的话就不能再指定分支了。&lt;/p&gt;
+&lt;p&gt;以上三步中所用到的  &lt;code&gt;authors.txt&lt;/code&gt;  即为上一步所生成的， &lt;code&gt;作者 -&amp;gt; 作者 &amp;lt;作者邮箱&amp;gt;&lt;/code&gt;  的对应关系文件.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;坑点&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#坑点&#34;&gt;#&lt;/a&gt; 坑点&lt;/h2&gt;
+&lt;p&gt;完成以上操作的话如果一切正常那么你就会获得一个新的 Git 仓库，然后就可以添加到远端，进行多人开发了，至于 git 的操作并不在本文的范围内，下面会讲一下遇到的坑以及解决办法。&lt;/p&gt;
+&lt;h4 id=&#34;坑点一时间久&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#坑点一时间久&#34;&gt;#&lt;/a&gt; 坑点一：时间久&lt;/h4&gt;
+&lt;p&gt;转换仓库是比较耗时的，因为他会一个提交一个提交的转换，转换的速度和你的仓库提交次数和电脑配置成正比，我当时转了十几个小时比较正常，而且转换完之后他还有个自己整理文件的过程也是很耗时的，不过如果你选择部分转换的话也可能很快，假如你一共 15000 个提交，然后你从 14999 来转换可能几分钟就够了。当然最好的办法就是下班前开始执行，第二天来了基本就差不多了。不过别高兴的太早，请看坑点二。&lt;/p&gt;
+&lt;h4 id=&#34;坑点二垃圾过多导致暂停&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#坑点二垃圾过多导致暂停&#34;&gt;#&lt;/a&gt; 坑点二：垃圾过多导致暂停&lt;/h4&gt;
+&lt;p&gt;因为是要遍历所有的历史提交，所以可能会有很多的无用文件 比如项目一开始代文件结构很乱，然后慢慢的经过重构，之类的优化步入正轨，这过程中必然会删掉大量的无用、冗余的文件，虽然这些文件已经不复存在了，但是提交记录会有，而且通过 git 的原理来看他还是会把这些东西一一保存下来，所以就会造成大量无用的文件越来越多，而 Git 是有一个缓冲区 (具体大小不确定) 当你无用文件把缓冲区沾满了，那么转换过程会停止会爆出如下错误&lt;br /&gt;
+ &lt;figure class=&#34;highlight livecodeserver&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;Auto packing &lt;span class=&#34;keyword&#34;&gt;the&lt;/span&gt; repository &lt;span class=&#34;keyword&#34;&gt;in&lt;/span&gt; background &lt;span class=&#34;keyword&#34;&gt;for&lt;/span&gt; optimum performance.&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;See &lt;span class=&#34;string&#34;&gt;&amp;quot;git help gc&amp;quot;&lt;/span&gt; &lt;span class=&#34;keyword&#34;&gt;for&lt;/span&gt; manual housekeeping.error: The &lt;span class=&#34;keyword&#34;&gt;last&lt;/span&gt; gc run reported &lt;span class=&#34;keyword&#34;&gt;the&lt;/span&gt; following. &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;Please correct &lt;span class=&#34;keyword&#34;&gt;the&lt;/span&gt; root cause &lt;span class=&#34;keyword&#34;&gt;and&lt;/span&gt; remove .git/gc.&lt;span class=&#34;built_in&#34;&gt;log&lt;/span&gt;.&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;Automatic cleanup will &lt;span class=&#34;keyword&#34;&gt;not&lt;/span&gt; be performed &lt;span class=&#34;keyword&#34;&gt;until&lt;/span&gt; &lt;span class=&#34;keyword&#34;&gt;the&lt;/span&gt; &lt;span class=&#34;built_in&#34;&gt;file&lt;/span&gt; is removed.&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;warning: There are too many unreachable loose objects; &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;run &lt;span class=&#34;string&#34;&gt;&amp;#x27;git prune&amp;#x27;&lt;/span&gt; &lt;span class=&#34;built_in&#34;&gt;to&lt;/span&gt; remove them.gc &lt;span class=&#34;comment&#34;&gt;--auto: command returned error: 255&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;br /&gt;
+ 大概意思是垃圾太多，转移暂停让你先清理垃圾，其实只要按照他说的 进到我们转了一半的仓库 进行  &lt;code&gt;git gc&lt;/code&gt;  就可以，但是这样一来我们就需要一直守在电脑前，随时准备输入  &lt;code&gt;git gc&lt;/code&gt;  而且假如你下班前开始跑结果第二天上班一看跑到一半就暂停了，白白浪费了一晚上的时间，真的会崩溃的。所以通过 google 找到了解决办法&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://image-1256056152.cos.ap-nanjing.myqcloud.com/073257.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;也就是开始转换的时候先进入仓库输入  &lt;code&gt;git config gc.auto 0&lt;/code&gt;  关闭 gc 功能，然后就可以一直跑到黑了，你大可以放心的运行命令然后下班回家。不过还有一点需要注意的是垃圾文件是否过多和你仓库大小没有太大关系，及时你仓库提交不多，但是每次提交都有很大改动的话也还是会出现这个问题，所以这里建议不管你仓库多大，都要先进行一下这个操作，以防万一。&lt;/p&gt;
+&lt;h4 id=&#34;坑点三大文件处理&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#坑点三大文件处理&#34;&gt;#&lt;/a&gt; 坑点三：大文件处理&lt;/h4&gt;
+&lt;p&gt;git 和 SVN 不同，在 git 上提交的单个文件是有大小限制的，超过这个大小就不允许提交到仓库中，通常我们会用 git LFS 来解决，具体的安装，添加步骤网上大把的教程，就不在这里说，不过他只会告诉你大文件的大小和限制的大小，具体的大文件是哪个他不会告诉你，这里可以用以下命令查看&lt;br /&gt;
+ &lt;figure class=&#34;highlight excel&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;git ls-tree -r -&lt;span class=&#34;built_in&#34;&gt;t&lt;/span&gt; -l --full-name HEAD | sort -&lt;span class=&#34;built_in&#34;&gt;n&lt;/span&gt; -k &lt;span class=&#34;number&#34;&gt;4&lt;/span&gt; | tail -&lt;span class=&#34;built_in&#34;&gt;n&lt;/span&gt; &lt;span class=&#34;number&#34;&gt;10&lt;/span&gt; //查找git 仓库中排名前十的大文件(升序)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;br /&gt;
+ 他会输出前十个最大的文件，然后你再按需处理。但是当你把大文件添加到 LFS 中后再次推送还是会爆出同样的错误，而且还是同样的文件，也就是说你根本没添加成功，其实并不是这样的，在添加 LFS 中只要你操作没错，就是添加成功了，他还会报错的原因是因为虽然你工程中的大文件已经添加，但是你的历史提交记录中是包含大文件的代码快照的，所以你需要将历史上所有包含大文件的提交记录重写，删掉大文件相关的东西，git 中重写 commit 的命令是：&lt;br /&gt;
+&lt;figure class=&#34;highlight vim&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;git &lt;span class=&#34;built_in&#34;&gt;filter&lt;/span&gt;-branch --force --&lt;span class=&#34;built_in&#34;&gt;index&lt;/span&gt;-&lt;span class=&#34;built_in&#34;&gt;filter&lt;/span&gt; &lt;span class=&#34;string&#34;&gt;&amp;#x27;git rm -rf --cached --ignore-unmatch 你大文件所在的目录&amp;#x27;&lt;/span&gt; --prune-&lt;span class=&#34;built_in&#34;&gt;empty&lt;/span&gt; --&lt;span class=&#34;keyword&#34;&gt;tag&lt;/span&gt;-name-&lt;span class=&#34;built_in&#34;&gt;filter&lt;/span&gt; &lt;span class=&#34;keyword&#34;&gt;cat&lt;/span&gt; -- --&lt;span class=&#34;keyword&#34;&gt;all&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;br /&gt;
+ 这个过程也比较漫长，他会便利你所有的提交记录并一一修改，不过就是漫长的等待就可以了，等到完成之后我们需要将代码 push 到远端，因为我们修改了所有的 commit 我们需要强制 push 使用如下命令&lt;br /&gt;
+ &lt;figure class=&#34;highlight crmsh&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;git push origin &lt;span class=&#34;keyword&#34;&gt;master&lt;/span&gt; &lt;span class=&#34;title&#34;&gt;--force&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;h4 id=&#34;坑点四-打包时间过长&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#坑点四-打包时间过长&#34;&gt;#&lt;/a&gt; 坑点四：打包时间过长&lt;/h4&gt;
+&lt;p&gt;再上一步我们执行完推送命令的时候，会先进行文件打包处理，这个过程也是非常漫长，而且非常消耗电脑资源的，按照我的电脑配置来说，这个过程一旦开始，电脑基本就是内存、cpu 全满的状态，鼠标也没法动，所以这个过程要有心理准备。漫长的等待之后就推送成功了。&lt;/p&gt;
+ ]]></description>
+        </item>
+        <item>
+            <guid isPermalink="true">https://oliverqueen.cn/2018-08-22-GitFlow/</guid>
+            <title>GitFlow流程</title>
+            <link>https://oliverqueen.cn/2018-08-22-GitFlow/</link>
+            <category>git</category>
+            <category>效率工作</category>
+            <pubDate>Thu, 23 Aug 2018 14:20:39 +0800</pubDate>
+            <description><![CDATA[ &lt;link rel=&#34;stylesheet&#34; class=&#34;aplayer-secondary-style-marker&#34; href=&#34;/assets/css/APlayer.min.css&#34;&gt;&lt;script src=&#34;/assets/js/APlayer.min.js&#34; class=&#34;aplayer-secondary-script-marker&#34;&gt;&lt;/script&gt;&lt;h1 id=&#34;关于gitflow&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#关于gitflow&#34;&gt;#&lt;/a&gt; 关于 gitflow&lt;/h1&gt;
+&lt;h2 id=&#34;概念&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#概念&#34;&gt;#&lt;/a&gt; 概念：&lt;/h2&gt;
+&lt;p&gt;Git Flow 是构建在 Git 之上的一个组织、管理软件开发活动的模型。Git Flow 是一套使用 Git 进行源代码管理时的一套行为规范和，通过利用 Git 创建和管理分支的能力，为每个分支设定具有特定的含义名称，并将软件生命周期中的各类活动归并到不同的分支上。实现了软件开发过程不同操作的相互隔离。这种软件开发的活动模型被称为 “Git Flow”。&lt;/p&gt;
+&lt;h2 id=&#34;原理&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#原理&#34;&gt;#&lt;/a&gt; 原理：&lt;/h2&gt;
+&lt;p&gt;gitflow 的核心就 branch，通过在项目的不同阶段对 branch 的不同操作包括但不限于 create、marge、rebase、等来实现一个完整的高效率的工作流程。一般而言，软件开发模型有常见的瀑布模型、迭代开发模型、以及最近出现的敏捷开发模型等不同的模型。每种模型有各自应用场景。&lt;strong&gt;Git Flow 重点解决的是由于源代码在开发过程中的各种冲突导致开发活动混乱的问题。因此，Git flow 可以很好的于各种现有开发模型相结合使用，尤其是多人合作开发时提高效率&lt;/strong&gt;。用一张图来了解 gitflow 的流程：从右向左看 从上到下看&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1ftk5pkvn7ij30vy16cwhl.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;branch&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#branch&#34;&gt;#&lt;/a&gt; Branch：&lt;/h2&gt;
+&lt;p&gt;Branch 是 gitfolw 的核心。主要分为两大类 &lt;strong&gt;Main Branchs&lt;/strong&gt; 和 &lt;strong&gt;Supporting branches&lt;/strong&gt;, 其中 &lt;strong&gt;Main Branchs&lt;/strong&gt; 中又包含了 &lt;strong&gt;Master&lt;/strong&gt; 和 &lt;strong&gt;Develop&lt;/strong&gt;，而 &lt;strong&gt;Supporting branches&lt;/strong&gt; 中包含了 **Feature **、&lt;strong&gt;Release&lt;/strong&gt;、&lt;strong&gt;Hotfix&lt;/strong&gt; &lt;strong&gt;以及其他自定义分支&lt;/strong&gt;，下面逐一讲解：&lt;/p&gt;
+&lt;h4 id=&#34;master&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#master&#34;&gt;#&lt;/a&gt; Master:&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;描述：&lt;/p&gt;
+&lt;p&gt;master 分支上存放的是最稳定的正式版的代码，并且该分支的代码应该是随时可在开发环境中使用的代码（Production Ready state）。当一个版本开发完毕后，产生了一份新的稳定的可供发布的代码时，master 分支上的代码要被更新，同时，每一次更新，都需要在 master 上打上对应的版本号 (tag)。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;生成及销毁：&lt;/p&gt;
+&lt;p&gt;任何人不允许在 master 上进行代码的直接提交，只接受合入，Master 上的代码必须是要从经过多轮测试且已经发布一段时间 (根据 DAU 以及项目实际情况来定，个人建议 K 歌国际版可以定为一周) 且线上已经稳定的 &lt;strong&gt;release&lt;/strong&gt; 分支合并进去，然后在 Master 上生成 tag (通常就是对应的版本号)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;命名：&lt;/p&gt;
+&lt;p&gt;master&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;develop&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#develop&#34;&gt;#&lt;/a&gt; Develop:&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;描述：&lt;/p&gt;
+&lt;p&gt;develop 分支是保存当前最新版本开发成果的分支。该分支上的代码允许有 BUG，但是必须保证编译通过，且该分支可以作为每天夜间测试的分支 (如果有夜间测试的话) 所以该分支也叫做 Nightly build。当 develop 分支上的代码已实现了软件需求说明书中所有的功能 (必须经过开发自测，但是不必经过 QA) 且相对稳定时候，就可以基于此分支来拉出新的 release 分支交付 QA 进行测试。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;生成及销毁：&lt;/p&gt;
+&lt;p&gt;Develop 分支是由一个人 (通常是 Team Leader) 从 Master 中拉出，任何人不得在 Develop 上进行代码提交，只接受合入。Develop 上所有代码一定都是由 &lt;strong&gt;Supporting branches&lt;/strong&gt; 中的 Branch 合并进来，且合入 Develop 的分支必须保证功能完整，可以独立运行，可允许包含一些 BUG (但是最好经过自测，不要有太大或者太明显的 BUG，比如一启动就 crash 之类的)。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;命名：&lt;/p&gt;
+&lt;p&gt;develop&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;流程：&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1ftk7aszas4j30eu0mc74p.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;h4 id=&#34;feature&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#feature&#34;&gt;#&lt;/a&gt; Feature:&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;描述：&lt;/p&gt;
+&lt;p&gt;Feature 分支通常叫做功能分支，也可以叫做个人分支，一般命名为 &lt;strong&gt;feature/XXXX&lt;/strong&gt;, 该分支就是每一个开发人员进行开发的分支，比如做一些功能、需求之类的东西，这个分支上的代码变更最终合并回 develop 分支或者干脆被抛弃掉（例如实验性且效果不好的代码变更）。一般而言，feature 分支代码可以保存在开发者自己的代码库中而不强制提交到主代码库里。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;生成及销毁：&lt;/p&gt;
+&lt;p&gt;每个开发者从通常会 Develop 分支中拉取自己的 feature，且开发者可以随意的在自己的 feature 上进行操作 包括但不限于 提交、回滚、删除。如果最终需要合并入 develop 那就要保证功能的完整性以及代码的稳定新，比如我在 feature 上做了 3 个需求但是由于时间关系我只做了两个，那也可以将 feature 合并入 develop，然后剩下的那一个需求等有时间了再去 feature 上做完之后再合入 develop。所以这里说的功能的完整性并不是值得要做完所有的功能，而是要保证你所要做的所有需求中的某一个或者某几个功能已经做完，不允许把做到一半的功合并入 develop。合并入 develop 尽量上删除远端的 feature 分支，本地的 feature 可以视情况而取舍。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;命名：&lt;/p&gt;
+&lt;p&gt;feature 通常是从 develope 上拉取 所有通常用 &lt;strong&gt;dev_功能描述_英文名&lt;/strong&gt; 来命名。比如 &lt;strong&gt;feature/dev_refresh_molierzhang&lt;/strong&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;流程：&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1ftk7br1fvqj307e0jugln.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;h4 id=&#34;release&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#release&#34;&gt;#&lt;/a&gt; Release:&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;描述：&lt;/p&gt;
+&lt;p&gt;Release 分支通常叫做发布分支，也可以叫做测试 - 发布分支，一般命名为 &lt;strong&gt;Release/1.2.3&lt;/strong&gt;（后面是版本号）, 该分支是为测试 - 发布新的产品版本而开辟的。因为包含测试流程，所以在这个分支上的代码允许做小的缺陷修正、准备发布版本所需的各项说明信息（版本号、发布时间、编译时间等等）。通过在 release 分支上进行这些工作可以让 develop 分支空闲出来以接受新的 feature 分支上的代码提交，进入新的软件开发迭代周期。&lt;strong&gt;注意：该分支上的代码一定是可编译可运行的，允许包含小 BUG&lt;/strong&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;生成及销毁：&lt;/p&gt;
+&lt;p&gt;当 develop 分支上的代码已经包含了该版本所有即将发布的功能和需求，并且已通过自测且已基本稳定，我们就可以考虑准备基于 develop 拉取 release 分支了。而所有在当前即将发布的版本之外的业务需求一定要确保不能混到 release 分支之内（避免由此引入一些不可控的系统缺陷）。成功的派生了 release 分支之后，develop 分支就可以为 “下一个版本” 服务了。所谓的 “下一个版本” 是在当前即将发布的版本之后发布的版本。开发人员可以在此分支上修改 BUG，进行提交、回滚等操作，但是与 feature 不同的是 release 分支是被多人操作的，不像 feature，所以一定要小心避免冲突。当现在 QA 测试没有问题，便从 release 上发布上线，且经过一段时间的验证没有问题后合入 master，并且删除 release 分支，其实根据 release 分支的特性我们可以使用 Git Hook 触发软件自动测试以及生产环境代码的自动更新工作。这些自动化操作将有利于减少新代码发布之后的一些事务性工作。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;命名：&lt;/p&gt;
+&lt;p&gt;release/1.2.3 后面跟对应的版本号&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;流程：&lt;/p&gt;
+&lt;p&gt;同 feature&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;hotfix&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#hotfix&#34;&gt;#&lt;/a&gt; Hotfix:&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;描述：&lt;/p&gt;
+&lt;p&gt;Hotfix 叫热修复分支，除了是计划外创建的以外，hotfix 分支与 release 分支十分相似，当已经发布的版本（Master 上代码）遇到了异常情况或者发现了严重到必须立即修复的软件缺陷的时候，就需要从 master 分支上指定的 tag 版本拉取 hotfix 分支来组织代码的紧急修复工作。这样做的显而易见的好处是不会打断正在进行的 develop 分支的开发工作，能够让团队中负责新功能开发的人与负责代码紧急修复的人并行、独立的开展工作。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;生成及销毁：&lt;/p&gt;
+&lt;p&gt;由 Master 上拉取，进行修复，负责修改 BUG 的同事可以进行提交及其它操作，后续的热修复测试也在此分支上进行。通过测试验证没问题后有一个人 (通常为 teamleader)&lt;strong&gt; 合并入 Master 分支，且同时也要合并入 Develop 分支&lt;/strong&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;命名：&lt;/p&gt;
+&lt;p&gt;Hotfix/1.2.3 后面跟对应的版本号&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;流程：&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://cdn.cdnjson.com/tvax3.sinaimg.cn/large/006tNc79gy1ftk81yr4iej308j0bqwf3.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;总结&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#总结&#34;&gt;#&lt;/a&gt; 总结&lt;/h2&gt;
+&lt;p&gt;Git Flow 开发模型从源代码管理角度对通常意义上的软件开发活动进行了约束。应该说，为我们的软件开发提供了一个可供参考的管理模型。Git Flow 开发模型让开发代码仓库保持整洁，让小组各个成员之间的开发相互隔离，能够有效避免处于开发状态中的代码相互影响而导致的效率低下和混乱。&lt;/p&gt;
+&lt;p&gt;所谓模型，在不同的开发团队，不同的文化，不同的项目背景情况下都有可能需要进行适当的裁剪或扩充。&lt;/p&gt;
+&lt;h2 id=&#34;效率工具&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#效率工具&#34;&gt;#&lt;/a&gt; 效率工具&lt;/h2&gt;
+&lt;p&gt;推荐 &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly93d3cuc291cmNldHJlZWFwcC5jb20v&#34;&gt;sourceTree&lt;/span&gt; 和 &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly93d3cuZ2l0a3Jha2VuLmNvbS8=&#34;&gt;gitkarken&lt;/span&gt; (用免费版即可，不用充钱) 前者对 gitsubmodel 的支持不太好，不过目前介于我们没有实现组件化所以暂时可以无视；后者完美支持 gitsubmodel，但是在拉取一些比较大的库的时候可能会卡死，前公司一个项目 30G+ 会有卡死情况出现，后者界面炫酷一些 iOS 的话 Xcdoe 自带 git 也可以试试。&lt;/p&gt;
+ ]]></description>
+        </item>
+    </channel>
+</rss>
